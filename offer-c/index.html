@@ -271,6 +271,7 @@
     .closing-box { padding: 28px 20px; }
     .faq summary { font-size: 17px; }
   }
+.mock-held{display:block;margin:8px 0;padding:6px 10px;border:1.5px dashed #b26a00;background:#fff4e0;color:#5a3600;font:600 12.5px/1.45 system-ui,-apple-system,sans-serif;border-radius:4px;text-align:left;letter-spacing:0;text-transform:none}.mock-held-wrap{max-width:1100px;margin:0 auto;padding:16px 20px 0}
 </style>
 </head>
 <body>
@@ -307,55 +308,55 @@
             <div class="field">
               <div class="field-row">
                 <label for="inq">New inquiries a month<small>Calls and web forms, before any filtering</small></label>
-                <span class="num"><input id="inq" type="number" inputmode="numeric" min="0" max="1000" step="1" value="40"></span>
+                <span class="num"><input id="inq" type="number" inputmode="numeric" min="0" max="1000" step="1" value="" placeholder="yours"></span>
               </div>
-              <input type="range" min="0" max="300" step="1" value="40" data-for="inq" aria-label="New inquiries a month, slider">
+              <input type="range" min="0" max="300" step="1" value="0" data-for="inq" aria-label="New inquiries a month, slider">
             </div>
 
             <div class="field">
               <div class="field-row">
                 <label for="fast">Answered within 5 minutes<small>Share that hear from a person or a text that fast</small></label>
-                <span class="num"><input id="fast" type="number" inputmode="numeric" min="0" max="100" step="1" value="30"><span>%</span></span>
+                <span class="num"><input id="fast" type="number" inputmode="numeric" min="0" max="100" step="1" value="" placeholder="yours"><span>%</span></span>
               </div>
-              <input type="range" min="0" max="100" step="1" value="30" data-for="fast" aria-label="Answered within 5 minutes, slider">
+              <input type="range" min="0" max="100" step="1" value="0" data-for="fast" aria-label="Answered within 5 minutes, slider">
             </div>
 
             <div class="field">
               <div class="field-row">
                 <label for="close">Estimate-to-job close rate<small>Of estimates you run, how many you win</small></label>
-                <span class="num"><input id="close" type="number" inputmode="numeric" min="0" max="100" step="1" value="30"><span>%</span></span>
+                <span class="num"><input id="close" type="number" inputmode="numeric" min="0" max="100" step="1" value="" placeholder="yours"><span>%</span></span>
               </div>
-              <input type="range" min="0" max="100" step="1" value="30" data-for="close" aria-label="Estimate-to-job close rate, slider">
+              <input type="range" min="0" max="100" step="1" value="0" data-for="close" aria-label="Estimate-to-job close rate, slider">
             </div>
 
             <div class="field">
               <div class="field-row">
                 <label for="avg">Average job value<small>Typical invoice for the work you want more of</small></label>
-                <span class="num"><span class="pre">$</span><input id="avg" type="number" inputmode="numeric" min="0" max="200000" step="100" value="4500"></span>
+                <span class="num"><span class="pre">$</span><input id="avg" type="number" inputmode="numeric" min="0" max="200000" step="100" value="" placeholder="yours"></span>
               </div>
-              <input type="range" min="0" max="30000" step="100" value="4500" data-for="avg" aria-label="Average job value, slider">
+              <input type="range" min="0" max="30000" step="100" value="0" data-for="avg" aria-label="Average job value, slider">
             </div>
 
-            <p class="placeholder-note">The starting values are placeholders, not industry figures. Replace them with yours.</p>
+            <p class="placeholder-note">The sheet starts empty. Put in last month's numbers. Nothing here is our figure.</p>
           </form>
 
           <div class="tally" aria-live="polite">
             <span class="label">The arithmetic</span>
             <ol class="rows">
-              <li><span class="op"></span><span class="v" data-out="inq">40</span><span class="t">inquiries a month</span></li>
-              <li><span class="op">×</span><span class="v" data-out="slowPct">70%</span><span class="t">not answered within 5 minutes</span></li>
-              <li class="sum"><span class="op">=</span><span class="v" data-out="slow">28</span><span class="t">inquiries that wait</span></li>
-              <li><span class="op">×</span><span class="v" data-out="close">30%</span><span class="t">your close rate</span></li>
-              <li class="sum"><span class="op">=</span><span class="v" data-out="worth">8.4</span><span class="t">jobs' worth at your own rate</span></li>
-              <li><span class="op">×</span><span class="v" data-out="avg">$4,500</span><span class="t">your average job</span></li>
+              <li><span class="op"></span><span class="v" data-out="inq">–</span><span class="t">inquiries a month</span></li>
+              <li><span class="op">×</span><span class="v" data-out="slowPct">–</span><span class="t">not answered within 5 minutes</span></li>
+              <li class="sum"><span class="op">=</span><span class="v" data-out="slow">–</span><span class="t">inquiries that wait</span></li>
+              <li><span class="op">×</span><span class="v" data-out="close">–</span><span class="t">your close rate</span></li>
+              <li class="sum"><span class="op">=</span><span class="v" data-out="worth">–</span><span class="t">jobs' worth at your own rate</span></li>
+              <li><span class="op">×</span><span class="v" data-out="avg">–</span><span class="t">your average job</span></li>
             </ol>
             <div class="result">
-              <div><span class="label">A month</span><br><span class="big" data-out="month">$37,800</span><p>job value sitting in inquiries that wait more than 5 minutes</p></div>
-              <div><span class="label">A year (× 12)</span><br><span class="big" data-out="year">$453,600</span><p>same arithmetic, twelve months</p></div>
+              <div><span class="label">Your numbers say: a month</span><br><span class="big" data-out="month">–</span><p>job value sitting in inquiries that wait more than 5 minutes</p></div>
+              <div><span class="label">Your numbers say: a year (× 12)</span><br><span class="big" data-out="year">–</span><p>same arithmetic, twelve months</p></div>
             </div>
             <div class="not-promise">
               <strong>Your numbers, your estimate. Not a promise.</strong>
-              <p data-out="note">Slow replies don't lose every one of these. This is what your own numbers put at risk, not what EstimateFlows will add.</p>
+              <p data-out="note">Fill in all four boxes to see what your numbers say.</p>
             </div>
           </div>
         </div>
@@ -370,10 +371,10 @@
 
   <section class="promise" aria-labelledby="promise-h">
     <div class="wrap promise-grid">
-      <span class="label">What we commit to</span>
+      <span class="label">What we do</span>
       <div>
-        <h2 id="promise-h" class="display"><span>15 qualified attended estimate appointments</span> in your first 30 days.</h2>
-        <p class="cond">DFY guarantee. Conditions apply.</p>
+        <h2 id="promise-h" class="display"><span>Fewer inquiries lost</span> between the first call and the estimate.</h2>
+        <p class="mock-held" role="note">MOCK note: the guarantee is held until the guaranteed DFY agreement is live. Then this band can read "15 qualified attended estimate appointments in your first 30 days", with the full conditions right beside it.</p>
         <p class="lede">We run the ads, get new inquiries a fast reply, qualify them and confirm them, so your estimator spends the month in front of homeowners who are home, in your area and asking for the work you want.</p>
         <a class="btn" href="../booking-c/index.html">Book a Painting Pipeline Review</a>
       </div>
@@ -417,7 +418,7 @@
         <div class="bridge">
           <div><span class="label">Most of the market</span><p>Calls back after getting off the ladder, often hours later. Evening and weekend inquiries wait until Monday.</p></div>
           <div><span class="label">Why that's a problem</span><p>Homeowners send the same form to several painters and talk to whoever answers first.</p></div>
-          <div><span class="label">What it costs you</span><p>In your worksheet, <span class="live" data-out="slow">28</span> inquiries a month wait more than 5 minutes. That's <span class="live" data-out="month">$37,800</span> of job value at your own close rate.</p></div>
+          <div><span class="label">What it costs you</span><p>Your numbers say <span class="live" data-out="slow">–</span> inquiries a month wait more than 5 minutes. That's <span class="live" data-out="month">–</span> of job value at your own close rate.</p></div>
           <div class="fix">
             <div><span class="label">So instead we</span><p>Give new calls and form inquiries a fast reply, including evenings and weekends. Missed calls get a text back.</p></div>
             <div><span class="label">So you can</span><p>Stay on the job and still be the company that answered.</p></div>
@@ -486,7 +487,7 @@
         </thead>
         <tbody>
           <tr><th scope="row">Who runs it</th><td data-col="Done-for-You">We run the ads, replies, qualification and confirmations for you.</td><td data-col="Done-with-You">We build the system with you and coach your team to run it. <span class="confirm">[Ali to confirm DWY wording]</span></td></tr>
-          <tr><th scope="row">Guarantee</th><td data-col="Done-for-You"><span class="yes">Yes.</span> 15 qualified attended estimate appointments in your first 30 days. <span class="cond">DFY guarantee. Conditions apply.</span></td><td data-col="Done-with-You">No guarantee.</td></tr>
+          <tr><th scope="row">Guarantee</th><td data-col="Done-for-You"><span class="mock-held">Held until the guaranteed DFY agreement is live</span><span class="yes">Yes.</span> 15 qualified attended estimate appointments in your first 30 days. <span class="cond">DFY guarantee: Done-for-You only, at least $2,000 a month in ad spend paid to the platform, and your complete past-lead list before launch. Other conditions apply.</span></td><td data-col="Done-with-You">No guarantee.</td></tr>
           <tr><th scope="row">Ad spend</th><td data-col="Done-for-You">At least $2,000 a month paid to the advertising platform for the guarantee.</td><td data-col="Done-with-You">Paid to the platform directly. We set the level with you on the call.</td></tr>
           <tr><th scope="row">Past lead list</th><td data-col="Done-for-You">Complete historical list before launch, needed for the guarantee.</td><td data-col="Done-with-You">Whatever you have. We use it for reactivation.</td></tr>
           <tr><th scope="row">Usually fits</th><td data-col="Done-for-You">2 or more crews and $2,000+ a month for ads.</td><td data-col="Done-with-You">Owner-operators, 1 crew, or a smaller ad budget.</td></tr>
@@ -495,7 +496,7 @@
     </div>
   </section>
 
-  <section id="guarantee" aria-labelledby="g-h">
+  <section id="guarantee" aria-labelledby="g-h"><div class="mock-held-wrap"><p class="mock-held" role="note">MOCK note: held until the guaranteed DFY agreement is live. The live page ships without this.</p></div>
     <div class="wrap guarantee">
       <div>
         <span class="label">The guarantee · DFY only</span>
@@ -566,7 +567,7 @@
       </div>
       <details>
         <summary>Is this a guarantee of jobs?</summary>
-        <div class="a"><p>No. The Done-for-You guarantee covers 15 qualified attended estimate appointments in the first 30 days. This is not a guarantee of signed or completed painting jobs. You run the estimates and close the work.</p><p><a href="#guarantee">Read the full guarantee</a></p></div>
+        <div class="a"><p>No. The Done-for-You guarantee covers 15 qualified attended estimate appointments in the first 30 days. This is not a guarantee of signed or completed painting jobs. You run the estimates and close the work.</p><p class="mock-held" role="note">MOCK note: held until the guaranteed DFY agreement is live. The live page ships without this.</p><p><a href="#guarantee">Read the full guarantee</a></p></div>
       </details>
       <details>
         <summary>What do I need to provide?</summary>
@@ -614,7 +615,7 @@
         </div>
         <div class="act">
           <a class="btn" href="../booking-c/index.html">Book a Painting Pipeline Review</a>
-          <span class="cond">Aiming for 15 qualified attended estimate appointments in your first 30 days? DFY guarantee. Conditions apply.</span>
+          <span class="mock-held">Held until the guaranteed DFY agreement is live</span><span class="cond">Aiming for 15 qualified attended estimate appointments in your first 30 days? DFY guarantee: Done-for-You only, at least $2,000 a month in ad spend paid to the platform, and your complete past-lead list before launch. Other conditions apply.</span>
         </div>
       </div>
     </div>
@@ -641,6 +642,11 @@
   const set = (key, text) => document.querySelectorAll(`[data-out="${key}"]`).forEach(el => { el.textContent = text; });
 
   function render() {
+    if (!ids.every(id => document.getElementById(id).value !== "")) {
+      ["inq", "slowPct", "slow", "close", "worth", "avg", "month", "year"].forEach(k => set(k, "–"));
+      set("note", "Fill in all four boxes to see what your numbers say.");
+      return;
+    }
     const inq = val("inq"), fast = val("fast"), close = val("close"), avg = val("avg");
     const slow = inq * (1 - fast / 100);
     const worth = slow * close / 100;
@@ -662,7 +668,7 @@
     const box = document.getElementById(id);
     const slider = document.querySelector(`input[type=range][data-for="${id}"]`);
     box.addEventListener("input", () => { slider.value = val(id); render(); });
-    box.addEventListener("blur", () => { box.value = val(id); render(); });
+    box.addEventListener("blur", () => { if (box.value !== "") box.value = val(id); render(); });
     slider.addEventListener("input", () => { box.value = slider.value; render(); });
   });
   document.getElementById("calc").addEventListener("submit", e => e.preventDefault());
