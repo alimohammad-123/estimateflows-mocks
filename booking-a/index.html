@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MOCK · Booking page · Option A · EstimateFlows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1d33;
+    --navy: #14284a;
+    --navy-2: #1d3762;
+    --navy-soft: #e8edf5;
+    --orange: #f08a3e;
+    --orange-btn: #c4541a;
+    --orange-btn-hover: #a8461a;
+    --orange-tint: #fdf1e8;
+    --paper: #f5f7fa;
+    --line: #dce2ea;
+    --muted: #4f5f77;
+    --ok: #1f7a4d;
+    --ok-tint: #e7f4ed;
+    --err: #b3261e;
+    --radius: 10px;
+    --strip-h: 34px;
+    --display: "Manrope", system-ui, sans-serif;
+    --body: "DM Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding-top: var(--strip-h);
+    font-family: var(--body); font-size: 16px; line-height: 1.55; color: var(--ink);
+    background: var(--paper); -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.02em; margin: 0; }
+  p { margin: 0; }
+  a { color: var(--navy-2); }
+  :focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; border-radius: 4px; }
+  [hidden] { display: none !important; }
+  .wrap { width: min(1160px, 100% - 40px); margin-inline: auto; }
+
+  .mock-strip {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--strip-h);
+    display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0 12px;
+    background: #fff4b8; color: #3d3300; border-bottom: 1px solid #e3d47a;
+    font-size: 13px; font-weight: 600; line-height: 1.2; text-align: center;
+  }
+  .mock-strip b { font-weight: 700; white-space: nowrap; }
+
+  .site-head { background: var(--navy); }
+  .site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+  .head-link { color: #cfd9ea; font-size: 15px; font-weight: 500; }
+  .head-link:hover { color: #fff; }
+
+  /* Layout */
+  .page { padding: 44px 0 72px; }
+  .page .wrap {
+    display: grid; grid-template-columns: minmax(0, 1fr) 460px; column-gap: 64px;
+    grid-template-areas: "intro card" "info card";
+    grid-template-rows: auto 1fr;
+  }
+  .intro { grid-area: intro; }
+  .info { grid-area: info; }
+  .card-col { grid-area: card; }
+  .eyebrow { font-size: 13.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--orange-btn); }
+  .intro h1 { margin-top: 10px; font-size: clamp(34px, 4vw, 48px); font-weight: 800; }
+
+  .promise { margin-top: 18px; font-size: 20px; line-height: 1.45; max-width: 30em; }
+  .promise strong { font-weight: 700; }
+  .terms-note { font-size: 13.5px; color: var(--muted); }
+  .promise + .terms-note { margin-top: 8px; }
+
+  .info-block { margin-top: 40px; }
+  .info-block h2 { font-size: 22px; font-weight: 800; }
+  .steps-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 0; }
+  .steps-list li { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .steps-list .t { font-size: 13px; font-weight: 700; color: var(--orange-btn); padding-top: 2px; font-variant-numeric: tabular-nums; }
+  .steps-list strong { display: block; }
+  .steps-list span.d { color: var(--muted); font-size: 15px; }
+  .ticks { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 10px; }
+  .ticks li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; }
+  .ticks svg { margin-top: 4px; }
+  .placeholder {
+    margin-top: 40px; padding: 22px; border: 2px dashed #b9a24a; border-radius: var(--radius);
+    background: repeating-linear-gradient(135deg, #fffbe6 0 12px, #fff7d6 12px 24px);
+    color: #4d4100; font-size: 15px; font-weight: 600;
+  }
+  .placeholder .ph-k { display: block; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; font-weight: 800; margin-bottom: 4px; }
+  .more-link { margin-top: 28px; font-size: 15px; }
+
+  /* Booking card */
+  .card {
+    position: sticky; top: calc(var(--strip-h) + 20px);
+    background: #fff; border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 24px 48px -28px rgba(15, 29, 51, .35);
+    overflow: hidden;
+  }
+  .card-head { background: var(--navy); color: #fff; padding: 16px 22px 14px; }
+  .card-head .what { font-family: var(--display); font-weight: 800; font-size: 17px; letter-spacing: -.01em; }
+  .card-head .meta { font-size: 13.5px; color: #c6d2e5; }
+  .progress { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .progress li { font-size: 12.5px; font-weight: 600; color: #9fb0ca; }
+  .progress li::before { content: ""; display: block; height: 4px; border-radius: 2px; background: rgba(255,255,255,.18); margin-bottom: 6px; }
+  .progress li.done, .progress li.current { color: #fff; }
+  .progress li.done::before { background: #9fb0ca; }
+  .progress li.current::before { background: var(--orange); }
+  .card-body { padding: 22px; }
+  .step-title { font-size: 20px; font-weight: 800; }
+  .step-title:focus { outline: none; }
+  .step-title:focus-visible { outline: 3px solid var(--orange); }
+  .step-sub { margin-top: 4px; color: var(--muted); font-size: 14.5px; }
+
+  .field { margin-top: 16px; }
+  .field label, .q legend { display: block; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+  .field input[type=text], .field input[type=tel], .field input[type=email] {
+    width: 100%; height: 48px; padding: 10px 14px; font: 500 16px var(--body); color: var(--ink);
+    border: 1.5px solid #b9c3d1; border-radius: 8px; background: #fff;
+  }
+  .field input:focus-visible { outline: 3px solid var(--orange); outline-offset: 1px; border-color: var(--navy); }
+  .field input[aria-invalid=true] { border-color: var(--err); }
+  .err { margin-top: 6px; color: var(--err); font-size: 14px; font-weight: 600; }
+  .consent { margin-top: 16px; display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .consent input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--navy); }
+  .consent .opt { font-weight: 700; color: var(--ink); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 50px; padding: 12px 20px; border-radius: 8px; border: 0;
+    background: var(--orange-btn); color: #fff; font: 700 16px/1.2 var(--body);
+    text-decoration: none; cursor: pointer; transition: background-color .15s;
+  }
+  .btn:hover { background: var(--orange-btn-hover); }
+  .btn-block { width: 100%; margin-top: 20px; }
+  .btn-back { background: transparent; color: var(--navy); box-shadow: inset 0 0 0 1.5px #b9c3d1; padding-inline: 16px; }
+  .btn-back:hover { background: var(--navy-soft); }
+  .nav-row { display: grid; grid-template-columns: auto 1fr; gap: 10px; margin-top: 22px; }
+  .nav-row .btn { margin: 0; }
+  .fine { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
+
+  /* Questions */
+  .q { border: 0; margin: 0; padding: 18px 0 0; min-width: 0; }
+  .q + .q { border-top: 1px solid var(--line); margin-top: 18px; }
+  /* Float the legend so it sits inside the fieldset instead of on its border. */
+  .q legend { float: left; width: 100%; padding: 0; }
+  .q legend + * { clear: both; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span {
+    display: inline-flex; align-items: center; min-height: 42px; padding: 8px 14px; border-radius: 8px;
+    border: 1.5px solid #b9c3d1; font-weight: 600; font-size: 15px; background: #fff; cursor: pointer;
+    transition: background-color .12s, border-color .12s;
+  }
+  .chip input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .chip input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 2px; }
+  .q .field { margin-top: 0; }
+  .q .sublabel { display: block; font-size: 13.5px; font-weight: 600; color: var(--muted); margin: 10px 0 6px; }
+  .q .field .sublabel { margin-top: 0; }
+  .err-summary { margin-top: 16px; padding: 12px 14px; border-radius: 8px; background: #fdecea; color: var(--err); font-size: 14px; font-weight: 600; }
+  .err-summary:focus { outline: 3px solid var(--err); outline-offset: 2px; }
+
+  /* Result */
+  .result { border-radius: var(--radius); padding: 16px 16px 14px; margin-top: 14px; }
+  .result.dfy { background: var(--orange-tint); border: 1px solid #f0c39f; }
+  .result.dwy { background: var(--navy-soft); border: 1px solid #c8d3e4; }
+  .result .prog { font-size: 12.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+  .result h3 { font-size: 19px; font-weight: 800; margin-top: 2px; }
+  .result p { margin-top: 6px; font-size: 14.5px; }
+  .result .g-short { font-weight: 700; font-size: 15.5px; }
+  .elig { margin-top: 10px; display: grid; grid-template-columns: 20px 1fr; gap: 8px; font-size: 14.5px; font-weight: 600; padding: 10px 12px; border-radius: 8px; background: #fff; }
+  .elig.yes { color: var(--ok); }
+  .elig.no { color: #7a4a00; }
+  .elig svg { margin-top: 2px; }
+  .confirm-tag { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 700; color: #6b4a00; background: #fff1c2; padding: 1px 6px; border-radius: 4px; }
+  details.terms { margin-top: 10px; font-size: 13.5px; }
+  details.terms summary { cursor: pointer; font-weight: 700; color: var(--navy-2); }
+  details.terms .terms-body { margin-top: 8px; display: grid; gap: 8px; color: #26354d; line-height: 1.5; }
+
+  /* Completed parts collapse into a summary the visitor can reopen. */
+  .summary { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: 8px; background: var(--paper); border: 1px solid var(--line); font-size: 14.5px; }
+  .summary .sum-k { font-size: 12px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+  .summary .link-btn { margin-top: 0; white-space: nowrap; font-size: 14px; }
+  #contact-open, #pick { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+  #contact-sum { margin-top: 12px; }
+  .consent-note { margin-top: 8px; font-size: 12px; line-height: 1.4; color: #3d3300; background: #fff4b8; padding: 6px 8px; border-radius: 6px; }
+  .no-slots { margin-top: 10px; font-size: 14px; color: var(--muted); }
+
+  /* Calendar mock */
+  .cal { margin-top: 12px; border: 2px dashed #9aa8bc; border-radius: var(--radius); padding: 12px; }
+  .cal-label { font-size: 12.5px; font-weight: 700; color: #3d3300; background: #fff4b8; border-radius: 6px; padding: 8px 10px; line-height: 1.4; }
+  .cal-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px; margin: 12px 2px 8px; font-size: 14px; }
+  .cal-head strong { font-family: var(--display); font-weight: 800; }
+  .cal-head span { color: var(--muted); font-size: 13px; }
+  .days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .day {
+    display: grid; justify-items: center; gap: 0; padding: 8px 0; border-radius: 8px;
+    border: 1.5px solid var(--line); background: #fff; font: 600 12.5px/1.25 var(--body); color: var(--muted); cursor: pointer;
+  }
+  .day b { font: 800 18px/1.2 var(--display); color: var(--ink); }
+  .day[aria-pressed=true] { background: var(--navy); border-color: var(--navy); color: #c6d2e5; }
+  .day[aria-pressed=true] b { color: #fff; }
+  .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+  .slot {
+    min-height: 42px; border-radius: 8px; border: 1.5px solid var(--navy-2); background: #fff; color: var(--navy-2);
+    font: 700 14.5px var(--body); cursor: pointer; font-variant-numeric: tabular-nums;
+  }
+  .slot:hover { background: var(--navy-soft); }
+  .tz { margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+
+  .booked { text-align: left; }
+  .booked-mark { width: 52px; height: 52px; border-radius: 50%; background: var(--ok); display: grid; place-items: center; }
+  .booked h2 { margin-top: 14px; font-size: 24px; font-weight: 800; }
+  .booked-detail { margin-top: 14px; padding: 14px; border-radius: var(--radius); background: var(--ok-tint); border: 1px solid #b9dcc8; display: grid; gap: 4px; font-size: 15px; }
+  .booked-detail strong { font-size: 16px; }
+  .booked .next { margin-top: 16px; font-size: 14.5px; color: var(--muted); }
+  .booked .mock-note { margin-top: 12px; font-size: 12.5px; color: #3d3300; background: #fff4b8; border-radius: 6px; padding: 8px 10px; }
+  .link-btn { background: none; border: 0; padding: 0; font: 700 15px var(--body); color: var(--navy-2); text-decoration: underline; cursor: pointer; margin-top: 14px; }
+
+  footer { background: var(--ink); color: #b5c3d9; padding: 26px 0; font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
+  footer nav { display: flex; gap: 22px; }
+  footer a { color: #e3e9f3; }
+
+  @media (max-width: 960px) {
+    .page { padding: 18px 0 56px; }
+    .page .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "card" "info"; grid-template-rows: auto; }
+    .intro h1 { margin-top: 0; font-size: 24px; }
+    .intro .eyebrow { display: none; }
+    .card { position: static; margin-top: 14px; }
+    .info { margin-top: 8px; }
+    .info .promise { margin-top: 36px; font-size: 18px; }
+  }
+  @media (max-width: 600px) {
+    :root { --strip-h: 44px; }
+    .wrap { width: min(1160px, 100% - 24px); }
+    .mock-strip { flex-direction: column; gap: 1px; font-size: 12px; }
+    .site-head .wrap { height: 50px; }
+    .brand { font-size: 16px; }
+    .brand svg { width: 24px; height: 24px; }
+    .head-link { font-size: 14px; }
+    .page { padding-top: 14px; }
+    .card-head { padding: 12px 16px 12px; }
+    .card-body { padding: 16px 16px 20px; }
+    .field { margin-top: 12px; }
+    .steps-list li { grid-template-columns: 1fr; gap: 2px; }
+    .day { font-size: 11.5px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-strip" role="note">
+  <span>MOCK for review. Not a live page. Proof is placeholder.</span>
+  <b>Booking page · Option A</b>
+</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../offer-a/index.html" aria-label="EstimateFlows: how the program works">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#c4541a"/><path d="M7 9h14M7 14h9M7 19h12" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>
+      EstimateFlows
+    </a>
+    <a class="head-link" href="../offer-a/index.html">How it works</a>
+  </div>
+</header>
+
+<main class="page">
+  <div class="wrap">
+    <div class="intro">
+      <p class="eyebrow">Painting Pipeline Review · 30 min · video call</p>
+      <h1>Book your pipeline review</h1>
+    </div>
+
+    <div class="card-col">
+      <div class="card" id="booking">
+        <div class="card-head">
+          <p class="what">Painting Pipeline Review</p>
+          <p class="meta">30 minutes · video call · no obligation</p>
+          <ol class="progress" aria-label="Booking steps">
+            <li data-p="1" class="current" aria-current="step">Fit check</li>
+            <li data-p="2">Your details</li>
+            <li data-p="3">Pick a time</li>
+          </ol>
+        </div>
+
+        <div class="card-body">
+          <!-- Part 1: questions -->
+          <form id="fit" novalidate>
+            <div id="fit-open">
+              <h2 class="step-title" id="fit-title" tabindex="-1">Four quick questions</h2>
+              <p class="step-sub">One tap each. Your answers decide which program we show you.</p>
+              <div class="err-summary" id="q-summary" tabindex="-1" hidden></div>
+
+              <fieldset class="q" id="q-crews" aria-describedby="crews-err">
+                <legend>How many crews do you run right now?</legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="crews" value="solo" data-label="Just me"><span>Just me</span></label>
+                  <label class="chip"><input type="radio" name="crews" value="1" data-label="1 crew"><span>1 crew</span></label>
+                  <label class="chip"><input type="radio" name="crews" value="2-3" data-label="2–3 crews"><span>2–3 crews</span></label>
+                  <label class="chip"><input type="radio" name="crews" value="4+" data-label="4+ crews"><span>4+ crews</span></label>
+                </div>
+                <p class="err" id="crews-err" hidden></p>
+              </fieldset>
+
+              <fieldset class="q" id="q-area" aria-describedby="area-err radius-err">
+                <legend>Where do you work?</legend>
+                <div class="field">
+                  <label class="sublabel" for="area">City or ZIP</label>
+                  <input id="area" name="area" type="text" autocomplete="postal-code" placeholder="e.g. 30062 or Marietta, GA">
+                  <p class="err" id="area-err" hidden></p>
+                </div>
+                <span class="sublabel" id="radius-l">Radius</span>
+                <div class="chips" role="radiogroup" aria-labelledby="radius-l">
+                  <label class="chip"><input type="radio" name="radius" value="25" data-label="25 miles"><span>25 miles</span></label>
+                  <label class="chip"><input type="radio" name="radius" value="50" data-label="50 miles"><span>50 miles</span></label>
+                  <label class="chip"><input type="radio" name="radius" value="75+" data-label="75+ miles"><span>75+ miles</span></label>
+                </div>
+                <p class="err" id="radius-err" hidden></p>
+              </fieldset>
+
+              <fieldset class="q" id="q-budget" aria-describedby="budget-err">
+                <legend>What can you put into ads each month, paid to Meta directly?</legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="budget" value="lt1000" data-label="Under $1,000 a month"><span>Under $1,000</span></label>
+                  <label class="chip"><input type="radio" name="budget" value="1000-1999" data-label="$1,000–1,999 a month"><span>$1,000–1,999</span></label>
+                  <label class="chip"><input type="radio" name="budget" value="2000-4999" data-label="$2,000–4,999 a month"><span>$2,000–4,999</span></label>
+                  <label class="chip"><input type="radio" name="budget" value="5000+" data-label="$5,000+ a month"><span>$5,000+</span></label>
+                </div>
+                <p class="err" id="budget-err" hidden></p>
+              </fieldset>
+
+              <fieldset class="q" id="q-list" aria-describedby="list-err">
+                <legend>Do you have a list of past leads and customers?</legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="list" value="complete" data-label="complete past lead list"><span>Yes, complete</span></label>
+                  <label class="chip"><input type="radio" name="list" value="partial" data-label="partial past lead list"><span>Partial</span></label>
+                  <label class="chip"><input type="radio" name="list" value="none" data-label="no past lead list"><span>No</span></label>
+                </div>
+                <p class="err" id="list-err" hidden></p>
+              </fieldset>
+
+              <button class="btn btn-block" type="submit">Next: see your program</button>
+            </div>
+
+            <div class="summary" id="fit-sum" hidden>
+              <div><p class="sum-k">Your answers</p><p id="fit-sum-text"></p></div>
+              <button class="link-btn" type="button" data-go="fit">Change answers</button>
+            </div>
+          </form>
+
+          <!-- Routed result: shown as soon as the questions are answered -->
+          <div id="result" hidden>
+            <div class="result dfy" id="res-dfy" hidden>
+              <p class="prog">Your program</p>
+              <h3>Done-for-You</h3>
+              <p>We build it and run it. Your team runs the estimates.</p>
+              <p class="g-short">15 qualified attended estimate appointments in your first 30 days.</p>
+              <p class="terms-note">DFY guarantee. Conditions apply.</p>
+              <p class="elig yes" id="elig-yes" hidden><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1f7a4d"/><path d="M7 12.5l3.3 3.3L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>You're eligible for the DFY guarantee.</span></p>
+              <p class="elig no" id="elig-no" hidden><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#c47a00"/><path d="M12 6.5v7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.4" fill="#fff"/></svg><span>The guarantee needs your complete historical lead list before launch. Without it, DFY runs without the guarantee.</span></p>
+              <details class="terms">
+                <summary>Read the full guarantee and conditions</summary>
+                <div class="terms-body">
+                  <p>15 qualified attended estimate appointments in the first 30 days. Appointments generated through database reactivation count toward the same 15 if they meet the same qualification, attendance, and CRM-recording criteria. If EstimateFlows misses the target, it will continue work at no additional service fee for another 30 days; if the same 15-appointment target is still unmet at the end of that extension, refund all program fees and reimburse all client ad spend. This is not a guarantee of signed or completed painting jobs.</p>
+                  <p>Done-for-You only. Available only if you provide your complete historical lead list before campaign launch. Your side: at least $2,000 per month of ad spend paid to the advertising platform; the complete historical lead list before launch; at least 10 calls per week to eligible prior painting customers; reasonably open estimate capacity; keep your service areas and advertised work available; run and reschedule estimates in good faith and follow up on quotes; keep the approved response and booking operations active; give reasonable access, approvals, assets and timely creative review; capture before, mid-job and after photos or video for each job. Full terms are in your written agreement.</p>
+                  <p>A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p>
+                </div>
+              </details>
+            </div>
+
+            <div class="result dwy" id="res-dwy" hidden>
+              <p class="prog">Your program</p>
+              <h3>Done-with-You</h3>
+              <p>We build the system with you and coach your team to run it.</p>
+              <span class="confirm-tag">[Ali to confirm DWY wording]</span>
+              <p>On the call we'll look at your area, crews and budget, and map out what your team would run.</p>
+            </div>
+          </div>
+
+          <!-- Part 2: contact, before the calendar -->
+          <form id="contact" novalidate hidden>
+            <div id="contact-open">
+              <h2 class="step-title" id="contact-title" tabindex="-1">Where should we send your booking?</h2>
+              <p class="step-sub">Your details go straight into the calendar, so you only type them once.</p>
+              <div class="field">
+                <label for="fname">First name</label>
+                <input id="fname" name="fname" type="text" autocomplete="given-name" required aria-describedby="fname-err">
+                <p class="err" id="fname-err" hidden></p>
+              </div>
+              <div class="field">
+                <label for="phone">Mobile phone</label>
+                <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 010-0000" required aria-describedby="phone-err">
+                <p class="err" id="phone-err" hidden></p>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="hello@example.com" required aria-describedby="email-err">
+                <p class="err" id="email-err" hidden></p>
+              </div>
+              <label class="consent">
+                <input type="checkbox" id="sms" name="sms">
+                <span><span class="opt">Optional.</span> I agree to receive SMS about my booking and occasional marketing from EstimateFlows. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span>
+              </label>
+              <p class="consent-note">MOCK note: if Ali requires consent, this box becomes required here; booking itself never requires it.</p>
+              <div class="nav-row">
+                <button class="btn btn-back" type="button" data-go="fit">Back</button>
+                <button class="btn" type="submit">Next: pick a time</button>
+              </div>
+            </div>
+            <div class="summary" id="contact-sum" hidden>
+              <div><p class="sum-k">Booking as</p><p id="contact-sum-text"></p></div>
+              <button class="link-btn" type="button" data-go="contact">Change details</button>
+            </div>
+          </form>
+
+          <!-- Part 3: calendar -->
+          <section id="pick" hidden aria-labelledby="pick-title">
+            <h2 class="step-title" id="pick-title" tabindex="-1">Pick a time</h2>
+            <div id="cal-wrap">
+              <div class="cal">
+                <p class="cal-label">MOCK: the live GHL calendar (Painting Pipeline Review, 30 min) appears here, prefilled with your details</p>
+                <div class="cal-head"><strong>Times in the next 3 days</strong><span id="tz"></span></div>
+                <div class="days" id="days"></div>
+                <div class="slots" id="slots" aria-label="Available times"></div>
+              </div>
+              <div class="nav-row">
+                <button class="btn btn-back" type="button" data-go="contact">Back</button>
+                <span></span>
+              </div>
+            </div>
+
+            <div class="booked" id="booked" hidden>
+              <div class="booked-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <h2 tabindex="-1" id="booked-title">Booked</h2>
+              <div class="booked-detail">
+                <strong id="booked-when"></strong>
+                <span>Painting Pipeline Review · 30 minutes · video call</span>
+                <span id="booked-prog"></span>
+              </div>
+              <p class="next" id="booked-next"></p>
+              <p class="mock-note">MOCK: in the live page, the GHL calendar sends the confirmation and video link. Nothing was sent from this mock.</p>
+              <button class="link-btn" type="button" id="change-time">Pick a different time</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="info">
+      <div id="info-promise">
+        <p class="promise">See if your company can get <strong>15 qualified attended estimate appointments in your first 30 days</strong>.</p>
+        <p class="terms-note">DFY guarantee. Conditions apply. <a href="../offer-a/index.html#guarantee">Read the terms</a></p>
+      </div>
+
+      <div class="info-block">
+        <h2>What happens on the 30-minute review</h2>
+        <ol class="steps-list">
+          <li><span class="t">First 10 min</span><span><strong>Where your estimates come from today</strong><span class="d">Your ads, referrals and past customers, and where inquiries get lost between the first call and the estimate.</span></span></li>
+          <li><span class="t">Next 10 min</span><span><strong>Your area, crews, budget and lead list</strong><span class="d">We check them against Done-for-You and Done-with-You, using the answers you give here.</span></span></li>
+          <li><span class="t">Last 10 min</span><span><strong>Which program fits, and what happens next</strong><span class="d">For Done-for-You, whether the guarantee applies to you. You decide afterwards. No obligation.</span></span></li>
+        </ol>
+      </div>
+
+      <div class="info-block">
+        <h2>Who it's for</h2>
+        <ul class="ticks">
+          <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1f7a4d" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Owners of established residential painting companies in the US.</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1f7a4d" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Crews that can take more work, and an estimator with open time.</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1f7a4d" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>A list of past leads and customers, even a messy one.</span></li>
+          <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" stroke="#a33a2a" stroke-width="2.6" stroke-linecap="round"/></svg><span>Not for painters who are booked out for the next 30 days.</span></li>
+        </ul>
+      </div>
+
+      <div class="placeholder"><span class="ph-k">Placeholder</span>PLACEHOLDER: client result. Needs written client permission before use.</div>
+
+      <p class="more-link"><a href="../offer-a/index.html">How the program works, step by step</a></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 EstimateFlows</span>
+    <nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const state = { stage: 'fit', answers: {}, contact: {}, program: null, days: [], day: 0 };
+  const stageNum = { fit: 1, contact: 2, pick: 3 };
+  const focusFor = { fit: '#fit-title', contact: '#contact-title', pick: '#pick-title' };
+
+  // One surface: completed parts collapse to summaries, the current part stays open.
+  function go(stage) {
+    state.stage = stage;
+    const n = stageNum[stage];
+    $('#fit-open').hidden = n !== 1;
+    $('#fit-sum').hidden = n === 1;
+    $('#result').hidden = n === 1;
+    $('#contact').hidden = n === 1;
+    $('#contact-open').hidden = n !== 2;
+    $('#contact-sum').hidden = n !== 3;
+    $('#pick').hidden = n !== 3;
+    if (n === 3) { $('#booked').hidden = true; $('#cal-wrap').hidden = false; $('#pick-title').hidden = false; }
+    document.querySelectorAll('.progress li').forEach((li) => {
+      const p = Number(li.dataset.p);
+      li.classList.toggle('done', p < n);
+      li.classList.toggle('current', p === n);
+      if (p === n) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    const target = $(focusFor[stage]);
+    target.focus({ preventScroll: true });
+    revealTop(stage === 'contact' ? $('#result') : target);
+  }
+
+  // Scroll so the start of the new part sits just under the fixed mock strip.
+  function revealTop(el) {
+    const strip = $('.mock-strip').offsetHeight;
+    const top = el.getBoundingClientRect().top;
+    if (top < strip + 8 || top > window.innerHeight * 0.6) window.scrollTo({ top: window.scrollY + top - strip - 12 });
+  }
+
+  function setErr(id, msg, input) {
+    const el = $('#' + id);
+    el.textContent = msg || '';
+    el.hidden = !msg;
+    if (input) input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  }
+
+  // Part 1: questions
+  const picked = (name) => document.querySelector(`input[name="${name}"]:checked`);
+  $('#fit').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const area = $('#area').value.trim();
+    const checks = [
+      ['crews-err', picked('crews') ? '' : 'Choose how many crews you run.'],
+      ['area-err', area ? '' : 'Enter the city or ZIP you work from.', $('#area')],
+      ['radius-err', picked('radius') ? '' : 'Choose how far you travel: 25, 50 or 75+ miles.'],
+      ['budget-err', picked('budget') ? '' : 'Choose a monthly ad budget.'],
+      ['list-err', picked('list') ? '' : 'Choose whether you have a list of past leads and customers.'],
+    ];
+    checks.forEach(([id, msg, input]) => setErr(id, msg, input));
+    const bad = checks.filter(([, msg]) => msg);
+    const summary = $('#q-summary');
+    if (bad.length) {
+      summary.textContent = bad.length === 1 ? 'One answer missing: ' + bad[0][1] : bad.length + ' answers missing. Each one is marked below.';
+      summary.hidden = false;
+      summary.focus();
+      return;
+    }
+    summary.hidden = true;
+    const a = { crews: picked('crews').value, budget: picked('budget').value, list: picked('list').value };
+    state.answers = a;
+    $('#fit-sum-text').textContent = [picked('crews').dataset.label, `${area}, ${picked('radius').dataset.label}`, picked('budget').dataset.label, picked('list').dataset.label].join(' · ');
+    const bigCrew = a.crews === '2-3' || a.crews === '4+';
+    const bigBudget = a.budget === '2000-4999' || a.budget === '5000+';
+    state.program = bigCrew && bigBudget ? 'dfy' : 'dwy';
+    const dfy = state.program === 'dfy';
+    $('#res-dfy').hidden = !dfy;
+    $('#res-dwy').hidden = dfy;
+    $('#elig-yes').hidden = !(dfy && a.list === 'complete');
+    $('#elig-no').hidden = !(dfy && a.list !== 'complete');
+    // Done-with-You visitors don't see the guarantee anywhere once routed.
+    $('#info-promise').hidden = !dfy;
+    go('contact');
+  });
+
+  document.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => go(b.dataset.go)));
+
+  // Part 2: contact
+  $('#contact').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fname = $('#fname'), phone = $('#phone'), email = $('#email');
+    const digits = phone.value.replace(/\D/g, '');
+    const phoneOk = digits.length === 10 || (digits.length === 11 && digits[0] === '1');
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
+    const errs = [
+      ['fname-err', fname.value.trim() ? '' : 'Enter your first name.', fname],
+      ['phone-err', !digits.length ? 'Enter your mobile number.' : phoneOk ? '' : 'Enter a 10-digit US mobile number, like (555) 010-0000.', phone],
+      ['email-err', !email.value.trim() ? 'Enter your email address.' : emailOk ? '' : 'Enter an email like name@company.com.', email],
+    ];
+    errs.forEach(([id, msg, input]) => setErr(id, msg, input));
+    const firstBad = errs.find(([, msg]) => msg);
+    if (firstBad) { firstBad[2].focus(); return; }
+    state.contact = { fname: fname.value.trim(), phone: phone.value.trim(), email: email.value.trim(), sms: $('#sms').checked };
+    // Non-breaking hyphen keeps the phone number on one line in the summary.
+    $('#contact-sum-text').textContent = `${state.contact.fname} · ${state.contact.email} · ${state.contact.phone.replace(/-/g, '\u2011')}`;
+    buildDays();
+    go('pick');
+  });
+
+  // Part 3: calendar. Mock availability: weekdays, 9 am to 5 pm local, inside the next 72 hours.
+  // US audience: always show US-style dates and 12-hour times, in the visitor's own time zone.
+  const dayFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
+  const longFmt = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  const timeFmt = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' });
+  const tzName = Intl.DateTimeFormat().resolvedOptions().timeZone || 'your time zone';
+  $('#tz').textContent = 'Your time zone: ' + tzName.replace(/_/g, ' ');
+
+  function buildDays() {
+    const now = new Date();
+    const earliest = now.getTime() + 60 * 60 * 1000;
+    const end = now.getTime() + 72 * 60 * 60 * 1000;
+    const pattern = [[9, 0], [10, 30], [11, 30], [13, 0], [14, 30], [16, 0], [16, 30]];
+    state.days = [];
+    for (let d = 0; d <= 3; d++) {
+      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() + d);
+      if (date.getDay() === 0 || date.getDay() === 6) continue;
+      const slots = pattern
+        .filter((_, i) => (i + date.getDate()) % 2 === 0)
+        .map(([h, m]) => new Date(date.getFullYear(), date.getMonth(), date.getDate(), h, m))
+        .filter((t) => t.getTime() >= earliest && t.getTime() <= end);
+      if (slots.length) state.days.push({ date, slots });
+    }
+    state.day = 0;
+    renderDays();
+  }
+
+  function renderDays() {
+    const wrap = $('#days');
+    const slotsEl = $('#slots');
+    wrap.innerHTML = '';
+    slotsEl.innerHTML = '';
+    if (!state.days.length) {
+      const p = document.createElement('p');
+      p.className = 'no-slots';
+      p.textContent = 'No open times in the next 3 days. We have your details and will call to book.';
+      slotsEl.append(p);
+      return;
+    }
+    wrap.style.gridTemplateColumns = `repeat(${Math.max(state.days.length, 3)}, 1fr)`;
+    state.days.forEach((d, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'day';
+      b.setAttribute('aria-pressed', String(i === state.day));
+      b.setAttribute('aria-label', longFmt.format(d.date));
+      b.innerHTML = `<span>${dayFmt.format(d.date)}</span><b>${d.date.getDate()}</b>`;
+      b.addEventListener('click', () => { state.day = i; renderDays(); wrap.children[i].focus(); });
+      wrap.append(b);
+    });
+    state.days[state.day].slots.forEach((t) => {
+      const s = document.createElement('button');
+      s.type = 'button';
+      s.className = 'slot';
+      s.textContent = timeFmt.format(t);
+      s.setAttribute('aria-label', `Book ${longFmt.format(t)} at ${timeFmt.format(t)}`);
+      s.addEventListener('click', () => book(t));
+      slotsEl.append(s);
+    });
+  }
+
+  function book(t) {
+    $('#booked-when').textContent = `${longFmt.format(t)}, ${timeFmt.format(t)}`;
+    $('#booked-prog').textContent = state.program === 'dfy' ? 'Program to discuss: Done-for-You' : 'Program to discuss: Done-with-You';
+    $('#booked-next').textContent = `${state.contact.fname}, your confirmation and video link go to ${state.contact.email}. Keep your past lead list handy for the call if you have one.`;
+    $('#cal-wrap').hidden = true;
+    $('#pick-title').hidden = true;
+    $('#booked').hidden = false;
+    document.querySelectorAll('.progress li').forEach((li) => li.classList.add('done'));
+    $('#booked-title').focus();
+  }
+
+  $('#change-time').addEventListener('click', () => {
+    $('#booked').hidden = true;
+    $('#cal-wrap').hidden = false;
+    $('#pick-title').hidden = false;
+    $('.progress li[data-p="3"]').classList.remove('done');
+    $('#days button[aria-pressed=true]').focus();
+  });
+
+  // Clear a question's error as soon as it's answered.
+  $('#fit').addEventListener('change', (e) => {
+    if (e.target.type === 'radio') setErr(e.target.name + '-err', '');
+  });
+  $('#area').addEventListener('input', () => { if ($('#area').value.trim()) setErr('area-err', '', $('#area')); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MOCK · EstimateFlows offer page · Option B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Kalam:wght@400;700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primer: #E3E5DF;
+    --paper: #FDFDFB;
+    --ink: #22262A;
+    --ink-2: #50575D;
+    --form: #2E6A4E;
+    --form-soft: #D4E4D9;
+    --form-rule: #C9DACF;
+    --tape: #74B6E6;
+    --tape-dark: #4E95C9;
+    --canary: #FBEB93;
+    --canary-edge: #DCC65A;
+    --pencil: #B1442F;
+    --cta: #1F5A40;
+    --cta-hover: #153F2D;
+    --chip-1: #DDECE1;
+    --chip-2: #B4D3BE;
+    --chip-3: #7FB290;
+    --chip-4: #4C8C66;
+    --chip-5: #1F5A40;
+    --strip-h: 36px;
+    --label: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --hand: "Kalam", "Comic Sans MS", cursive;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--strip-h) + 16px); }
+  body {
+    margin: 0;
+    padding-top: var(--strip-h);
+    background: var(--primer);
+    color: var(--ink);
+    font: 400 18px/1.65 "Public Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--form); text-underline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--tape-dark); outline-offset: 3px; border-radius: 2px; }
+
+  /* Mock strip */
+  .mock-strip {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    min-height: var(--strip-h);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 14px;
+    padding: 6px 16px;
+    background: var(--ink); color: #fff;
+    font: 600 13px/1.3 "Public Sans", sans-serif; text-align: center;
+  }
+  .mock-strip b { font-family: var(--label); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--canary); }
+
+  /* Top bar */
+  .topbar {
+    max-width: 1120px; margin: 0 auto; padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 700 24px/1 var(--label); letter-spacing: .01em; }
+  .brand-chip { display: grid; grid-template-rows: repeat(3, 7px); width: 18px; border-radius: 2px; overflow: hidden; }
+  .brand-chip i:nth-child(1) { background: var(--chip-2); }
+  .brand-chip i:nth-child(2) { background: var(--chip-4); }
+  .brand-chip i:nth-child(3) { background: var(--chip-5); }
+  .topbar-link { font: 600 18px/1 var(--label); letter-spacing: .04em; text-transform: uppercase; color: var(--cta); text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+  .topbar-link:hover { color: var(--cta-hover); }
+
+  /* The letter sheet */
+  .sheet-wrap { position: relative; max-width: 780px; margin: 8px auto 64px; padding: 0 16px; }
+  .sheet {
+    position: relative;
+    background: var(--paper);
+    padding: 56px 50px 64px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.06), 0 18px 40px -24px rgba(34,38,42,.35);
+  }
+  .tape {
+    position: absolute; top: -14px; width: 132px; height: 30px;
+    background: var(--tape); opacity: .9;
+    clip-path: polygon(0 8%, 4% 0, 9% 10%, 14% 2%, 100% 0, 97% 30%, 100% 55%, 96% 78%, 100% 100%, 0 100%, 3% 70%, 0 45%);
+  }
+  .tape.l { left: 28px; transform: rotate(-3deg); }
+  .tape.r { right: 28px; transform: rotate(2.5deg); }
+  .letter { max-width: 680px; margin: 0 auto; }
+
+  /* Estimate-sheet header block */
+  .form-head { border: 2px solid var(--form); margin-bottom: 40px; }
+  .form-head-title { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; background: var(--form); color: #fff; padding: 6px 12px; font: 600 15px/1.2 var(--label); letter-spacing: .08em; text-transform: uppercase; }
+  .form-row { display: grid; grid-template-columns: 74px 1fr; border-top: 1px solid var(--form-rule); }
+  .form-row:first-of-type { border-top: 0; }
+  .form-row dt { padding: 9px 12px; font: 600 14px/1.4 var(--label); letter-spacing: .08em; text-transform: uppercase; color: var(--form); border-right: 1px solid var(--form-rule); }
+  .form-row dd { margin: 0; padding: 7px 12px; font: 400 21px/1.35 var(--hand); color: #24408F; }
+  .form-head dl { margin: 0; }
+
+  h1 {
+    font: 700 clamp(40px, 7.4vw, 62px)/1.02 var(--label);
+    letter-spacing: -.005em; margin: 0 0 22px;
+  }
+  .pencil-mark {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M3 9 C 40 4, 80 12, 120 7 S 180 5, 197 8' fill='none' stroke='%23B1442F' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M10 12 C 60 9, 120 13, 190 10' fill='none' stroke='%23B1442F' stroke-width='1.6' stroke-linecap='round' opacity='.7'/%3E%3C/svg%3E") no-repeat left bottom / 100% 14px;
+    padding-bottom: 6px;
+  }
+  .promise { font-size: 21px; line-height: 1.55; margin: 0 0 10px; }
+  .promise strong { font-weight: 700; }
+  .cond-note { display: inline-block; font: 600 15px/1.3 var(--label); letter-spacing: .06em; text-transform: uppercase; color: var(--form); background: var(--form-soft); padding: 4px 8px; margin: 0 0 30px; }
+  .cond-note a { color: inherit; }
+
+  .letter p { margin: 0 0 1.05em; }
+  .salute { font-weight: 600; }
+
+  /* CTA */
+  .cta-block { margin: 34px 0 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    min-height: 56px; padding: 14px 26px;
+    background: var(--cta); color: #fff; text-decoration: none;
+    font: 700 22px/1 var(--label); letter-spacing: .03em;
+    border-radius: 3px; box-shadow: 0 3px 0 #0E2E20;
+    transition: background-color .15s ease, transform .15s ease;
+  }
+  .cta:hover { background: var(--cta-hover); }
+  .cta:active { transform: translateY(2px); box-shadow: 0 1px 0 #0E2E20; }
+  .cta svg { flex: none; }
+  .cta-meta { font-size: 15px; color: var(--ink-2); }
+
+  /* Masking-tape section labels */
+  .section { margin-top: 64px; }
+  .tape-label {
+    display: inline-block; position: relative;
+    padding: 4px 16px 3px; margin: 0 0 14px -6px;
+    background: #F1E7C2; color: #2B2B26;
+    font: 700 19px/1.2 var(--hand);
+    transform: rotate(-1.2deg);
+    clip-path: polygon(0 6%, 3% 0, 97% 4%, 100% 0, 98% 50%, 100% 100%, 3% 96%, 0 100%, 2% 50%);
+  }
+  h2 { font: 700 clamp(30px, 5vw, 40px)/1.08 var(--label); margin: 0 0 18px; }
+  h3 { font: 700 26px/1.15 var(--label); margin: 0; }
+
+  /* Pillars as estimate line items */
+  .leak { margin: 34px 0 0; border: 2px solid var(--form); background: #fff; }
+  .leak-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; padding: 12px 16px; border-bottom: 2px solid var(--form); background: var(--form-soft); }
+  .leak-head small { font: 600 14px/1.2 var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--form); }
+  .leak dl { margin: 0; }
+  .leak-row { display: grid; grid-template-columns: 150px 1fr; border-top: 1px solid var(--form-rule); }
+  .leak-row:first-child { border-top: 0; }
+  .leak-row dt { padding: 12px 14px; font: 600 15px/1.35 var(--label); letter-spacing: .07em; text-transform: uppercase; color: var(--form); border-right: 1px solid var(--form-rule); }
+  .leak-row dd { margin: 0; padding: 11px 16px; font-size: 17px; line-height: 1.55; }
+  .leak-row.cost dd { color: var(--pencil); font-weight: 600; }
+  .leak-row.instead { background: #F4F9F5; }
+  .leak-row.instead dt, .leak-row.benefit dt { color: var(--cta); }
+  .leak-row.benefit dd { font-weight: 700; }
+
+  /* Illustration: text thread */
+  .illus { margin: 22px 0 6px; border: 1.5px dashed var(--ink-2); padding: 14px 14px 16px; background: var(--paper); }
+  .illus-tag { display: inline-block; font: 700 13px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; background: var(--ink); color: #fff; padding: 4px 7px; margin-bottom: 12px; }
+  .thread { max-width: 360px; display: grid; gap: 8px; font-size: 15px; line-height: 1.4; }
+  .thread .sys { justify-self: center; font-size: 12.5px; color: var(--ink-2); }
+  .bubble { padding: 9px 12px; border-radius: 14px; max-width: 86%; }
+  .bubble.out { justify-self: end; background: var(--cta); color: #fff; border-bottom-right-radius: 4px; }
+  .bubble.in { justify-self: start; background: #E7EAE6; border-bottom-left-radius: 4px; }
+  .bubble time { display: block; font-size: 11.5px; opacity: .75; margin-top: 2px; }
+
+  /* Proof placeholder */
+  .placeholder {
+    margin: 36px 0; padding: 22px 20px;
+    border: 2px dashed #9AA19B; background: repeating-linear-gradient(-45deg, #F5F6F3 0 12px, #EEF0EC 12px 24px);
+    font: 700 17px/1.4 var(--label); letter-spacing: .04em; text-transform: uppercase; color: #474D52; text-align: center;
+  }
+
+  /* Delivery list */
+  .steps { list-style: none; margin: 8px 0 0; padding: 0; counter-reset: step; }
+  .steps li { position: relative; padding: 0 0 22px 58px; counter-increment: step; }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 0; top: 0;
+    width: 38px; height: 38px; display: grid; place-items: center;
+    border: 2px solid var(--form); color: var(--form); border-radius: 50%;
+    font: 700 20px/1 var(--label);
+  }
+  .steps li::after { content: ""; position: absolute; left: 19px; top: 42px; bottom: 4px; border-left: 2px dotted var(--form-rule); }
+  .steps li:last-child::after { display: none; }
+  .steps strong { display: block; font: 700 22px/1.25 var(--label); margin: 4px 0 4px; }
+
+  /* Two programs as paint chips */
+  .programs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px; }
+  .chip-card { background: #fff; border: 1px solid #CDD2CC; box-shadow: 0 10px 24px -20px rgba(0,0,0,.5); display: flex; flex-direction: column; }
+  .chip-swatch { height: 86px; padding: 12px 14px; display: flex; align-items: flex-end; color: #fff; font: 700 28px/1 var(--label); }
+  .chip-card.dfy .chip-swatch { background: var(--chip-5); }
+  .chip-card.dwy .chip-swatch { background: var(--chip-3); color: #0F2A1E; }
+  .chip-body { padding: 14px 16px 18px; font-size: 16px; line-height: 1.5; flex: 1; }
+  .chip-body p { margin: 0 0 12px; }
+  .chip-body dl { margin: 0; display: grid; gap: 10px; }
+  .chip-body dt { font: 600 13px/1.2 var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--form); }
+  .chip-body dd { margin: 2px 0 0; }
+  .confirm { display: inline-block; font: 400 15px/1.3 var(--hand); color: var(--pencil); }
+
+  /* Terms card: canary carbon copy */
+  .terms {
+    position: relative; margin: 26px 0 8px;
+    background: var(--canary); border: 1px solid var(--canary-edge);
+    padding: 26px 24px 22px;
+    box-shadow: 0 12px 28px -22px rgba(0,0,0,.55);
+  }
+  .terms::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px;
+    background: radial-gradient(circle at 6px 0, var(--paper) 3px, transparent 3.5px) 0 0 / 12px 8px repeat-x;
+  }
+  .terms-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; border-bottom: 2px solid #3B3720; padding-bottom: 8px; margin-bottom: 16px; }
+  .terms-head h3 { font-size: 28px; }
+  .terms-head span { font: 600 13px/1.2 var(--label); letter-spacing: .12em; text-transform: uppercase; color: #5E5628; }
+  .terms h4 { font: 700 14px/1.2 var(--label); letter-spacing: .12em; text-transform: uppercase; color: #5E5628; margin: 18px 0 6px; }
+  .terms h4:first-of-type { margin-top: 0; }
+  .terms p { font-size: 16.5px; line-height: 1.6; margin: 0; color: #24231A; }
+  .terms .lead-term { font-size: 18px; font-weight: 600; }
+
+  /* Fit */
+  .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 16px; }
+  .fit h3 { font-size: 23px; margin-bottom: 10px; }
+  .fit ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; font-size: 16.5px; line-height: 1.5; }
+  .fit li { position: relative; padding-left: 30px; }
+  .fit li::before { position: absolute; left: 2px; top: -3px; font: 700 23px/1 var(--hand); }
+  .fit .yes li::before { content: "✓"; color: var(--cta); }
+  .fit .no li::before { content: "✗"; color: var(--pencil); }
+
+  /* FAQ */
+  .faq { margin-top: 12px; border-top: 2px solid var(--ink); }
+  .faq details { border-bottom: 1px solid #CDD2CC; }
+  .faq summary {
+    list-style: none; cursor: pointer; padding: 16px 40px 16px 0; position: relative;
+    font: 700 22px/1.25 var(--label);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; position: absolute; right: 6px; top: 12px; font: 700 28px/1 var(--label); color: var(--form); }
+  .faq details[open] summary::after { content: "−"; }
+  .faq details > div { padding: 0 0 18px; font-size: 17px; }
+  .faq details > div p { margin: 0 0 10px; }
+
+  .ps { margin-top: 48px; padding-top: 22px; border-top: 1px dashed #B9BFB8; }
+  .sign { font: 400 30px/1 var(--hand); color: #24408F; margin: 18px 0 2px; }
+
+  /* Margin notes (wide screens only) */
+  .margin-note { display: none; }
+  @media (min-width: 1180px) {
+    .margin-note {
+      display: block; position: absolute; left: calc(100% + 26px); width: 170px;
+      font: 400 18px/1.3 var(--hand); color: var(--pencil); transform: rotate(-2deg);
+    }
+    .margin-note::before { content: "← "; }
+    .anchor { position: relative; }
+  }
+
+  footer { max-width: 780px; margin: 0 auto; padding: 0 24px 48px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-size: 14px; color: var(--ink-2); }
+  footer nav { display: flex; gap: 18px; }
+  footer a { color: var(--ink-2); }
+
+  @media (max-width: 720px) {
+    :root { --strip-h: 54px; }
+    body { font-size: 17px; }
+    .topbar { padding: 14px 18px; }
+    .sheet-wrap { padding: 0 8px; }
+    .sheet { padding: 40px 20px 44px; }
+    .tape { width: 92px; height: 24px; }
+    .form-head-title { font-size: 13px; }
+    .promise { font-size: 19px; }
+    .leak-row { grid-template-columns: 1fr; }
+    .leak-row dt { border-right: 0; padding: 10px 14px 0; font-size: 14px; }
+    .leak-row dd { padding: 2px 14px 12px; }
+    .programs, .fit { grid-template-columns: 1fr; }
+    .terms { padding: 24px 16px 18px; }
+    .cta { width: 100%; justify-content: center; font-size: 21px; }
+    .cta-block { gap: 8px; }
+    .cta-meta { width: 100%; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-strip" role="note">
+  <span>MOCK for review. Not a live page. Proof is placeholder.</span>
+  <b>Offer page · Option B</b>
+</div>
+
+<header class="topbar">
+  <a class="brand" href="#top" aria-label="EstimateFlows, back to top"><span class="brand-chip" aria-hidden="true"><i></i><i></i><i></i></span>EstimateFlows</a>
+  <a class="topbar-link" href="../booking-b/index.html">Book a pipeline review</a>
+</header>
+
+<main id="top" class="sheet-wrap">
+  <article class="sheet">
+    <span class="tape l" aria-hidden="true"></span>
+    <span class="tape r" aria-hidden="true"></span>
+    <div class="letter">
+
+      <section class="form-head" aria-label="Letter details">
+        <div class="form-head-title"><span>Owner to owner</span><span>A letter, not a brochure</span></div>
+        <dl>
+          <div class="form-row"><dt>To</dt><dd>The owner of a painting company</dd></div>
+          <div class="form-row"><dt>From</dt><dd>EstimateFlows</dd></div>
+          <div class="form-row"><dt>Re</dt><dd>The estimates you already paid for</dd></div>
+        </dl>
+      </section>
+
+      <h1>More leads won't fix a pipeline that <span class="pencil-mark">loses</span> them.</h1>
+
+      <p class="promise">We fix the path from ad to attended estimate: the ads, the first reply, the qualifying questions and the reminders. On Done-for-You we run all of it, and the target is <strong>15 qualified attended estimate appointments in your first 30 days.</strong></p>
+      <p class="cond-note">DFY guarantee. Conditions apply. <a href="#terms">Read the terms</a></p>
+
+      <p class="salute">If you've bought leads before, you know how it goes.</p>
+      <p>The phone rings while you're up a ladder. A form comes in at 8 pm and nobody sees it until morning. Someone books an estimate, then doesn't answer the door. Your estimator drives across town to price one bedroom.</p>
+      <p>None of that is a lead problem. It's what happens between the lead and the estimate. Buy more leads into the same gaps and you lose more of them, at a higher price.</p>
+      <p>So this letter isn't about getting you more leads. It covers the four places a painting pipeline usually leaks, what each one costs you, and what we do instead. At the end there's a link to book a 30-minute review of your own pipeline.</p>
+
+      <div class="cta-block">
+        <a class="cta" href="../booking-b/index.html">Book your pipeline review
+          <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M1 8h18M13 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <span class="cta-meta">30 minutes. Video call. No obligation.</span>
+      </div>
+
+      <section class="section" aria-labelledby="leaks-h">
+        <span class="tape-label">the 4 leaks</span>
+        <h2 id="leaks-h" class="anchor">Where the pipeline loses homeowners<span class="margin-note" aria-hidden="true">in the order a lead hits them</span></h2>
+        <p>A homeowner passes four points on the way to an estimate: they see an ad, they reach out, they get booked, and they show up. Here's what usually goes wrong at each one.</p>
+
+        <article class="leak" aria-labelledby="leak1">
+          <div class="leak-head"><h3 id="leak1">Service-Area Demand Capture</h3><small>Leak 1 of 4 · the ad</small></div>
+          <dl>
+            <div class="leak-row"><dt>Most painters</dt><dd>Run broad "painters near me" ads or buy shared leads, and forget the customers they already have.</dd></div>
+            <div class="leak-row"><dt>Why it hurts</dt><dd>Broad ads pull in small touch-ups, far-off addresses and price shoppers. Shared leads get called by three other painters. Old estimates and past customers sit in a spreadsheet nobody opens.</dd></div>
+            <div class="leak-row cost"><dt>What it costs you</dt><dd>Ad money spent on homeowners you'd never quote, and repeat work going to whoever reached them last.</dd></div>
+            <div class="leak-row instead"><dt>What we do instead</dt><dd>Meta ads built around the project types that make you money, in the neighbourhoods you want to work. And we reactivate your own list of past leads and customers, people who already know your name.</dd></div>
+            <div class="leak-row benefit"><dt>So you can</dt><dd>Fill the calendar with the work you want, close to home.</dd></div>
+          </dl>
+        </article>
+
+        <article class="leak" aria-labelledby="leak2">
+          <div class="leak-head"><h3 id="leak2">Instant Inquiry Response</h3><small>Leak 2 of 4 · the first reply</small></div>
+          <dl>
+            <div class="leak-row"><dt>Most painters</dt><dd>Call back when they get off the ladder, or the next morning.</dd></div>
+            <div class="leak-row"><dt>Why it hurts</dt><dd>A homeowner who fills out a form is often asking more than one painter. The one who answers first usually gets the conversation.</dd></div>
+            <div class="leak-row cost"><dt>What it costs you</dt><dd>You paid for the lead, then handed it to the painter who replied faster.</dd></div>
+            <div class="leak-row instead"><dt>What we do instead</dt><dd>New calls and form inquiries get a fast reply, including evenings and weekends. Miss a call and the homeowner gets a text back.</dd></div>
+            <div class="leak-row benefit"><dt>So you can</dt><dd>Stay on site without letting the lead go cold.</dd></div>
+          </dl>
+          <div class="illus" role="group" aria-label="Illustration of a missed-call text-back">
+            <span class="illus-tag">Illustration</span>
+            <div class="thread">
+              <span class="sys">Missed call · Thu 7:42 pm</span>
+              <div class="bubble out">Hi, this is [your company]. Sorry we missed your call. Is this for interior or exterior painting?<time>7:43 pm</time></div>
+              <div class="bubble in">Exterior. Two-story house, needs it before spring.<time>7:51 pm</time></div>
+              <div class="bubble out">Got it. What's the address, and is any day next week good for an estimate?<time>7:52 pm</time></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="leak" aria-labelledby="leak3">
+          <div class="leak-head"><h3 id="leak3">Job Qualification &amp; Routing</h3><small>Leak 3 of 4 · the booking</small></div>
+          <dl>
+            <div class="leak-row"><dt>Most painters</dt><dd>Book every estimate that asks, then find out the details in the driveway.</dd></div>
+            <div class="leak-row"><dt>Why it hurts</dt><dd>Without scope, address and timing up front, your estimator drives to projects that are too small, too far away or a year out.</dd></div>
+            <div class="leak-row cost"><dt>What it costs you</dt><dd>An afternoon of estimating time on a quote that was never going to sign.</dd></div>
+            <div class="leak-row instead"><dt>What we do instead</dt><dd>We collect scope, address, timing and fit before the appointment is set. It lands on your calendar only when it matches the work you do.</dd></div>
+            <div class="leak-row benefit"><dt>So you can</dt><dd>Send your estimator to homes worth the drive.</dd></div>
+          </dl>
+        </article>
+
+        <article class="leak" aria-labelledby="leak4">
+          <div class="leak-head"><h3 id="leak4">Confirmation &amp; Recovery</h3><small>Leak 4 of 4 · the visit</small></div>
+          <dl>
+            <div class="leak-row"><dt>Most painters</dt><dd>Book the estimate and hope the homeowner is home.</dd></div>
+            <div class="leak-row"><dt>Why it hurts</dt><dd>People forget, reschedule or go quiet. Nobody chases them, because everyone is busy painting.</dd></div>
+            <div class="leak-row cost"><dt>What it costs you</dt><dd>Empty driveways, and homeowners who were interested but never got booked.</dd></div>
+            <div class="leak-row instead"><dt>What we do instead</dt><dd>We confirm and remind every appointment, follow up no-shows to rebook them, and keep following up with homeowners who didn't book.</dd></div>
+            <div class="leak-row benefit"><dt>So you can</dt><dd>Knock on doors that open.</dd></div>
+          </dl>
+        </article>
+
+        <div class="placeholder" role="note">PLACEHOLDER: client result. Needs written client permission before use.</div>
+
+        <div class="cta-block">
+          <a class="cta" href="../booking-b/index.html">See where your pipeline leaks
+            <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M1 8h18M13 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <span class="cta-meta">Book a 30-minute pipeline review.</span>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="how-h">
+        <span class="tape-label">how it runs</span>
+        <h2 id="how-h">What happens after you say yes</h2>
+        <ol class="steps">
+          <li><strong>Pipeline review</strong>A 30-minute video call. We look at your service area, crews, ad budget and past lead list, and tell you which program fits. No obligation.</li>
+          <li><strong>Setup</strong>We build the ads, the reply and qualifying steps, and the reminders around your service area and project types. You send your historical lead list and approve the ads.</li>
+          <li><strong>Launch</strong>The ads go live and we start reaching out to your past leads and customers.</li>
+          <li><strong>Running</strong>Appointments land on your calendar with scope, address and timing attached. You run the estimates and follow up on quotes. We keep the pipeline moving.</li>
+        </ol>
+      </section>
+
+      <section class="section" aria-labelledby="prog-h">
+        <span class="tape-label">two programs</span>
+        <h2 id="prog-h">Done-for-You or Done-with-You</h2>
+        <p>Same four fixes. The difference is who runs them day to day, and only Done-for-You carries the guarantee.</p>
+        <div class="programs">
+          <article class="chip-card dfy" aria-labelledby="dfy-h">
+            <div class="chip-swatch"><h3 id="dfy-h">Done-for-You</h3></div>
+            <div class="chip-body">
+              <p>We build the system and run it for you: ads, replies, qualifying, confirmations and follow-up.</p>
+              <dl>
+                <div><dt>Guarantee</dt><dd>Yes. 15 qualified attended estimate appointments in your first 30 days. Conditions apply.</dd></div>
+                <div><dt>Your side</dt><dd>At least $2,000 a month in ad spend paid to Meta, your complete historical lead list before launch, and open estimate capacity.</dd></div>
+                <div><dt>Usually fits</dt><dd>Companies running 2 or more crews.</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="chip-card dwy" aria-labelledby="dwy-h">
+            <div class="chip-swatch"><h3 id="dwy-h">Done-with-You</h3></div>
+            <div class="chip-body">
+              <p>We build the system with you and coach your team to run it. <span class="confirm">[Ali to confirm DWY wording]</span></p>
+              <dl>
+                <div><dt>Guarantee</dt><dd>No appointment guarantee.</dd></div>
+                <div><dt>Your side</dt><dd>Someone on your team runs the replies, booking and follow-up each day.</dd></div>
+                <div><dt>Usually fits</dt><dd>Smaller teams or ad budgets, or owners who want their own staff running it.</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section anchor" id="terms" aria-labelledby="terms-h">
+        <span class="tape-label">the terms</span>
+        <h2 id="terms-h">The guarantee, in full</h2>
+        <p>Here it is word for word, conditions included. Your written agreement is what counts.</p>
+        <div class="terms">
+          <span class="margin-note" aria-hidden="true" style="top: 40px;">the whole thing, word for word</span>
+          <div class="terms-head"><h3>Done-for-You guarantee</h3><span>Customer copy</span></div>
+          <h4>What we commit to</h4>
+          <p class="lead-term">15 qualified attended estimate appointments in the first 30 days. Appointments generated through database reactivation count toward the same 15 if they meet the same qualification, attendance, and CRM-recording criteria. If EstimateFlows misses the target, it will continue work at no additional service fee for another 30 days; if the same 15-appointment target is still unmet at the end of that extension, refund all program fees and reimburse all client ad spend. This is not a guarantee of signed or completed painting jobs.</p>
+          <h4>Conditions</h4>
+          <p>Done-for-You only. Available only if you provide your complete historical lead list before campaign launch. Your side: at least $2,000 per month of ad spend paid to the advertising platform; the complete historical lead list before launch; at least 10 calls per week to eligible prior painting customers; reasonably open estimate capacity; keep your service areas and advertised work available; run and reschedule estimates in good faith and follow up on quotes; keep the approved response and booking operations active; give reasonable access, approvals, assets and timely creative review; capture before, mid-job and after photos or video for each job. Full terms are in your written agreement.</p>
+          <h4>What counts</h4>
+          <p>A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p>
+        </div>
+
+        <div class="placeholder" role="note">PLACEHOLDER: client result. Needs written client permission before use.</div>
+
+        <div class="cta-block">
+          <a class="cta" href="../booking-b/index.html">Check if you qualify
+            <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M1 8h18M13 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <span class="cta-meta">Four questions, then pick a time.</span>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="fit-h">
+        <span class="tape-label">fit</span>
+        <h2 id="fit-h">Who this is for, and who it isn't</h2>
+        <div class="fit">
+          <div class="yes">
+            <h3>A good fit if</h3>
+            <ul>
+              <li>You own a residential painting company in the US.</li>
+              <li>You have crews and room on the calendar for more estimates.</li>
+              <li>You can put a monthly budget into ads, paid to Meta directly.</li>
+              <li>You keep a list of past leads and customers, even a messy one.</li>
+              <li>You follow up on the quotes you send.</li>
+            </ul>
+          </div>
+          <div class="no">
+            <h3>Not a fit if</h3>
+            <ul>
+              <li>You want leads to resell or share with other contractors.</li>
+              <li>You can't run more estimates in the next month.</li>
+              <li>You're looking for a promise of signed work. We don't make one.</li>
+              <li>Nobody on your side will call past customers or follow up on quotes.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="faq-h">
+        <span class="tape-label">questions</span>
+        <h2 id="faq-h">What owners ask us</h2>
+        <div class="faq">
+          <details>
+            <summary>Is this a guarantee of jobs?</summary>
+            <div>
+              <p>No. The Done-for-You guarantee covers 15 qualified attended estimate appointments in the first 30 days. This is not a guarantee of signed or completed painting jobs.</p>
+              <p>An appointment counts only when the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. <a href="#terms">Read the full terms</a>.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What do I need to provide?</summary>
+            <div>
+              <p>Your service area and the project types you want, access to your ad account and calendar, approvals on the ads, and your historical list of past leads and customers.</p>
+              <p>For the Done-for-You guarantee, the complete list is needed before launch, along with the other conditions in <a href="#terms">the terms</a>, such as at least 10 calls per week to eligible prior painting customers.</p>
+            </div>
+          </details>
+          <details>
+            <summary>Do I need to spend on ads?</summary>
+            <div>
+              <p>Yes. Ad spend goes straight to Meta from your account, separate from our fees. The Done-for-You guarantee needs at least $2,000 per month paid to the advertising platform. If you're below that, we'll talk through Done-with-You on the review call.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What happens on the review call?</summary>
+            <div>
+              <p>It's 30 minutes on video. We go through your service area, crews, ad budget and past lead list, show you where your pipeline is likely leaking, and tell you which program fits, if either does. No obligation, and no pressure to decide on the call.</p>
+            </div>
+          </details>
+          <details>
+            <summary>What's the difference between Done-for-You and Done-with-You?</summary>
+            <div>
+              <p>Done-for-You: we run the system for you, and it carries the appointment guarantee. Done-with-You: we build the system with you and coach your team to run it, with no guarantee. <span class="confirm">[Ali to confirm DWY wording]</span></p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="ps" aria-label="Sign-off">
+        <p>Thanks for reading this far. If any of the four leaks sounded familiar, a 30-minute review will show you where yours are.</p>
+        <p class="sign">EstimateFlows</p>
+        <p class="cta-meta"><span class="confirm">[Ali to confirm signature: founder name or team]</span></p>
+        <p><strong>P.S.</strong> The booking page asks four quick questions first: crews, service area, ad budget and your lead list. Your answers tell you on the spot whether Done-for-You and its guarantee are open to you.</p>
+        <div class="cta-block">
+          <a class="cta" href="../booking-b/index.html">Book your pipeline review
+            <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M1 8h18M13 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <span class="cta-meta">30 minutes. Video call. No obligation.</span>
+        </div>
+      </section>
+
+    </div>
+  </article>
+</main>
+
+<footer>
+  <span>© 2026 EstimateFlows</span>
+  <nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+</footer>
+
+</body>
+</html>

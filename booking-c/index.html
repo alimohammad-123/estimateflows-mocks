@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MOCK · Booking page · Option C · EstimateFlows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EDF0F2;
+    --card: #FFFFFF;
+    --ink: #1B2127;
+    --ink-2: #4A5560;
+    --line: #CBD3DA;
+    --tape: #3A78DD;
+    --tape-ink: #1A4FA8;
+    --tape-wash: #E3ECFA;
+    --hi: #FFE35A;
+    --err: #A8231B;
+    --ok: #1E6B45;
+    --strip: 34px;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: calc(var(--strip) + 12px); }
+  body { margin: 0; padding-top: var(--strip); background: var(--paper); color: var(--ink); font: 400 16px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--tape-ink); }
+  :focus-visible { outline: 3px solid var(--tape-ink); outline-offset: 2px; border-radius: 4px; }
+  [hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .mock-strip { position: fixed; inset: 0 0 auto 0; z-index: 60; height: var(--strip); display: flex; align-items: center; justify-content: center; gap: 14px; background: var(--ink); color: #fff; font: 500 12.5px/1 var(--mono); padding: 0 12px; white-space: nowrap; overflow: hidden; }
+  .mock-strip b { background: var(--hi); color: var(--ink); padding: 3px 7px; border-radius: 3px; font-weight: 600; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .display { font-stretch: 78%; font-weight: 800; letter-spacing: -0.01em; line-height: 1.04; }
+  .label { font: 600 12px/1.25 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); }
+
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0 6px; }
+  .brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); font-stretch: 82%; font-weight: 800; font-size: 19px; }
+  .brand i { width: 24px; height: 13px; background: var(--tape); transform: rotate(-6deg); display: block; border-radius: 1px; }
+  .top a.how { font-size: 14.5px; }
+
+  .intro { padding: 10px 0 16px; }
+  .intro h1 { font-size: clamp(30px, 4vw, 46px); margin: 6px 0 6px; }
+  .intro p { margin: 0; color: var(--ink-2); max-width: 60ch; }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; padding-bottom: 56px; }
+
+  /* steps */
+  .step { background: var(--card); border-radius: 6px; box-shadow: 0 0 0 1px var(--line); margin-bottom: 14px; position: relative; }
+  .step-head { display: flex; align-items: center; gap: 12px; padding: 16px 20px; }
+  .step-head .n { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font: 600 14px var(--mono); background: var(--paper); color: var(--ink-2); box-shadow: inset 0 0 0 1.5px var(--line); }
+  .step-head h2 { font-size: 23px; margin: 0; flex: 1; }
+  .step-head h2:focus { outline: none; }
+  .step-head h2:focus-visible { outline: 3px solid var(--tape-ink); }
+  .step-head .state { font: 500 12.5px var(--mono); color: var(--ink-2); text-align: right; }
+  .step[data-state="active"] { box-shadow: 0 0 0 2px var(--ink), 0 16px 34px -24px rgba(27,33,39,.4); }
+  .step[data-state="active"] .n { background: var(--ink); color: #fff; box-shadow: none; }
+  .step[data-state="done"] .n { background: var(--tape-ink); color: #fff; box-shadow: none; }
+  .step[data-state="locked"] { background: transparent; box-shadow: 0 0 0 1px var(--line) inset; }
+  .step[data-state="locked"] h2 { color: var(--ink-2); }
+  .step-body { padding: 2px 20px 20px; }
+  .summary { padding: 0 20px 16px 62px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 14.5px; color: var(--ink-2); }
+  .summary .chip { font: 500 13px var(--mono); background: var(--paper); padding: 3px 8px; border-radius: 4px; color: var(--ink); }
+  .linkbtn { background: none; border: 0; padding: 4px 2px; font: 600 14.5px var(--sans); color: var(--tape-ink); text-decoration: underline; cursor: pointer; }
+
+  /* questions */
+  fieldset { border: 0; margin: 0; padding: 14px 0 16px; border-top: 1px solid #E4E9ED; min-width: 0; }
+  fieldset:first-child { border-top: 0; padding-top: 4px; }
+  legend { float: left; width: 100%; padding: 0; font-weight: 700; font-size: 16.5px; line-height: 1.3; margin-bottom: 10px; }
+  legend + * { clear: both; }
+  .seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 2px solid var(--ink); border-radius: 8px; overflow: hidden; }
+  .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .seg label { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 46px; padding: 6px 8px; font-weight: 600; font-size: 15px; line-height: 1.15; cursor: pointer; border-left: 1px solid var(--line); background: var(--card); }
+  .seg label:first-of-type { border-left: 0; }
+  .seg label:hover { background: var(--tape-wash); }
+  .seg input:checked + label { background: var(--tape-ink); color: #fff; }
+  .seg input:focus-visible + label { outline: 3px solid var(--tape-ink); outline-offset: -5px; box-shadow: inset 0 0 0 5px #fff; }
+  .where { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: stretch; }
+  .text { width: 100%; height: 50px; border: 2px solid var(--ink); border-radius: 8px; padding: 0 12px; font: 500 16px var(--sans); color: var(--ink); background: var(--card); }
+  .text:focus-visible { outline-offset: 1px; border-radius: 8px; }
+  .text[aria-invalid="true"] { border-color: var(--err); }
+  .err { color: var(--err); font-size: 14px; font-weight: 600; margin: 6px 0 0; }
+  .err:empty { display: none; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 14px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 22px; border-radius: 8px; border: 0; background: var(--tape-ink); color: #fff; font: 700 16.5px/1.1 var(--sans); cursor: pointer; text-decoration: none; }
+  .btn:hover { background: #143f88; }
+  .btn.back { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+  .btn.back:hover { background: var(--paper); }
+
+  /* contact */
+  .route-note { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; background: var(--tape-wash); border-left: 4px solid var(--tape); padding: 10px 14px; border-radius: 4px; margin: 4px 0 14px; font-size: 15px; }
+  .route-note b { font-stretch: 82%; font-size: 18px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 12px; }
+  .f label { display: block; font-weight: 700; font-size: 15px; margin-bottom: 5px; }
+  .consent { display: grid; grid-template-columns: 22px 1fr; gap: 10px; margin-top: 14px; font-size: 14px; color: var(--ink-2); align-items: start; }
+  .consent input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--tape-ink); }
+  .mocknote { margin: 8px 0 0 32px; font: 500 12.5px/1.4 var(--mono); color: var(--err); background: #FBECEA; padding: 6px 8px; border-radius: 4px; }
+
+  /* calendar */
+  .cal-label { font: 600 13px/1.45 var(--mono); background: var(--hi); padding: 8px 10px; border-radius: 4px; margin: 2px 0 12px; }
+  .cal-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 14px; font-size: 14.5px; color: var(--ink-2); margin-bottom: 12px; }
+  .cal-meta strong { color: var(--ink); }
+  .days { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .day { border: 1px solid var(--line); border-radius: 6px; padding: 10px; }
+  .day h3 { margin: 0 0 8px; font-size: 15px; font-weight: 700; }
+  .day h3 span { display: block; font: 500 12px var(--mono); color: var(--ink-2); }
+  .slot { display: block; width: 100%; margin-bottom: 6px; min-height: 42px; border-radius: 6px; border: 2px solid var(--tape-ink); background: var(--card); color: var(--tape-ink); font: 600 15px var(--mono); cursor: pointer; }
+  .slot:hover { background: var(--tape-wash); }
+  .slot:disabled { border-color: var(--line); color: #98A3AD; background: #F4F6F7; cursor: not-allowed; text-decoration: line-through; }
+  .booked { border: 2px solid var(--ok); border-radius: 6px; padding: 18px; background: #EEF7F1; }
+  .booked h3 { margin: 0 0 6px; font-size: 26px; color: var(--ok); }
+  .booked p { margin: 0 0 6px; }
+
+  /* fit panel */
+  .fit { position: sticky; top: calc(var(--strip) + 14px); }
+  .fit-bar { display: none; }
+  .fit-body { background: var(--card); border-radius: 6px; box-shadow: 0 0 0 1px var(--line); overflow: hidden; }
+  .fit-head { background: var(--ink); color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: baseline; }
+  .fit-head h2 { margin: 0; font-size: 22px; }
+  .fit-head span { font: 500 12.5px var(--mono); color: #C9D2DA; }
+  .fit-sec { padding: 14px 18px; border-top: 1px solid #E4E9ED; }
+  .fit-sec:first-of-type { border-top: 0; }
+  .fit-sec .label { display: block; margin-bottom: 6px; }
+  .prog { font-stretch: 80%; font-weight: 800; font-size: 26px; line-height: 1.05; }
+  .prog.pending { color: #98A3AD; font-size: 20px; }
+  .fit-sec p { margin: 6px 0 0; font-size: 14.5px; color: var(--ink-2); }
+  .gshort { font-weight: 700; font-size: 15.5px; line-height: 1.35; }
+  .cond { font: 500 12.5px/1.4 var(--mono); color: var(--ink-2); }
+  .elig { margin-top: 10px; padding: 9px 11px; border-radius: 4px; font-size: 14.5px; font-weight: 600; }
+  .elig.yes { background: #EEF7F1; color: var(--ok); }
+  .elig.no { background: #FFF7D6; color: #5B4A00; }
+  .confirm { font: 600 12px var(--mono); color: var(--err); background: #FBECEA; padding: 1px 5px; border-radius: 3px; }
+  .cover { margin: 0; padding: 0 0 0 18px; font-size: 14.5px; }
+  .cover li { margin-bottom: 4px; }
+  details.full { margin-top: 10px; font-size: 13.5px; }
+  details.full summary { cursor: pointer; color: var(--tape-ink); font-weight: 600; }
+  details.full p { color: var(--ink-2); margin: 8px 0 0; }
+
+  footer { padding: 24px 0 36px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: space-between; }
+  footer nav { display: flex; gap: 16px; }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .fit { position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 40; }
+    .fit-bar { display: flex; width: 100%; align-items: center; gap: 10px; min-height: 60px; padding: 8px 16px calc(8px + env(safe-area-inset-bottom)); background: var(--ink); color: #fff; border: 0; text-align: left; font: 600 15px/1.25 var(--sans); cursor: pointer; }
+    .fit-bar .t { flex: 1; min-width: 0; }
+    .fit-bar small { display: block; font: 500 12px var(--mono); color: #C9D2DA; }
+    .fit-bar .chev { font: 600 13px var(--mono); color: var(--hi); white-space: nowrap; }
+    .fit-bar:focus-visible { outline: 3px solid var(--hi); outline-offset: -4px; }
+    .fit-body { display: none; border-radius: 10px 10px 0 0; max-height: 64vh; overflow: auto; box-shadow: 0 -12px 30px -10px rgba(0,0,0,.35); }
+    .fit-head { display: none; }
+    .fit.open .fit-body { display: block; }
+    body.has-bar { padding-bottom: 70px; }
+    .fit:not(.show) { display: none; }
+  }
+  @media (max-width: 640px) {
+    :root { --strip: 44px; }
+    .mock-strip { font-size: 11px; line-height: 1.35; white-space: normal; flex-wrap: wrap; align-content: center; justify-content: flex-start; gap: 0 8px; padding: 4px 12px; }
+    .mock-strip b { display: none; }
+    .wrap { padding: 0 14px; }
+    .top { padding-top: 10px; }
+    .intro { padding: 4px 0 12px; }
+    .intro h1 { font-size: 29px; }
+    .intro p { font-size: 15px; }
+    .step-head { padding: 14px 14px; }
+    .step-head h2 { font-size: 21px; }
+    .step-body { padding: 0 14px 16px; }
+    .summary { padding: 0 14px 14px 14px; }
+    .seg label { font-size: 14px; padding: 6px 4px; }
+    .seg.wrap2 { grid-auto-flow: row; grid-template-columns: 1fr 1fr; }
+    .seg.wrap2 label:nth-of-type(3) { border-left: 0; }
+    .seg.wrap2 label:nth-of-type(n+3) { border-top: 1px solid var(--line); }
+    .where, .grid3 { grid-template-columns: 1fr; }
+    .actions .btn { flex: 1 1 auto; }
+    .days { grid-template-columns: 1fr; }
+    .day .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .day .slot { margin: 0; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="mock-strip" role="note"><b>MOCK</b><span>MOCK for review. Not a live page. Proof is placeholder.</span><span>Booking page · Option C</span></div>
+
+<header class="wrap top">
+  <a class="brand" href="../offer-c/index.html" aria-label="EstimateFlows, how it works"><i aria-hidden="true"></i>EstimateFlows</a>
+  <a class="how" href="../offer-c/index.html">How it works</a>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <span class="label">Painting Pipeline Review · 30 min · video call · no obligation</span>
+    <h1 class="display">Check your fit, then pick a time</h1>
+    <p>Four taps, your contact details, then a time. About a minute, all on this page.</p>
+  </div>
+
+  <div class="layout">
+    <div class="flow">
+      <!-- Step 1: questions -->
+      <section class="step" id="s1" data-state="active" aria-labelledby="s1-h">
+        <div class="step-head"><span class="n" aria-hidden="true">1</span><h2 id="s1-h" class="display" tabindex="-1">Your company</h2><span class="state" data-st="1"></span></div>
+        <div class="summary" data-sum="1" hidden></div>
+        <form class="step-body" id="f1" novalidate>
+          <fieldset>
+            <legend>How many crews do you run right now?</legend>
+            <div class="seg" role="radiogroup" aria-label="Crews">
+              <input type="radio" name="crews" id="c0" value="Just me"><label for="c0">Just me</label>
+              <input type="radio" name="crews" id="c1" value="1 crew"><label for="c1">1 crew</label>
+              <input type="radio" name="crews" id="c2" value="2&ndash;3 crews"><label for="c2">2&ndash;3 crews</label>
+              <input type="radio" name="crews" id="c3" value="4+ crews"><label for="c3">4+ crews</label>
+            </div>
+            <p class="err" id="e-crews"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Where do you work?</legend>
+            <div class="where">
+              <div><label class="sr" for="city">City or ZIP</label><input class="text" id="city" name="city" type="text" autocomplete="address-level2" placeholder="City or ZIP" aria-describedby="e-city"></div>
+              <div class="seg" role="radiogroup" aria-label="Radius">
+                <input type="radio" name="radius" id="r0" value="25 miles"><label for="r0">25 mi</label>
+                <input type="radio" name="radius" id="r1" value="50 miles"><label for="r1">50 mi</label>
+                <input type="radio" name="radius" id="r2" value="75+ miles"><label for="r2">75+ mi</label>
+              </div>
+            </div>
+            <p class="err" id="e-city"></p>
+          </fieldset>
+          <fieldset>
+            <legend>What can you put into ads each month, paid to Meta directly?</legend>
+            <div class="seg wrap2" role="radiogroup" aria-label="Monthly ad budget">
+              <input type="radio" name="budget" id="b0" value="Under $1,000"><label for="b0">Under $1,000</label>
+              <input type="radio" name="budget" id="b1" value="$1,000&ndash;1,999"><label for="b1">$1,000&ndash;1,999</label>
+              <input type="radio" name="budget" id="b2" value="$2,000&ndash;4,999"><label for="b2">$2,000&ndash;4,999</label>
+              <input type="radio" name="budget" id="b3" value="$5,000+"><label for="b3">$5,000+</label>
+            </div>
+            <p class="err" id="e-budget"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Do you have a list of past leads and customers?</legend>
+            <div class="seg" role="radiogroup" aria-label="Past lead list">
+              <input type="radio" name="list" id="l0" value="Yes, complete"><label for="l0">Yes, complete</label>
+              <input type="radio" name="list" id="l1" value="Partial"><label for="l1">Partial</label>
+              <input type="radio" name="list" id="l2" value="No"><label for="l2">No</label>
+            </div>
+            <p class="err" id="e-list"></p>
+          </fieldset>
+          <div class="actions"><button class="btn" type="submit">Next: your details</button></div>
+        </form>
+      </section>
+
+      <!-- Step 2: contact -->
+      <section class="step" id="s2" data-state="locked" aria-labelledby="s2-h">
+        <div class="step-head"><span class="n" aria-hidden="true">2</span><h2 id="s2-h" class="display" tabindex="-1">Your details</h2><span class="state" data-st="2"></span></div>
+        <div class="summary" data-sum="2" hidden></div>
+        <form class="step-body" id="f2" novalidate hidden>
+          <div class="route-note" id="route-note"></div>
+          <div class="grid3">
+            <div class="f"><label for="fname">First name</label><input class="text" id="fname" type="text" autocomplete="given-name" aria-describedby="e-fname"><p class="err" id="e-fname"></p></div>
+            <div class="f"><label for="phone">Mobile phone</label><input class="text" id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(555) 010-0000" aria-describedby="e-phone"><p class="err" id="e-phone"></p></div>
+            <div class="f"><label for="email">Email</label><input class="text" id="email" type="email" autocomplete="email" placeholder="you@company.com" aria-describedby="e-email"><p class="err" id="e-email"></p></div>
+          </div>
+          <label class="consent"><input type="checkbox" id="consent"><span>I agree to receive SMS about my booking and occasional marketing from EstimateFlows. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span></label>
+          <p class="mocknote">MOCK note: if Ali requires consent, this box becomes required here; booking itself never requires it.</p>
+          <div class="actions">
+            <button class="btn" type="submit">Next: pick a time</button>
+            <button class="btn back" type="button" data-go="1">Back</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Step 3: calendar -->
+      <section class="step" id="s3" data-state="locked" aria-labelledby="s3-h">
+        <div class="step-head"><span class="n" aria-hidden="true">3</span><h2 id="s3-h" class="display" tabindex="-1">Pick a time</h2><span class="state" data-st="3"></span></div>
+        <div class="step-body" id="cal" hidden>
+          <p class="cal-label">MOCK: the live GHL calendar (Painting Pipeline Review, 30 min) appears here, prefilled with your details</p>
+          <div id="picker">
+            <div class="cal-meta"><span><strong>Times in the next 3 days</strong> · 9 AM to 5 PM, weekdays</span><span id="tz"></span></div>
+            <div class="days" id="days"></div>
+            <p class="cal-meta" id="prefill" style="margin-top:12px"></p>
+          </div>
+          <div class="booked" id="booked" hidden tabindex="-1"></div>
+          <div class="actions"><button class="btn back" type="button" data-go="2">Back</button></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="fit" id="fit" aria-label="Your fit">
+      <button class="fit-bar" id="fit-bar" type="button" aria-expanded="false" aria-controls="fit-body">
+        <span class="t"><small>Your fit</small><span id="bar-text">Answer the 4 questions</span></span>
+        <span class="chev" id="bar-chev">Details</span>
+      </button>
+      <div class="fit-body" id="fit-body">
+        <div class="fit-head"><h2 class="display">Your fit</h2><span id="answered">0 of 4 answered</span></div>
+        <div class="fit-sec">
+          <span class="label">Program</span>
+          <div class="prog pending" id="prog">Answer crews and ad budget</div>
+          <p id="prog-why">Done-for-You needs 2 or more crews and $2,000+ a month for ads. Otherwise it's Done-with-You.</p>
+        </div>
+        <div class="fit-sec" id="g-sec" hidden>
+          <span class="label">DFY guarantee</span>
+          <div class="gshort">15 qualified attended estimate appointments in your first 30 days</div>
+          <div class="cond">DFY guarantee. Conditions apply.</div>
+          <div class="elig" id="elig" hidden></div>
+          <details class="full">
+            <summary>Read the full guarantee</summary>
+            <p>15 qualified attended estimate appointments in the first 30 days. Appointments generated through database reactivation count toward the same 15 if they meet the same qualification, attendance, and CRM-recording criteria. If EstimateFlows misses the target, it will continue work at no additional service fee for another 30 days; if the same 15-appointment target is still unmet at the end of that extension, refund all program fees and reimburse all client ad spend. This is not a guarantee of signed or completed painting jobs.</p>
+            <p>Done-for-You only. Available only if you provide your complete historical lead list before campaign launch. Your side: at least $2,000 per month of ad spend paid to the advertising platform; the complete historical lead list before launch; at least 10 calls per week to eligible prior painting customers; reasonably open estimate capacity; keep your service areas and advertised work available; run and reschedule estimates in good faith and follow up on quotes; keep the approved response and booking operations active; give reasonable access, approvals, assets and timely creative review; capture before, mid-job and after photos or video for each job. Full terms are in your written agreement.</p>
+            <p>A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p>
+          </details>
+        </div>
+        <div class="fit-sec">
+          <span class="label">On the call we'll cover</span>
+          <ul class="cover" id="cover"></ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 EstimateFlows · (555) 010-0000 · hello@example.com</span>
+    <nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = s => document.querySelector(s);
+  const state = { step: 1, booked: null };
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const radio = name => (document.querySelector(`input[name="${name}"]:checked`) || {}).value || "";
+  const answers = () => ({ crews: radio("crews"), city: $("#city").value.trim(), radius: radio("radius"), budget: radio("budget"), list: radio("list") });
+
+  function route(a) {
+    if (!a.crews || !a.budget) return null;
+    const bigBudget = a.budget.startsWith("$2,000") || a.budget === "$5,000+";
+    const crews2 = a.crews.startsWith("2") || a.crews.startsWith("4");
+    return bigBudget && crews2 ? "dfy" : "dwy";
+  }
+  const name = r => r === "dfy" ? "Done-for-You" : "Done-with-You";
+
+  function renderFit() {
+    const a = answers();
+    const r = route(a);
+    const count = [a.crews, a.city && a.radius, a.budget, a.list].filter(Boolean).length;
+    $("#answered").textContent = `${count} of 4 answered`;
+    const prog = $("#prog");
+    prog.classList.toggle("pending", !r);
+    prog.textContent = r ? name(r) : "Answer crews and ad budget";
+    $("#prog-why").innerHTML = !r
+      ? "Done-for-You needs 2 or more crews and $2,000+ a month for ads. Otherwise it's Done-with-You."
+      : r === "dfy"
+        ? "You run 2 or more crews and can put $2,000+ a month into ads. We run the system for you."
+        : 'We build the system with you and coach your team to run it. <span class="confirm">[Ali to confirm DWY wording]</span>';
+
+    $("#g-sec").hidden = r !== "dfy";
+    const elig = $("#elig");
+    elig.hidden = !(r === "dfy" && a.list);
+    if (a.list === "Yes, complete") { elig.className = "elig yes"; elig.textContent = "You're eligible for the DFY guarantee."; }
+    else if (a.list) { elig.className = "elig no"; elig.textContent = "The guarantee needs your complete historical lead list before launch. Without it, DFY runs without the guarantee."; }
+
+    const cover = ["Where your inquiries wait today, using your own numbers"];
+    if (a.city) cover.push(`Your service area: ${a.city}${a.radius ? ", " + a.radius : ""}`);
+    if (a.crews) cover.push(`How many estimates ${a.crews === "Just me" ? "you" : "your " + a.crews} can take on`);
+    if (r === "dfy") cover.push("What we run for you, and what's on your side");
+    if (r === "dwy") cover.push("How we build it with you and how your team runs it");
+    if (a.budget) cover.push(`What ${a.budget} a month in Meta ads covers in your area`);
+    if (a.list === "Yes, complete" || a.list === "Partial") cover.push("Reactivating your past leads and customers");
+    if (r === "dfy" && a.list === "Partial") cover.push("Getting your lead list complete before launch, so the guarantee can apply");
+    if (a.list === "No") cover.push(r === "dfy" ? "Starting without a past list, and what that means for the guarantee" : "Starting without a past list");
+    $("#cover").innerHTML = cover.map(c => `<li>${esc(c)}</li>`).join("");
+
+    $("#bar-text").textContent = r
+      ? name(r) + (r === "dfy" && a.list ? (a.list === "Yes, complete" ? " · guarantee eligible" : " · needs complete list for guarantee") : "")
+      : `${count} of 4 answered`;
+    const show = count > 0 || state.step > 1;
+    $("#fit").classList.toggle("show", show);
+    document.body.classList.toggle("has-bar", show);
+    return { a, r };
+  }
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function setErr(id, msg, field) {
+    $("#e-" + id).textContent = msg || "";
+    if (field) field.setAttribute("aria-invalid", msg ? "true" : "false");
+  }
+
+  function go(step, initial) {
+    state.step = step;
+    [1, 2, 3].forEach(n => {
+      const sec = $("#s" + n);
+      const st = n === step ? "active" : n < step ? "done" : "locked";
+      sec.dataset.state = st;
+      const body = n === 1 ? $("#f1") : n === 2 ? $("#f2") : $("#cal");
+      body.hidden = st !== "active";
+      const sum = $(`[data-sum="${n}"]`);
+      if (sum) sum.hidden = st !== "done";
+      $(`[data-st="${n}"]`).textContent = st === "locked" ? (n === 2 ? "After step 1" : "After step 2") : st === "done" ? "Done" : `Step ${n} of 3`;
+    });
+    const { a, r } = renderFit();
+    $('[data-sum="1"]').innerHTML = [a.crews, `${a.city}, ${a.radius}`, a.budget + "/mo", "List: " + a.list].map(t => `<span class="chip">${esc(t)}</span>`).join("") + '<button class="linkbtn" type="button" data-go="1">Change answers</button>';
+    $('[data-sum="2"]').innerHTML = [$("#fname").value.trim(), $("#phone").value.trim(), $("#email").value.trim()].map(t => `<span class="chip">${esc(t)}</span>`).join("") + '<button class="linkbtn" type="button" data-go="2">Edit details</button>';
+    if (step === 2) {
+      $("#route-note").innerHTML = `<span class="label">Based on your answers</span><b>${name(r)}</b>` +
+        (r === "dfy" && a.list === "Yes, complete" ? "<span>You're eligible for the DFY guarantee.</span>" : "") +
+        "<span>Where should we send the call link?</span>";
+    }
+    if (step === 3) buildCalendar();
+    if (initial) return;
+    $(`#s${step}-h`).focus({ preventScroll: true });
+    $("#s" + step).scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+  }
+
+  $("#f1").addEventListener("submit", e => {
+    e.preventDefault();
+    const a = answers();
+    setErr("crews", a.crews ? "" : "Pick how many crews you run.");
+    setErr("city", !a.city ? "Enter the city or ZIP you work from." : !a.radius ? "Pick how far you travel: 25, 50 or 75+ miles." : "", $("#city"));
+    if (a.city) $("#city").setAttribute("aria-invalid", "false");
+    setErr("budget", a.budget ? "" : "Pick a monthly ad budget. It's paid to Meta, not to us.");
+    setErr("list", a.list ? "" : "Pick whether you have a past lead list.");
+    const first = ["crews", "city", "budget", "list"].find(k => $("#e-" + k).textContent);
+    if (first) {
+      const target = first === "city" && !a.city ? $("#city") : $("#e-" + first).closest("fieldset").querySelector("input:checked, input");
+      target.focus();
+      return;
+    }
+    go(2);
+  });
+
+  $("#f2").addEventListener("submit", e => {
+    e.preventDefault();
+    const fname = $("#fname"), phone = $("#phone"), email = $("#email");
+    const digits = phone.value.replace(/\D/g, "");
+    const okPhone = digits.length === 10 || (digits.length === 11 && digits[0] === "1");
+    const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim());
+    setErr("fname", fname.value.trim() ? "" : "Enter your first name.", fname);
+    setErr("phone", !digits ? "Enter your mobile number." : okPhone ? "" : "Enter a 10-digit US mobile number, like (555) 010-0000.", phone);
+    setErr("email", !email.value.trim() ? "Enter your email." : okEmail ? "" : "Enter an email like you@company.com.", email);
+    const bad = [fname, phone, email].find(f => f.getAttribute("aria-invalid") === "true");
+    if (bad) { bad.focus(); return; }
+    if (okPhone) {
+      const d = digits.slice(-10);
+      phone.value = `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+    }
+    go(3);
+  });
+
+  document.addEventListener("click", e => {
+    const b = e.target.closest("[data-go]");
+    if (b) go(Number(b.dataset.go));
+  });
+
+  document.querySelectorAll("#f1 input").forEach(i => i.addEventListener(i.type === "text" ? "input" : "change", () => {
+    if (i.type === "radio") setErr(i.name === "radius" ? "city" : i.name, "");
+    renderFit();
+  }));
+
+  // calendar mock: weekday slots in the visitor's time zone, next 72 hours only
+  const SLOT_TIMES = [[9, 0], [10, 30], [13, 0], [14, 30], [16, 0]];
+  function buildCalendar() {
+    state.booked = null;
+    $("#booked").hidden = true;
+    $("#picker").hidden = false;
+    const now = new Date();
+    const end = new Date(now.getTime() + 72 * 3600e3);
+    const earliest = new Date(now.getTime() + 2 * 3600e3);
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const tzShort = new Intl.DateTimeFormat("en-US", { timeZoneName: "short" }).formatToParts(now).find(p => p.type === "timeZoneName").value;
+    $("#tz").textContent = `Your time zone: ${tz.replace(/_/g, " ")} (${tzShort})`;
+    const days = [];
+    for (let d = 0; d < 4; d++) {
+      const day = new Date(now.getFullYear(), now.getMonth(), now.getDate() + d);
+      if (day.getDay() === 0 || day.getDay() === 6) continue;
+      const slots = SLOT_TIMES.map(([h, m]) => new Date(day.getFullYear(), day.getMonth(), day.getDate(), h, m)).filter(t => t >= earliest && t <= end);
+      if (slots.length) days.push({ day, slots });
+    }
+    const fmtDay = new Intl.DateTimeFormat("en-US", { weekday: "long" });
+    const fmtDate = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
+    const fmtTime = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" });
+    const box = $("#days");
+    box.innerHTML = days.length ? days.map((d, di) => `
+      <div class="day"><h3>${fmtDay.format(d.day)}<span>${fmtDate.format(d.day)}</span></h3><div class="slots">
+        ${d.slots.map((t, si) => `<button type="button" class="slot" data-t="${t.toISOString()}" ${(di + si) % 4 === 1 ? 'disabled aria-label="' + fmtTime.format(t) + ', taken"' : ""}>${fmtTime.format(t)}</button>`).join("")}
+      </div></div>`).join("")
+      : '<p>No open weekday times in the next 3 days. The live calendar would show the next open day here.</p>';
+    $("#prefill").textContent = `Booking for ${$("#fname").value.trim()} · ${$("#phone").value.trim()} · ${$("#email").value.trim()}`;
+  }
+
+  $("#days").addEventListener("click", e => {
+    const s = e.target.closest(".slot");
+    if (!s || s.disabled) return;
+    const t = new Date(s.dataset.t);
+    const when = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZoneName: "short" }).format(t);
+    const r = route(answers());
+    const sms = $("#consent").checked ? ` and a text to ${esc($("#phone").value.trim())}` : "";
+    $("#picker").hidden = true;
+    const b = $("#booked");
+    b.innerHTML = `<span class="label">Mock confirmation</span><h3 class="display">Booked</h3>
+      <p><strong>${esc(when)}</strong></p>
+      <p>Painting Pipeline Review, 30 min, video call with ${esc($("#fname").value.trim())}. We'll talk through ${name(r)}.</p>
+      <p>Confirmation goes to ${esc($("#email").value.trim())}${sms}.</p>
+      <button class="linkbtn" type="button" id="rebook">Pick a different time</button>`;
+    b.hidden = false;
+    b.focus();
+    $('[data-st="3"]').textContent = "Booked";
+  });
+  $("#booked").addEventListener("click", e => {
+    if (e.target.id === "rebook") { buildCalendar(); $('[data-st="3"]').textContent = "Step 3 of 3"; $("#days .slot:not(:disabled)")?.focus(); }
+  });
+
+  const bar = $("#fit-bar");
+  bar.addEventListener("click", () => {
+    const open = bar.getAttribute("aria-expanded") !== "true";
+    bar.setAttribute("aria-expanded", String(open));
+    $("#fit").classList.toggle("open", open);
+    $("#bar-chev").textContent = open ? "Hide" : "Details";
+  });
+  // bar sits before the body in the DOM; on mobile, show the sheet above the bar
+  const mq = matchMedia("(max-width: 900px)");
+  const place = () => { const fit = $("#fit"); mq.matches ? fit.append(bar) : fit.prepend(bar); };
+  mq.addEventListener("change", place); place();
+
+  go(1, true);
+})();
+</script>
+</body>
+</html>

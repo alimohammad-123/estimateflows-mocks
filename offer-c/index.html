@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MOCK · Offer page · Option C · EstimateFlows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EDF0F2;
+    --card: #FFFFFF;
+    --ink: #1B2127;
+    --ink-2: #4A5560;
+    --line: #CBD3DA;
+    --tape: #3A78DD;
+    --tape-ink: #1A4FA8;
+    --tape-wash: #E3ECFA;
+    --hi: #FFE35A;
+    --err: #A8231B;
+    --strip: 34px;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: calc(var(--strip) + 16px); }
+  body {
+    margin: 0; padding-top: var(--strip);
+    background: var(--paper); color: var(--ink);
+    font: 400 17px/1.55 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  a { color: var(--tape-ink); }
+  :focus-visible { outline: 3px solid var(--tape-ink); outline-offset: 3px; border-radius: 4px; }
+
+  .mock-strip {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--strip);
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    background: var(--ink); color: #fff; font: 500 12.5px/1 var(--mono);
+    padding: 0 12px; white-space: nowrap; overflow: hidden;
+  }
+  .mock-strip b { background: var(--hi); color: var(--ink); padding: 3px 7px; border-radius: 3px; font-weight: 600; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  .display { font-family: var(--sans); font-stretch: 78%; font-weight: 800; letter-spacing: -0.01em; line-height: 1.02; }
+  .label { font: 600 12.5px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); }
+
+  /* header */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-stretch: 82%; font-weight: 800; font-size: 21px; letter-spacing: -.01em; }
+  .brand i { width: 26px; height: 14px; background: var(--tape); transform: rotate(-6deg); display: block; border-radius: 1px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+  .top nav { display: flex; align-items: center; gap: 22px; font-size: 15px; }
+  .top nav a:not(.btn) { color: var(--ink-2); text-decoration: none; }
+  .top nav a:not(.btn):hover { color: var(--ink); text-decoration: underline; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; padding: 0 22px; border-radius: 8px; border: 0;
+    background: var(--tape-ink); color: #fff; font: 700 16px/1.1 var(--sans); text-decoration: none; cursor: pointer;
+  }
+  .btn:hover { background: #143f88; }
+  .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+  .btn.ghost:hover { background: var(--card); }
+  .btn.small { min-height: 40px; padding: 0 16px; font-size: 15px; }
+  .cond { font: 500 13px/1.4 var(--mono); color: var(--ink-2); }
+
+  /* hero */
+  .hero { padding: 26px 0 64px; }
+  .hero-head { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; align-items: end; margin-bottom: 30px; }
+  .hero h1 { font-size: clamp(40px, 5.4vw, 74px); margin: 10px 0 0; }
+  .hero h1 mark { background: linear-gradient(transparent 58%, var(--hi) 58%); color: inherit; padding: 0 .05em; }
+  .hero-head p { margin: 0; font-size: 18px; color: var(--ink-2); max-width: 46ch; }
+
+  .sheet {
+    position: relative; background: var(--card); border-radius: 6px;
+    box-shadow: 0 1px 0 var(--line), 0 18px 40px -24px rgba(27,33,39,.35);
+    background-image:
+      linear-gradient(rgba(58,120,221,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(58,120,221,.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .tape { position: absolute; width: 92px; height: 26px; background: rgba(58,120,221,.82); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+  .tape.tl { top: -12px; left: 36px; transform: rotate(-4deg); }
+  .tape.tr { top: -10px; right: 48px; transform: rotate(5deg); }
+  .sheet-grid { display: grid; grid-template-columns: 5fr 6fr; }
+  .inputs { padding: 34px 34px 30px; border-right: 1px dashed var(--line); }
+  .inputs .label { margin-bottom: 18px; display: block; }
+  .field { margin-bottom: 22px; }
+  .field-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .field label { font-weight: 650; font-size: 16px; line-height: 1.3; }
+  .field small { display: block; color: var(--ink-2); font-size: 13.5px; margin-top: 2px; }
+  .num {
+    display: inline-flex; align-items: center; background: var(--card); border: 2px solid var(--ink); border-radius: 6px;
+    padding: 0 8px; height: 42px; font: 600 17px var(--mono); flex: none;
+  }
+  .num input { width: 7ch; border: 0; background: transparent; font: inherit; text-align: right; color: var(--ink); padding: 0; -moz-appearance: textfield; }
+  .num input::-webkit-outer-spin-button, .num input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .num input:focus { outline: none; }
+  .num:focus-within { outline: 3px solid var(--tape-ink); outline-offset: 2px; }
+  .num span { color: var(--ink-2); padding-left: 3px; }
+  .num .pre { padding: 0 3px 0 0; }
+  input[type=range] { width: 100%; margin: 10px 0 0; accent-color: var(--tape-ink); height: 24px; }
+  .placeholder-note { font-size: 13.5px; color: var(--ink-2); margin: 4px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
+
+  .tally { padding: 34px 34px 30px; display: flex; flex-direction: column; }
+  .tally .label { margin-bottom: 16px; }
+  .rows { font-family: var(--mono); font-size: 16px; margin: 0; padding: 0; list-style: none; }
+  .rows li { display: grid; grid-template-columns: 2.2ch 12ch 1fr; gap: 10px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid #E4E9ED; }
+  .rows .op { color: var(--ink-2); }
+  .rows .v { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .rows .t { font-family: var(--sans); color: var(--ink-2); font-size: 15px; }
+  .rows li.sum { border-bottom: 2px solid var(--ink); }
+  .rows li.sum .t { color: var(--ink); font-weight: 600; }
+  .result { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .result div { padding: 16px 18px; border-radius: 6px; background: var(--paper); }
+  .result .big { font: 600 clamp(28px, 3vw, 38px)/1.05 var(--mono); letter-spacing: -.02em; display: inline-block; background: var(--hi); padding: 2px 6px; margin: 6px 0 6px -6px; font-variant-numeric: tabular-nums; }
+  .result p { margin: 0; font-size: 14.5px; color: var(--ink-2); line-height: 1.4; }
+  .not-promise { margin-top: 18px; padding: 14px 16px; border-left: 4px solid var(--ink); background: #F6F8F9; font-size: 15px; }
+  .not-promise strong { display: block; font-size: 16px; }
+  .not-promise p { margin: 4px 0 0; color: var(--ink-2); }
+  .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 26px; }
+
+  /* sections */
+  section { padding: 72px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  .sec-head { display: grid; grid-template-columns: 260px 1fr; gap: 40px; margin-bottom: 36px; }
+  .sec-head h2 { font-size: clamp(32px, 3.6vw, 48px); margin: 0; max-width: 20ch; }
+  .sec-head p { margin: 12px 0 0; color: var(--ink-2); max-width: 60ch; }
+
+  /* promise */
+  .promise { background: var(--ink); color: #fff; border-top: 0; }
+  .promise + section { border-top: 0; }
+  .promise .label { color: #AEB8C2; }
+  .promise-grid { display: grid; grid-template-columns: 260px 1fr; gap: 40px; }
+  .promise h2 { font-size: clamp(36px, 4.6vw, 64px); margin: 0 0 14px; max-width: 18ch; }
+  .promise h2 span { color: var(--hi); }
+  .promise .cond { color: #CDD5DC; font-size: 14px; }
+  .promise p.lede { font-size: 19px; color: #DCE2E7; max-width: 58ch; margin: 22px 0 28px; }
+  .promise .btn { background: var(--hi); color: var(--ink); }
+  .promise .btn:hover { background: #fff; }
+  .promise :focus-visible { outline-color: var(--hi); }
+
+  /* pillars */
+  .pillar { display: grid; grid-template-columns: 260px 1fr; gap: 40px; padding: 34px 0; border-top: 2px solid var(--ink); }
+  .pillar:last-child { border-bottom: 2px solid var(--ink); }
+  .pillar h3 { font-size: 30px; margin: 6px 0 0; }
+  .pillar .stage { font: 600 12.5px/1.3 var(--mono); color: var(--tape-ink); text-transform: uppercase; letter-spacing: .06em; }
+  .bridge { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; align-self: start; background: var(--card); border-radius: 6px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+  .bridge > div { padding: 18px 20px; border-right: 1px solid var(--line); }
+  .bridge > div:nth-child(3) { border-right: 0; }
+  .bridge .label { display: block; margin-bottom: 8px; font-size: 11.5px; }
+  .bridge p { margin: 0; font-size: 15.5px; line-height: 1.5; }
+  .bridge .fix { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid var(--tape); background: var(--tape-wash); padding: 0; border-right: 0; }
+  .bridge .fix > div { padding: 18px 20px; }
+  .bridge .fix > div + div { border-left: 1px solid #C4D4EF; }
+  .bridge .fix .label { color: var(--tape-ink); }
+  .live { font-family: var(--mono); font-weight: 600; background: var(--hi); padding: 0 4px; border-radius: 2px; white-space: nowrap; }
+  .thread { margin-top: 16px; max-width: 420px; background: var(--card); border-radius: 10px; padding: 14px; box-shadow: 0 0 0 1px var(--line); }
+  .thread .label { display: flex; justify-content: space-between; margin-bottom: 10px; }
+  .bubble { max-width: 85%; padding: 9px 12px; border-radius: 14px; font-size: 14.5px; line-height: 1.4; margin-bottom: 6px; }
+  .bubble.in { background: var(--paper); border-bottom-left-radius: 4px; }
+  .bubble.out { background: var(--tape-ink); color: #fff; margin-left: auto; border-bottom-right-radius: 4px; }
+  .bubble time { display: block; font: 500 11px var(--mono); opacity: .7; margin-top: 3px; }
+  .sys { font: 500 12px var(--mono); color: var(--ink-2); text-align: center; margin: 4px 0 8px; }
+
+  /* delivery */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .steps li { background: var(--card); border-radius: 6px; padding: 22px 20px; box-shadow: 0 0 0 1px var(--line); position: relative; }
+  .steps li::before { counter-increment: s; content: "Step " counter(s); font: 600 12px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--tape-ink); }
+  .steps h3 { font-size: 22px; margin: 8px 0 8px; }
+  .steps p { margin: 0; font-size: 15.5px; color: var(--ink-2); }
+  .steps .you { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 14.5px; color: var(--ink); }
+
+  /* compare */
+  .compare { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 6px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); font-size: 16px; }
+  .compare th, .compare td { text-align: left; vertical-align: top; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .compare thead th { font-family: var(--sans); font-stretch: 80%; font-weight: 800; font-size: 24px; background: #F6F8F9; }
+  .compare thead th small { display: block; font: 500 13px/1.4 var(--mono); color: var(--ink-2); margin-top: 4px; font-stretch: 100%; }
+  .compare thead th:nth-child(2) { background: var(--tape-wash); border-top: 4px solid var(--tape); }
+  .compare tbody th { font: 600 13px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); width: 24%; }
+  .compare td:nth-child(2) { background: #F7FAFF; }
+  .confirm { font: 600 12.5px var(--mono); color: var(--err); background: #FBECEA; padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+  .compare tr:last-child > * { border-bottom: 0; }
+  .yes { font-weight: 700; }
+
+  /* guarantee */
+  .guarantee { display: grid; grid-template-columns: 260px 1fr; gap: 40px; }
+  .gbox { background: var(--card); border: 2px solid var(--ink); border-radius: 6px; position: relative; padding: 34px 36px 30px; }
+  .gbox .tape.tl { left: 28px; }
+  .gbox blockquote { margin: 0; font-size: 19px; line-height: 1.55; font-weight: 500; }
+  .gbox .side { margin: 22px 0 0; padding-top: 20px; border-top: 1px dashed var(--line); font-size: 16px; color: var(--ink-2); }
+  .gbox .def { margin: 18px 0 0; padding: 14px 16px; background: var(--paper); border-radius: 6px; font-size: 15.5px; }
+
+  /* fit */
+  .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .fit > div { background: var(--card); border-radius: 6px; padding: 26px 28px; box-shadow: 0 0 0 1px var(--line); }
+  .fit h3 { font-size: 26px; margin: 0 0 14px; }
+  .fit ul { margin: 0; padding: 0; list-style: none; }
+  .fit li { padding: 10px 0 10px 30px; border-top: 1px solid #E4E9ED; position: relative; }
+  .fit li::before { content: ""; position: absolute; left: 2px; top: 17px; width: 14px; height: 8px; }
+  .fit .for li::before { border-left: 3px solid var(--tape-ink); border-bottom: 3px solid var(--tape-ink); transform: rotate(-45deg); top: 15px; }
+  .fit .not li::before { height: 3px; background: var(--ink-2); top: 21px; }
+
+  /* proof */
+  .proofs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .ph { border: 2px dashed #8C99A5; border-radius: 6px; padding: 26px 22px; min-height: 170px; display: flex; flex-direction: column; justify-content: space-between; background: repeating-linear-gradient(135deg, transparent 0 12px, rgba(140,153,165,.08) 12px 24px); }
+  .ph p { margin: 0; font: 600 15px/1.45 var(--mono); }
+  .ph span { font: 500 12.5px var(--mono); color: var(--ink-2); margin-top: 14px; }
+
+  /* faq */
+  .faq details { border-top: 1px solid var(--line); }
+  .faq details:last-child { border-bottom: 1px solid var(--line); }
+  .faq summary { cursor: pointer; list-style: none; padding: 20px 44px 20px 0; position: relative; font-weight: 700; font-size: 19px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; position: absolute; right: 6px; top: 14px; font: 500 26px var(--mono); color: var(--tape-ink); }
+  .faq details[open] summary::after { content: "\2212"; }
+  .faq .a { padding: 0 0 22px; max-width: 72ch; color: var(--ink-2); }
+  .faq .a p { margin: 0 0 10px; }
+  .faq .a ul { margin: 0; padding-left: 20px; }
+  .faq .a li { margin-bottom: 4px; }
+
+  /* closing */
+  .closing { text-align: left; }
+  .closing-box { background: var(--card); border-radius: 6px; padding: 40px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; align-items: center; box-shadow: 0 0 0 1px var(--line); position: relative; }
+  .closing h2 { font-size: clamp(30px, 3.4vw, 44px); margin: 0 0 10px; }
+  .closing p { margin: 0; color: var(--ink-2); }
+  .closing .act { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+
+  footer { padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--ink-2); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; }
+  footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+
+  @media (max-width: 1000px) {
+    .hero-head, .sec-head, .promise-grid, .pillar, .guarantee { grid-template-columns: 1fr; gap: 14px; }
+    .sheet-grid { grid-template-columns: 1fr; }
+    .inputs { border-right: 0; border-bottom: 1px dashed var(--line); }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .closing-box { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    :root { --strip: 44px; }
+    .mock-strip { font-size: 11px; line-height: 1.35; white-space: normal; flex-wrap: wrap; align-content: center; justify-content: flex-start; gap: 0 8px; padding: 4px 12px; }
+    .mock-strip b { display: none; }
+    .wrap { padding: 0 18px; }
+    .top nav a:not(.btn) { display: none; }
+    .hero { padding-top: 12px; }
+    .hero-head p { font-size: 16.5px; }
+    .inputs, .tally { padding: 26px 18px 22px; }
+    .rows { font-size: 14.5px; }
+    .rows li { grid-template-columns: 2ch 10ch 1fr; gap: 8px; }
+    .rows .t { font-size: 13.5px; }
+    .result { grid-template-columns: 1fr; }
+    section { padding: 52px 0; }
+    .bridge { grid-template-columns: 1fr; }
+    .bridge > div { border-right: 0; border-bottom: 1px solid var(--line); }
+    .bridge .fix { grid-template-columns: 1fr; border-bottom: 0; }
+    .bridge .fix > div + div { border-left: 0; border-top: 1px solid #C4D4EF; }
+    .steps, .fit, .proofs { grid-template-columns: 1fr; }
+    .gbox { padding: 28px 20px 22px; }
+    .gbox blockquote { font-size: 17px; }
+    .compare thead { display: none; }
+    .compare, .compare tbody, .compare tr, .compare th, .compare td { display: block; width: 100%; }
+    .compare tbody tr { border-bottom: 2px solid var(--ink); }
+    .compare tbody th { width: 100%; border-bottom: 0; padding-bottom: 4px; }
+    .compare td { border-bottom: 1px solid var(--line); }
+    .compare td::before { content: attr(data-col); display: block; font: 700 13px var(--mono); color: var(--ink); margin-bottom: 3px; }
+    .closing-box { padding: 28px 20px; }
+    .faq summary { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+<div class="mock-strip" role="note"><b>MOCK</b><span>MOCK for review. Not a live page. Proof is placeholder.</span><span>Offer page · Option C</span></div>
+
+<header class="wrap top">
+  <a class="brand" href="#top" aria-label="EstimateFlows home"><i aria-hidden="true"></i>EstimateFlows</a>
+  <nav aria-label="Page">
+    <a href="#how">How it works</a>
+    <a href="#programs">Programs</a>
+    <a href="#guarantee">Guarantee</a>
+    <a href="#faq">FAQ</a>
+    <a class="btn small" href="../booking-c/index.html">Book a review</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div class="hero-head">
+        <div>
+          <span class="label">Lead leak worksheet · for painting company owners</span>
+          <h1 id="hero-h" class="display">How much work is <mark>waiting on a slow reply?</mark></h1>
+        </div>
+        <p>Put in your own numbers from last month. The sheet does the arithmetic in plain view, so you can check every line. Nothing here is our figure.</p>
+      </div>
+
+      <div class="sheet" role="group" aria-labelledby="sheet-h">
+        <span class="tape tl" aria-hidden="true"></span><span class="tape tr" aria-hidden="true"></span>
+        <div class="sheet-grid">
+          <form class="inputs" id="calc" novalidate>
+            <span class="label" id="sheet-h">Your numbers</span>
+
+            <div class="field">
+              <div class="field-row">
+                <label for="inq">New inquiries a month<small>Calls and web forms, before any filtering</small></label>
+                <span class="num"><input id="inq" type="number" inputmode="numeric" min="0" max="1000" step="1" value="40"></span>
+              </div>
+              <input type="range" min="0" max="300" step="1" value="40" data-for="inq" aria-label="New inquiries a month, slider">
+            </div>
+
+            <div class="field">
+              <div class="field-row">
+                <label for="fast">Answered within 5 minutes<small>Share that hear from a person or a text that fast</small></label>
+                <span class="num"><input id="fast" type="number" inputmode="numeric" min="0" max="100" step="1" value="30"><span>%</span></span>
+              </div>
+              <input type="range" min="0" max="100" step="1" value="30" data-for="fast" aria-label="Answered within 5 minutes, slider">
+            </div>
+
+            <div class="field">
+              <div class="field-row">
+                <label for="close">Estimate-to-job close rate<small>Of estimates you run, how many you win</small></label>
+                <span class="num"><input id="close" type="number" inputmode="numeric" min="0" max="100" step="1" value="30"><span>%</span></span>
+              </div>
+              <input type="range" min="0" max="100" step="1" value="30" data-for="close" aria-label="Estimate-to-job close rate, slider">
+            </div>
+
+            <div class="field">
+              <div class="field-row">
+                <label for="avg">Average job value<small>Typical invoice for the work you want more of</small></label>
+                <span class="num"><span class="pre">$</span><input id="avg" type="number" inputmode="numeric" min="0" max="200000" step="100" value="4500"></span>
+              </div>
+              <input type="range" min="0" max="30000" step="100" value="4500" data-for="avg" aria-label="Average job value, slider">
+            </div>
+
+            <p class="placeholder-note">The starting values are placeholders, not industry figures. Replace them with yours.</p>
+          </form>
+
+          <div class="tally" aria-live="polite">
+            <span class="label">The arithmetic</span>
+            <ol class="rows">
+              <li><span class="op"></span><span class="v" data-out="inq">40</span><span class="t">inquiries a month</span></li>
+              <li><span class="op">×</span><span class="v" data-out="slowPct">70%</span><span class="t">not answered within 5 minutes</span></li>
+              <li class="sum"><span class="op">=</span><span class="v" data-out="slow">28</span><span class="t">inquiries that wait</span></li>
+              <li><span class="op">×</span><span class="v" data-out="close">30%</span><span class="t">your close rate</span></li>
+              <li class="sum"><span class="op">=</span><span class="v" data-out="worth">8.4</span><span class="t">jobs' worth at your own rate</span></li>
+              <li><span class="op">×</span><span class="v" data-out="avg">$4,500</span><span class="t">your average job</span></li>
+            </ol>
+            <div class="result">
+              <div><span class="label">A month</span><br><span class="big" data-out="month">$37,800</span><p>job value sitting in inquiries that wait more than 5 minutes</p></div>
+              <div><span class="label">A year (× 12)</span><br><span class="big" data-out="year">$453,600</span><p>same arithmetic, twelve months</p></div>
+            </div>
+            <div class="not-promise">
+              <strong>Your numbers, your estimate. Not a promise.</strong>
+              <p data-out="note">Slow replies don't lose every one of these. This is what your own numbers put at risk, not what EstimateFlows will add.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-cta">
+        <a class="btn" href="../booking-c/index.html">Go through your numbers with us</a>
+        <a href="#how">See where we close the gap</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="promise" aria-labelledby="promise-h">
+    <div class="wrap promise-grid">
+      <span class="label">What we commit to</span>
+      <div>
+        <h2 id="promise-h" class="display"><span>15 qualified attended estimate appointments</span> in your first 30 days.</h2>
+        <p class="cond">DFY guarantee. Conditions apply.</p>
+        <p class="lede">We run the ads, get new inquiries a fast reply, qualify them and confirm them, so your estimator spends the month in front of homeowners who are home, in your area and asking for the work you want.</p>
+        <a class="btn" href="../booking-c/index.html">Book a Painting Pipeline Review</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">How it works · 4 parts</span>
+        <div>
+          <h2 id="how-h" class="display">Four places a lead leaks, in the order it moves</h2>
+          <p>Each part fixes one stage between a homeowner seeing your ad and your estimator walking up the driveway.</p>
+        </div>
+      </div>
+
+      <article class="pillar">
+        <div><span class="stage">Stage 1 · Getting found</span><h3 class="display">Service-Area Demand Capture</h3></div>
+        <div class="bridge">
+          <div><span class="label">Most of the market</span><p>Buys shared leads or runs generic "painters near me" ads. Past leads and customers sit untouched in the CRM.</p></div>
+          <div><span class="label">Why that's a problem</span><p>Shared leads go to several companies at once. Generic ads pull small jobs from towns you don't want to drive to.</p></div>
+          <div><span class="label">What it costs you</span><p>Estimator hours on price shoppers and drive time, while people who already know you hear nothing.</p></div>
+          <div class="fix">
+            <div><span class="label">So instead we</span><p>Build Meta ads around your profitable project types and neighborhoods, and reactivate your own database of past leads and customers.</p></div>
+            <div><span class="label">So you can</span><p>Fill the calendar with the work and the areas you actually want.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pillar">
+        <div>
+          <span class="stage">Stage 2 · First reply</span><h3 class="display">Instant Inquiry Response</h3>
+          <div class="thread" aria-label="Illustration of a missed-call text-back">
+            <span class="label"><span>Missed-call text-back</span><span>Illustration</span></span>
+            <p class="sys">Missed call · Tue 7:42 PM</p>
+            <div class="bubble out">Hi, this is the office at your painting company. Sorry we missed you. Is this about an interior or exterior project?<time>7:43 PM</time></div>
+            <div class="bubble in">Exterior. 2 story, needs it before spring<time>7:51 PM</time></div>
+            <div class="bubble out">Got it. What's the street address so we can check it's in our area?<time>7:51 PM</time></div>
+          </div>
+        </div>
+        <div class="bridge">
+          <div><span class="label">Most of the market</span><p>Calls back after getting off the ladder, often hours later. Evening and weekend inquiries wait until Monday.</p></div>
+          <div><span class="label">Why that's a problem</span><p>Homeowners send the same form to several painters and talk to whoever answers first.</p></div>
+          <div><span class="label">What it costs you</span><p>In your worksheet, <span class="live" data-out="slow">28</span> inquiries a month wait more than 5 minutes. That's <span class="live" data-out="month">$37,800</span> of job value at your own close rate.</p></div>
+          <div class="fix">
+            <div><span class="label">So instead we</span><p>Give new calls and form inquiries a fast reply, including evenings and weekends. Missed calls get a text back.</p></div>
+            <div><span class="label">So you can</span><p>Stay on the job and still be the company that answered.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pillar">
+        <div><span class="stage">Stage 3 · Before the estimate</span><h3 class="display">Job Qualification &amp; Routing</h3></div>
+        <div class="bridge">
+          <div><span class="label">Most of the market</span><p>Books every estimate that asks, then learns on the driveway that it's one bedroom, 40 miles out, next year.</p></div>
+          <div><span class="label">Why that's a problem</span><p>Your estimator's time is the bottleneck. Every bad estimate pushes a good one back.</p></div>
+          <div><span class="label">What it costs you</span><p>Lost afternoons, fuel and quotes for work you never wanted.</p></div>
+          <div class="fix">
+            <div><span class="label">So instead we</span><p>Collect scope, address, timing and fit before your estimator spends any time.</p></div>
+            <div><span class="label">So you can</span><p>Send your estimator only to estimates worth running.</p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="pillar">
+        <div><span class="stage">Stage 4 · Showing up</span><h3 class="display">Confirmation &amp; Recovery</h3></div>
+        <div class="bridge">
+          <div><span class="label">Most of the market</span><p>Books the appointment and hopes the homeowner is home. Homeowners who didn't book never hear from you again.</p></div>
+          <div><span class="label">Why that's a problem</span><p>No-shows and forgotten inquiries look like a lead problem when they're a follow-up problem.</p></div>
+          <div><span class="label">What it costs you</span><p>Empty slots you held open and homeowners who went with someone else by default.</p></div>
+          <div class="fix">
+            <div><span class="label">So instead we</span><p>Confirm and remind every appointment, follow up no-shows, and follow up homeowners who didn't book.</p></div>
+            <div><span class="label">So you can</span><p>Pull up to homes where someone is expecting you.</p></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="del-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Delivery</span>
+        <div>
+          <h2 id="del-h" class="display">What happens after you book</h2>
+          <p>Short version. The full plan and terms are in your written agreement.</p>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><h3 class="display">Review call</h3><p>30 minutes on video. We go through your numbers, crews, service area and past lead list, and tell you which program fits.</p><p class="you">You bring: last month's rough numbers.</p></li>
+        <li><h3 class="display">Build</h3><p>We set up the ads, the fast reply, qualification questions and confirmations around your service area and project types.</p><p class="you">You bring: your complete historical lead list, access and approvals.</p></li>
+        <li><h3 class="display">Launch</h3><p>Ads go live and database reactivation starts on your past leads and customers.</p><p class="you">You bring: open estimate slots and ad spend paid to the platform.</p></li>
+        <li><h3 class="display">Run</h3><p>Appointments land in your CRM, confirmed. You see what booked, what attended and what's being followed up.</p><p class="you">You bring: estimates run in good faith and quote follow-up.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="programs" aria-labelledby="prog-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Two programs</span>
+        <div>
+          <h2 id="prog-h" class="display">Done-for-You or Done-with-You</h2>
+          <p>Same four parts. The difference is who runs them day to day, and only Done-for-You carries the guarantee.</p>
+        </div>
+      </div>
+      <table class="compare">
+        <thead>
+          <tr><th scope="col"><span class="label">Compare</span></th><th scope="col">Done-for-You<small>DFY</small></th><th scope="col">Done-with-You<small>DWY</small></th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Who runs it</th><td data-col="Done-for-You">We run the ads, replies, qualification and confirmations for you.</td><td data-col="Done-with-You">We build the system with you and coach your team to run it. <span class="confirm">[Ali to confirm DWY wording]</span></td></tr>
+          <tr><th scope="row">Guarantee</th><td data-col="Done-for-You"><span class="yes">Yes.</span> 15 qualified attended estimate appointments in your first 30 days. <span class="cond">DFY guarantee. Conditions apply.</span></td><td data-col="Done-with-You">No guarantee.</td></tr>
+          <tr><th scope="row">Ad spend</th><td data-col="Done-for-You">At least $2,000 a month paid to the advertising platform for the guarantee.</td><td data-col="Done-with-You">Paid to the platform directly. We set the level with you on the call.</td></tr>
+          <tr><th scope="row">Past lead list</th><td data-col="Done-for-You">Complete historical list before launch, needed for the guarantee.</td><td data-col="Done-with-You">Whatever you have. We use it for reactivation.</td></tr>
+          <tr><th scope="row">Usually fits</th><td data-col="Done-for-You">2 or more crews and $2,000+ a month for ads.</td><td data-col="Done-with-You">Owner-operators, 1 crew, or a smaller ad budget.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="guarantee" aria-labelledby="g-h">
+    <div class="wrap guarantee">
+      <div>
+        <span class="label">The guarantee · DFY only</span>
+        <h2 id="g-h" class="display" style="font-size:clamp(30px,3.2vw,42px);margin:10px 0 0;">The whole guarantee, word for word</h2>
+      </div>
+      <div class="gbox">
+        <span class="tape tl" aria-hidden="true"></span>
+        <blockquote>15 qualified attended estimate appointments in the first 30 days. Appointments generated through database reactivation count toward the same 15 if they meet the same qualification, attendance, and CRM-recording criteria. If EstimateFlows misses the target, it will continue work at no additional service fee for another 30 days; if the same 15-appointment target is still unmet at the end of that extension, refund all program fees and reimburse all client ad spend. This is not a guarantee of signed or completed painting jobs.</blockquote>
+        <p class="side">Done-for-You only. Available only if you provide your complete historical lead list before campaign launch. Your side: at least $2,000 per month of ad spend paid to the advertising platform; the complete historical lead list before launch; at least 10 calls per week to eligible prior painting customers; reasonably open estimate capacity; keep your service areas and advertised work available; run and reschedule estimates in good faith and follow up on quotes; keep the approved response and booking operations active; give reasonable access, approvals, assets and timely creative review; capture before, mid-job and after photos or video for each job. Full terms are in your written agreement.</p>
+        <p class="def">A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="fit-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Fit</span>
+        <div><h2 id="fit-h" class="display">Who this is for, and who it isn't</h2></div>
+      </div>
+      <div class="fit">
+        <div class="for">
+          <h3 class="display">A good fit if you</h3>
+          <ul>
+            <li>Own an established residential painting company in the US</li>
+            <li>Have room on the calendar for more estimates in the next 30 days</li>
+            <li>Run your estimates and follow up on quotes</li>
+            <li>Have past leads and customers on file, ideally the complete list</li>
+            <li>Can pay for ads directly to the platform each month</li>
+          </ul>
+        </div>
+        <div class="not">
+          <h3 class="display">Not a fit if you</h3>
+          <ul>
+            <li>Want a promise of signed contracts. We don't make one.</li>
+            <li>Can't take more estimates right now</li>
+            <li>Want shared leads to work through on your own</li>
+            <li>Won't run ads paid to the platform</li>
+            <li>Mostly bid commercial or new construction work</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="proof-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">Results</span>
+        <div>
+          <h2 id="proof-h" class="display">What owners say</h2>
+          <p>These spaces stay empty until a client gives written permission.</p>
+        </div>
+      </div>
+      <div class="proofs">
+        <div class="ph"><p>PLACEHOLDER: client result. Needs written client permission before use.</p><span>Slot 1 · result</span></div>
+        <div class="ph"><p>PLACEHOLDER: client result. Needs written client permission before use.</p><span>Slot 2 · result</span></div>
+        <div class="ph"><p>PLACEHOLDER: client result. Needs written client permission before use.</p><span>Slot 3 · result</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="label">FAQ</span>
+        <div><h2 id="faq-h" class="display">Straight answers</h2></div>
+      </div>
+      <details>
+        <summary>Is this a guarantee of jobs?</summary>
+        <div class="a"><p>No. The Done-for-You guarantee covers 15 qualified attended estimate appointments in the first 30 days. This is not a guarantee of signed or completed painting jobs. You run the estimates and close the work.</p><p><a href="#guarantee">Read the full guarantee</a></p></div>
+      </details>
+      <details>
+        <summary>What do I need to provide?</summary>
+        <div class="a">
+          <p>For Done-for-You with the guarantee:</p>
+          <ul>
+            <li>At least $2,000 per month of ad spend paid to the advertising platform</li>
+            <li>The complete historical lead list before launch</li>
+            <li>At least 10 calls per week to eligible prior painting customers</li>
+            <li>Reasonably open estimate capacity</li>
+            <li>Your service areas and advertised work kept available</li>
+            <li>Estimates run and rescheduled in good faith, and quotes followed up</li>
+            <li>The approved response and booking operations kept active</li>
+            <li>Reasonable access, approvals, assets and timely creative review</li>
+            <li>Before, mid-job and after photos or video for each job</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>Do I need to spend on ads?</summary>
+        <div class="a"><p>Yes. Ad spend is paid to the platform directly, not to us. The Done-for-You guarantee needs at least $2,000 per month of ad spend paid to the advertising platform. For Done-with-You we set the level with you on the call.</p></div>
+      </details>
+      <details>
+        <summary>What happens on the review call?</summary>
+        <div class="a"><p>It's a 30-minute Painting Pipeline Review on video, with no obligation. We go through your numbers (the same ones in the worksheet above), your crews, service area and past lead list. You leave knowing which program fits, whether the guarantee applies to you, and what you'd need to provide.</p></div>
+      </details>
+      <details>
+        <summary>What counts as a qualified attended estimate appointment?</summary>
+        <div class="a"><p>A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p></div>
+      </details>
+      <details>
+        <summary>Where are the prices?</summary>
+        <div class="a"><p>Program fees depend on which program fits, so we cover them on the review call.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <section class="closing" aria-labelledby="close-h">
+    <div class="wrap">
+      <div class="closing-box">
+        <span class="tape tr" aria-hidden="true"></span>
+        <div>
+          <h2 id="close-h" class="display">Bring your numbers to a 30-minute review</h2>
+          <p>Video call, no obligation. We'll check your worksheet with you and tell you whether Done-for-You or Done-with-You fits.</p>
+        </div>
+        <div class="act">
+          <a class="btn" href="../booking-c/index.html">Book a Painting Pipeline Review</a>
+          <span class="cond">Aiming for 15 qualified attended estimate appointments in your first 30 days? DFY guarantee. Conditions apply.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 EstimateFlows · (555) 010-0000 · hello@example.com</span>
+    <nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const ids = ["inq", "fast", "close", "avg"];
+  const max = { inq: 1000, fast: 100, close: 100, avg: 200000 };
+  const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  const num = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
+  const val = id => {
+    const n = parseFloat(document.getElementById(id).value);
+    return Number.isFinite(n) ? Math.min(Math.max(n, 0), max[id]) : 0;
+  };
+  const set = (key, text) => document.querySelectorAll(`[data-out="${key}"]`).forEach(el => { el.textContent = text; });
+
+  function render() {
+    const inq = val("inq"), fast = val("fast"), close = val("close"), avg = val("avg");
+    const slow = inq * (1 - fast / 100);
+    const worth = slow * close / 100;
+    const month = worth * avg;
+    set("inq", num.format(inq));
+    set("slowPct", num.format(100 - fast) + "%");
+    set("slow", num.format(slow));
+    set("close", num.format(close) + "%");
+    set("worth", num.format(worth));
+    set("avg", usd.format(avg));
+    set("month", usd.format(month));
+    set("year", usd.format(month * 12));
+    set("note", fast >= 100
+      ? "By your numbers, all of your inquiries hear back within 5 minutes. If something leaks, it's later: qualification, confirmations or no-shows."
+      : "Slow replies don't lose every one of these. This is what your own numbers put at risk, not what EstimateFlows will add.");
+  }
+
+  ids.forEach(id => {
+    const box = document.getElementById(id);
+    const slider = document.querySelector(`input[type=range][data-for="${id}"]`);
+    box.addEventListener("input", () => { slider.value = val(id); render(); });
+    box.addEventListener("blur", () => { box.value = val(id); render(); });
+    slider.addEventListener("input", () => { box.value = slider.value; render(); });
+  });
+  document.getElementById("calc").addEventListener("submit", e => e.preventDefault());
+  render();
+})();
+</script>
+</body>
+</html>

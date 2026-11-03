@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MOCK · EstimateFlows booking page · Option B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Kalam:wght@400;700&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primer: #E3E5DF;
+    --paper: #FDFDFB;
+    --ink: #22262A;
+    --ink-2: #50575D;
+    --form: #2E6A4E;
+    --form-soft: #D4E4D9;
+    --form-rule: #C9DACF;
+    --tape: #74B6E6;
+    --tape-dark: #4E95C9;
+    --canary: #FBEB93;
+    --canary-edge: #DCC65A;
+    --pencil: #B1442F;
+    --cta: #1F5A40;
+    --cta-hover: #153F2D;
+    --chip-1: #DDECE1;
+    --chip-2: #B4D3BE;
+    --chip-3: #7FB290;
+    --chip-4: #4C8C66;
+    --chip-5: #1F5A40;
+    --strip-h: 36px;
+    --label: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --hand: "Kalam", "Comic Sans MS", cursive;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh; min-height: 100dvh;
+    padding-top: var(--strip-h);
+    display: flex; flex-direction: column;
+    background: var(--primer); color: var(--ink);
+    font: 400 17px/1.55 "Public Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--form); text-underline-offset: 3px; }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--tape-dark); outline-offset: 3px; border-radius: 3px; }
+  [hidden] { display: none !important; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .mock-strip {
+    position: fixed; inset: 0 0 auto 0; z-index: 50;
+    min-height: var(--strip-h);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 14px;
+    padding: 6px 16px; background: var(--ink); color: #fff;
+    font: 600 13px/1.3 "Public Sans", sans-serif; text-align: center;
+  }
+  .mock-strip b { font-family: var(--label); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--canary); }
+
+  /* Chrome: back, brand, progress */
+  .chrome { width: 100%; max-width: 680px; margin: 0 auto; padding: 14px 20px 0; }
+  .chrome-row { display: flex; align-items: center; justify-content: space-between; min-height: 40px; gap: 12px; }
+  .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 40px; padding: 6px 10px 6px 4px; margin-left: -4px;
+    background: none; border: 0; cursor: pointer; text-decoration: none;
+    font: 600 18px/1 var(--label); letter-spacing: .05em; text-transform: uppercase; color: var(--ink);
+  }
+  .back:hover { color: var(--form); }
+  .brand { display: inline-flex; align-items: center; gap: 8px; font: 700 20px/1 var(--label); color: var(--ink); text-decoration: none; }
+  .brand-chip { display: grid; grid-template-rows: repeat(3, 6px); width: 15px; border-radius: 2px; overflow: hidden; }
+  .brand-chip i:nth-child(1) { background: var(--chip-2); }
+  .brand-chip i:nth-child(2) { background: var(--chip-4); }
+  .brand-chip i:nth-child(3) { background: var(--chip-5); }
+
+  .progress { margin-top: 10px; }
+  .chips { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+  .chips i { height: 10px; background: #fff; border: 1px solid #C3C9C2; transition: background-color .25s ease, border-color .25s ease; }
+  .chips i.on:nth-child(1) { background: var(--chip-1); border-color: #B9CFC0; }
+  .chips i.on:nth-child(2) { background: var(--chip-2); border-color: var(--chip-2); }
+  .chips i.on:nth-child(3) { background: var(--chip-3); border-color: var(--chip-3); }
+  .chips i.on:nth-child(4) { background: var(--chip-4); border-color: var(--chip-4); }
+  .chips i.on:nth-child(5) { background: #336F51; border-color: #336F51; }
+  .chips i.on:nth-child(6) { background: var(--chip-5); border-color: var(--chip-5); }
+  .progress-label { margin-top: 6px; font: 600 14px/1.2 var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+
+  /* Screens */
+  main { flex: 1; width: 100%; max-width: 680px; margin: 0 auto; padding: 22px 20px 40px; display: flex; flex-direction: column; }
+  .screen { width: 100%; }
+  .screen.q { margin: auto 0; padding-bottom: 6vh; }
+  .screen.enter { animation: enter .22s ease-out both; }
+  @keyframes enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+  .eyebrow {
+    display: inline-block; padding: 3px 14px 2px; margin: 0 0 10px -4px;
+    background: #F1E7C2; color: #2B2B26; font: 700 17px/1.25 var(--hand);
+    transform: rotate(-1.2deg);
+    clip-path: polygon(0 6%, 3% 0, 97% 4%, 100% 0, 98% 50%, 100% 100%, 3% 96%, 0 100%, 2% 50%);
+  }
+  h1 { font: 700 clamp(32px, 6vw, 46px)/1.05 var(--label); margin: 0 0 8px; }
+  h1:focus, h1:focus-visible, .booked h2:focus-visible { outline: none; }
+  .sub { margin: 0 0 22px; color: var(--ink-2); font-size: 17px; }
+
+  /* Contact form */
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font: 600 15px/1.2 var(--label); letter-spacing: .08em; text-transform: uppercase; color: var(--form); margin-bottom: 5px; }
+  .input {
+    width: 100%; height: 54px; padding: 0 14px;
+    background: #fff; border: 2px solid #AEB6AD; border-radius: 3px;
+    font-size: 18px;
+  }
+  .input:focus { border-color: var(--form); outline: 3px solid var(--tape); outline-offset: 1px; }
+  .input[aria-invalid="true"] { border-color: var(--pencil); background: #FFF7F5; }
+  .err { display: flex; gap: 6px; align-items: flex-start; margin: 6px 0 0; color: var(--pencil); font-size: 15px; font-weight: 600; }
+  .err::before { content: "!"; flex: none; display: grid; place-items: center; width: 18px; height: 18px; margin-top: 1px; border-radius: 50%; background: var(--pencil); color: #fff; font-size: 12px; font-weight: 700; }
+  .consent { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; margin: 6px 0 18px; font-size: 13.5px; line-height: 1.45; color: var(--ink-2); cursor: pointer; }
+  .consent input { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--cta); cursor: pointer; }
+  .consent em { font-style: normal; font-weight: 700; color: var(--ink); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+    width: 100%; min-height: 58px; padding: 12px 22px;
+    background: var(--cta); color: #fff; border: 0; border-radius: 3px; cursor: pointer;
+    font: 700 23px/1 var(--label); letter-spacing: .03em;
+    box-shadow: 0 3px 0 #0E2E20; transition: background-color .15s ease;
+  }
+  .btn:hover { background: var(--cta-hover); }
+  .btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #0E2E20; }
+  .fine { margin: 12px 0 0; font-size: 14px; color: var(--ink-2); text-align: center; }
+
+  /* Paint-chip answers */
+  .opts { display: grid; gap: 10px; margin-top: 20px; }
+  .opt {
+    display: grid; grid-template-columns: 58px 1fr 34px; align-items: stretch;
+    min-height: 66px; padding: 0; text-align: left; cursor: pointer;
+    background: #fff; border: 2px solid #C3C9C2; border-radius: 3px;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .opt:hover { border-color: var(--form); box-shadow: 0 6px 16px -12px rgba(0,0,0,.5); }
+  .opt .sw { display: grid; place-items: end start; padding: 0 0 6px 8px; font: 600 13px/1 var(--label); color: rgba(0,0,0,.55); }
+  .opt .sw.d { color: rgba(255,255,255,.8); }
+  .opt .txt { align-self: center; padding: 10px 14px; font: 600 22px/1.15 var(--label); }
+  .opt .txt small { display: block; font: 400 14px/1.3 "Public Sans", sans-serif; color: var(--ink-2); margin-top: 2px; }
+  .opt .tick { align-self: center; justify-self: center; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #C3C9C2; }
+  .opt[aria-pressed="true"] { border-color: var(--cta); box-shadow: inset 0 0 0 1px var(--cta); }
+  .opt[aria-pressed="true"] .tick { border-color: var(--cta); background: var(--cta) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat; }
+  .s1 { background: var(--chip-1); } .s2 { background: var(--chip-2); } .s3 { background: var(--chip-3); } .s4 { background: var(--chip-5); }
+  .keyhint { margin: 14px 0 0; font-size: 13.5px; color: var(--ink-2); }
+  @media (hover: none) { .keyhint, .opt .sw span { display: none; } }
+
+  .radius { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .radius .opt { grid-template-columns: 1fr; min-height: 58px; text-align: center; }
+  .radius .opt .txt { padding: 8px; }
+  .radius-legend { padding: 0; margin: 18px 0 8px; font: 600 15px/1.2 var(--label); letter-spacing: .08em; text-transform: uppercase; color: var(--form); }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+
+  /* Result */
+  .ticket { margin: 18px 0 0; background: #fff; border: 2px solid var(--form); }
+  .ticket-head { display: flex; justify-content: space-between; gap: 10px; padding: 6px 12px; background: var(--form); color: #fff; font: 600 14px/1.2 var(--label); letter-spacing: .1em; text-transform: uppercase; }
+  .ticket dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; }
+  .ticket dl div { padding: 8px 12px; border-top: 1px solid var(--form-rule); }
+  .ticket dl div:nth-child(odd) { border-right: 1px solid var(--form-rule); }
+  .ticket dl div:nth-child(-n+2) { border-top: 0; }
+  .ticket dt { font: 600 12.5px/1.2 var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--form); }
+  .ticket dd { margin: 2px 0 0; font: 400 18px/1.3 var(--hand); color: #24408F; overflow-wrap: anywhere; }
+
+  .promise-line { margin: 16px 0 0; padding: 14px 16px; background: var(--form-soft); border-left: 5px solid var(--cta); }
+  .promise-line strong { display: block; font: 700 23px/1.15 var(--label); }
+  .promise-line span { display: inline-block; margin-top: 6px; font: 600 14px/1.2 var(--label); letter-spacing: .08em; text-transform: uppercase; color: var(--form); }
+  .elig { display: grid; grid-template-columns: 26px 1fr; gap: 8px; margin: 12px 0 0; font-weight: 600; }
+  .elig::before { content: ""; width: 22px; height: 22px; margin-top: 2px; border-radius: 50%; }
+  .elig.ok::before { background: var(--cta) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat; }
+  .elig.warn::before { background: var(--canary); border: 2px solid var(--canary-edge); }
+  .confirm-tag { font: 400 15px/1.3 var(--hand); color: var(--pencil); }
+
+  .section-h { font: 700 26px/1.1 var(--label); margin: 30px 0 10px; }
+
+  /* Calendar mock */
+  .cal { border: 2px dashed var(--ink-2); background: var(--paper); }
+  .cal-mock { padding: 8px 12px; background: var(--ink); color: #fff; font: 600 13.5px/1.35 "Public Sans", sans-serif; }
+  .cal-body { padding: 16px; }
+  .cal-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 14px; font-size: 14px; color: var(--ink-2); margin-bottom: 12px; }
+  .cal-meta strong { color: var(--ink); font: 700 20px/1.2 var(--label); display: block; }
+  .prefill { font-size: 13.5px; background: var(--form-soft); padding: 7px 10px; margin-bottom: 14px; overflow-wrap: anywhere; }
+  .days { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .day {
+    min-height: 62px; padding: 6px 2px; cursor: pointer; text-align: center;
+    background: #fff; border: 2px solid #C3C9C2; border-radius: 3px;
+    font: 600 14px/1.15 var(--label); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2);
+  }
+  .day b { display: block; font-size: 24px; letter-spacing: 0; color: var(--ink); }
+  .day[aria-pressed="true"] { border-color: var(--cta); background: var(--cta); color: #DDECE1; }
+  .day[aria-pressed="true"] b { color: #fff; }
+  .slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+  .slot {
+    min-height: 50px; cursor: pointer; background: #fff; border: 2px solid var(--form); border-radius: 3px; color: var(--cta);
+    font: 700 19px/1 var(--label); letter-spacing: .02em;
+  }
+  .slot:hover { background: var(--form-soft); }
+  .tz { margin: 10px 0 0; font-size: 13px; color: var(--ink-2); }
+  .booked { text-align: left; }
+  .booked-stamp {
+    display: inline-block; padding: 4px 12px; margin-bottom: 10px;
+    border: 3px solid var(--cta); color: var(--cta); border-radius: 4px;
+    font: 700 30px/1 var(--label); letter-spacing: .1em; text-transform: uppercase; transform: rotate(-3deg);
+  }
+  .booked h2 { font: 700 26px/1.15 var(--label); margin: 4px 0 6px; outline: none; }
+  .booked p { margin: 0 0 8px; }
+  .link-btn { background: none; border: 0; padding: 6px 0; cursor: pointer; color: var(--form); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+
+  /* Terms card */
+  .terms { position: relative; margin-top: 12px; background: var(--canary); border: 1px solid var(--canary-edge); padding: 22px 18px 18px; }
+  .terms::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px; background: radial-gradient(circle at 6px 0, var(--primer) 3px, transparent 3.5px) 0 0 / 12px 8px repeat-x; }
+  .terms h3 { font: 700 13.5px/1.2 var(--label); letter-spacing: .12em; text-transform: uppercase; color: #5E5628; margin: 14px 0 4px; }
+  .terms h3:first-child { margin-top: 0; }
+  .terms p { margin: 0; font-size: 15px; line-height: 1.55; color: #24231A; }
+
+  footer { width: 100%; max-width: 680px; margin: 0 auto; padding: 12px 20px 22px; display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--ink-2); }
+  footer nav { display: flex; gap: 16px; }
+  footer a { color: var(--ink-2); }
+
+  @media (max-width: 600px) {
+    :root { --strip-h: 54px; }
+    .chrome { padding: 8px 16px 0; }
+    main { padding: 14px 16px 28px; }
+    h1 { font-size: 32px; }
+    .sub { font-size: 15.5px; margin-bottom: 14px; }
+    .field { margin-bottom: 10px; }
+    .input { height: 50px; }
+    .screen.q { margin: 8px 0 auto; padding-bottom: 0; }
+    .slots { grid-template-columns: repeat(2, 1fr); }
+    .day b { font-size: 21px; }
+    .ticket dd { font-size: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .screen.enter { animation: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-strip" role="note">
+  <span>MOCK for review. Not a live page. Proof is placeholder.</span>
+  <b>Booking page · Option B</b>
+</div>
+
+<div class="chrome">
+  <div class="chrome-row">
+    <a class="back" id="howLink" href="../offer-b/index.html">
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M17 7H2M7 1.5 1.5 7 7 12.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>How it works
+    </a>
+    <button class="back" id="backBtn" type="button" hidden>
+      <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M17 7H2M7 1.5 1.5 7 7 12.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Back
+    </button>
+    <a class="brand" href="../offer-b/index.html" aria-label="EstimateFlows, read how it works"><span class="brand-chip" aria-hidden="true"><i></i><i></i><i></i></span>EstimateFlows</a>
+  </div>
+  <div class="progress" aria-hidden="true">
+    <div class="chips"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <p class="progress-label" id="progressLabel">Step 1 of 3 · Your details</p>
+</div>
+
+<main>
+  <!-- Step 1: contact -->
+  <section class="screen" data-screen="contact" aria-labelledby="h-contact">
+    <span class="eyebrow">painting pipeline review · 30 min</span>
+    <h1 id="h-contact" tabindex="-1">Find out where your pipeline leaks.</h1>
+    <p class="sub">A 30-minute video call, no obligation. First, where should we send your booking details?</p>
+    <form id="contactForm" novalidate>
+      <div class="field">
+        <label for="fname">First name</label>
+        <input class="input" id="fname" name="fname" type="text" autocomplete="given-name" aria-describedby="fname-err">
+        <p class="err" id="fname-err" hidden></p>
+      </div>
+      <div class="field">
+        <label for="phone">Mobile phone</label>
+        <input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 010-0000" aria-describedby="phone-err">
+        <p class="err" id="phone-err" hidden></p>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="hello@example.com" aria-describedby="email-err">
+        <p class="err" id="email-err" hidden></p>
+      </div>
+      <label class="consent">
+        <input type="checkbox" id="consent" name="consent">
+        <span><em>Optional.</em> I agree to receive SMS about my booking and occasional marketing from EstimateFlows. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</span>
+      </label>
+      <button class="btn" type="submit">Next: check fit
+        <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M1 8h18M13 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+  </section>
+
+  <!-- Step 2, question 1 -->
+  <section class="screen q" data-screen="crews" aria-labelledby="h-crews" hidden>
+    <span class="eyebrow">crews</span>
+    <h1 id="h-crews" tabindex="-1">How many crews do you run right now?</h1>
+    <p class="sub">One tap. It tells us how many estimates you can take on.</p>
+    <div class="opts" role="group" aria-labelledby="h-crews">
+      <button class="opt" type="button" data-q="crews" data-v="0" aria-pressed="false"><span class="sw s1"><span>1</span></span><span class="txt">Just me</span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="crews" data-v="1" aria-pressed="false"><span class="sw s2"><span>2</span></span><span class="txt">1 crew</span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="crews" data-v="2" aria-pressed="false"><span class="sw s3"><span>3</span></span><span class="txt">2–3 crews</span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="crews" data-v="3" aria-pressed="false"><span class="sw s4 d"><span>4</span></span><span class="txt">4+ crews</span><span class="tick" aria-hidden="true"></span></button>
+    </div>
+    <p class="keyhint">Tip: press 1 to 4 on your keyboard.</p>
+  </section>
+
+  <!-- Step 2, question 2 -->
+  <section class="screen q" data-screen="area" aria-labelledby="h-area" hidden>
+    <span class="eyebrow">service area</span>
+    <h1 id="h-area" tabindex="-1">Where do you work?</h1>
+    <p class="sub">The town or ZIP you work from, and how far you'll drive for an estimate.</p>
+    <form id="areaForm" novalidate>
+      <div class="field">
+        <label for="place">City or ZIP</label>
+        <input class="input" id="place" name="place" type="text" autocomplete="postal-code" placeholder="e.g. Columbus, OH or 43215" aria-describedby="place-err">
+        <p class="err" id="place-err" hidden></p>
+      </div>
+      <fieldset aria-describedby="radius-err">
+        <legend class="radius-legend">Radius</legend>
+        <div class="radius">
+          <button class="opt" type="button" data-q="radius" data-v="25" aria-pressed="false"><span class="txt">25 miles</span></button>
+          <button class="opt" type="button" data-q="radius" data-v="50" aria-pressed="false"><span class="txt">50 miles</span></button>
+          <button class="opt" type="button" data-q="radius" data-v="75+" aria-pressed="false"><span class="txt">75+ miles</span></button>
+        </div>
+        <p class="err" id="radius-err" hidden></p>
+      </fieldset>
+      <button class="btn" type="submit" style="margin-top:20px">Next
+        <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true"><path d="M1 8h18M13 2l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+  </section>
+
+  <!-- Step 2, question 3 -->
+  <section class="screen q" data-screen="budget" aria-labelledby="h-budget" hidden>
+    <span class="eyebrow">ad budget</span>
+    <h1 id="h-budget" tabindex="-1">What can you put into ads each month, paid to Meta directly?</h1>
+    <p class="sub">This goes to Meta from your own account. It's separate from our fees.</p>
+    <div class="opts" role="group" aria-labelledby="h-budget">
+      <button class="opt" type="button" data-q="budget" data-v="0" aria-pressed="false"><span class="sw s1"><span>1</span></span><span class="txt">Under $1,000</span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="budget" data-v="1" aria-pressed="false"><span class="sw s2"><span>2</span></span><span class="txt">$1,000–1,999</span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="budget" data-v="2" aria-pressed="false"><span class="sw s3"><span>3</span></span><span class="txt">$2,000–4,999</span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="budget" data-v="3" aria-pressed="false"><span class="sw s4 d"><span>4</span></span><span class="txt">$5,000+</span><span class="tick" aria-hidden="true"></span></button>
+    </div>
+    <p class="keyhint">Tip: press 1 to 4 on your keyboard.</p>
+  </section>
+
+  <!-- Step 2, question 4 -->
+  <section class="screen q" data-screen="list" aria-labelledby="h-list" hidden>
+    <span class="eyebrow">past customers</span>
+    <h1 id="h-list" tabindex="-1">Do you have a list of past leads and customers?</h1>
+    <p class="sub">A CRM, a spreadsheet or an old estimate book all count.</p>
+    <div class="opts" role="group" aria-labelledby="h-list">
+      <button class="opt" type="button" data-q="list" data-v="complete" aria-pressed="false"><span class="sw s4 d"><span>1</span></span><span class="txt">Yes, complete<small>CRM or spreadsheet</small></span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="list" data-v="partial" aria-pressed="false"><span class="sw s2"><span>2</span></span><span class="txt">Partial</span><span class="tick" aria-hidden="true"></span></button>
+      <button class="opt" type="button" data-q="list" data-v="no" aria-pressed="false"><span class="sw s1"><span>3</span></span><span class="txt">No</span><span class="tick" aria-hidden="true"></span></button>
+    </div>
+    <p class="keyhint">Tip: press 1 to 3 on your keyboard.</p>
+  </section>
+
+  <!-- Step 3: routed result + calendar -->
+  <section class="screen" data-screen="result" aria-labelledby="h-result" hidden>
+    <span class="eyebrow">your fit</span>
+    <h1 id="h-result" tabindex="-1"></h1>
+
+    <div id="dfyView" hidden>
+      <p class="sub" style="margin-bottom:0">You run 2 or more crews and can put $2,000+ a month into ads. That's what Done-for-You needs. We build the system and run it for you.</p>
+      <div class="promise-line">
+        <strong>15 qualified attended estimate appointments in your first 30 days.</strong>
+        <span>DFY guarantee. Conditions apply.</span>
+      </div>
+      <p class="elig" id="eligLine"></p>
+    </div>
+
+    <div id="dwyView" hidden>
+      <p class="sub" style="margin-bottom:0">We build the system with you and coach your team to run it. <span class="confirm-tag">[Ali to confirm DWY wording]</span></p>
+      <p class="sub" style="margin:10px 0 0">On the call we'll look at your area, crews and budget, and map out what to fix first.</p>
+    </div>
+
+    <div class="ticket" aria-label="Your answers">
+      <div class="ticket-head"><span>Your answers</span><span id="ticketProgram"></span></div>
+      <dl>
+        <div><dt>Crews</dt><dd id="a-crews"></dd></div>
+        <div><dt>Service area</dt><dd id="a-area"></dd></div>
+        <div><dt>Ad budget / month</dt><dd id="a-budget"></dd></div>
+        <div><dt>Past lead list</dt><dd id="a-list"></dd></div>
+      </dl>
+    </div>
+
+    <h2 class="section-h">Pick a time for your review</h2>
+    <div class="cal">
+      <div class="cal-mock">MOCK: the live GHL calendar (Painting Pipeline Review, 30 min) appears here, prefilled with your details</div>
+      <div class="cal-body" id="calPick">
+        <div class="cal-meta"><div><strong>Painting Pipeline Review</strong>30 minutes · video call · no obligation</div><div>Week of November 9</div></div>
+        <div class="prefill" id="prefill"></div>
+        <div class="days" role="group" aria-label="Choose a day" id="days"></div>
+        <div class="slots" role="group" aria-label="Choose a time" id="slots"></div>
+        <p class="tz">Times shown in your local time.</p>
+      </div>
+      <div class="cal-body booked" id="calBooked" hidden>
+        <span class="booked-stamp">Booked</span>
+        <h2 id="bookedH" tabindex="-1"></h2>
+        <p id="bookedWhat"></p>
+        <p id="bookedSent"></p>
+        <button class="link-btn" type="button" id="changeTime">Pick a different time</button>
+      </div>
+    </div>
+
+    <div id="dfyTerms" hidden>
+      <h2 class="section-h">The guarantee, word for word</h2>
+      <div class="terms">
+        <h3>What we commit to</h3>
+        <p>15 qualified attended estimate appointments in the first 30 days. Appointments generated through database reactivation count toward the same 15 if they meet the same qualification, attendance, and CRM-recording criteria. If EstimateFlows misses the target, it will continue work at no additional service fee for another 30 days; if the same 15-appointment target is still unmet at the end of that extension, refund all program fees and reimburse all client ad spend. This is not a guarantee of signed or completed painting jobs.</p>
+        <h3>Conditions</h3>
+        <p>Done-for-You only. Available only if you provide your complete historical lead list before campaign launch. Your side: at least $2,000 per month of ad spend paid to the advertising platform; the complete historical lead list before launch; at least 10 calls per week to eligible prior painting customers; reasonably open estimate capacity; keep your service areas and advertised work available; run and reschedule estimates in good faith and follow up on quotes; keep the approved response and booking operations active; give reasonable access, approvals, assets and timely creative review; capture before, mid-job and after photos or video for each job. Full terms are in your written agreement.</p>
+        <h3>What counts</h3>
+        <p>A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p>
+      </div>
+    </div>
+
+    <p class="fine" style="text-align:left;margin-top:22px">Want the full picture first? <a href="../offer-b/index.html">Read how it works</a>.</p>
+  </section>
+
+  <p class="sr-only" aria-live="polite" id="announce"></p>
+</main>
+
+<footer>
+  <span>© 2026 EstimateFlows</span>
+  <nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+</footer>
+
+<script>
+(() => {
+  const order = ["contact", "crews", "area", "budget", "list", "result"];
+  const labels = {
+    contact: "Step 1 of 3 · Your details",
+    crews: "Step 2 of 3 · Question 1 of 4",
+    area: "Step 2 of 3 · Question 2 of 4",
+    budget: "Step 2 of 3 · Question 3 of 4",
+    list: "Step 2 of 3 · Question 4 of 4",
+    result: "Step 3 of 3 · Pick a time"
+  };
+  const text = {
+    crews: ["Just me", "1 crew", "2–3 crews", "4+ crews"],
+    budget: ["Under $1,000", "$1,000–1,999", "$2,000–4,999", "$5,000+"],
+    list: { complete: "Yes, complete", partial: "Partial", no: "No" }
+  };
+  const week = [
+    { d: "Mon", n: 9,  long: "Monday, November 9",    t: ["9:00 am", "10:30 am", "1:00 pm", "3:30 pm"] },
+    { d: "Tue", n: 10, long: "Tuesday, November 10",  t: ["8:30 am", "11:00 am", "2:00 pm"] },
+    { d: "Wed", n: 11, long: "Wednesday, November 11", t: ["9:30 am", "12:00 pm", "4:00 pm"] },
+    { d: "Thu", n: 12, long: "Thursday, November 12", t: ["10:00 am", "1:30 pm"] },
+    { d: "Fri", n: 13, long: "Friday, November 13",   t: ["9:00 am", "11:30 am", "2:30 pm"] }
+  ];
+  const state = { i: 0, fname: "", phone: "", email: "", consent: false, crews: null, place: "", radius: null, budget: null, list: null, day: 0, slot: null };
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const screens = Object.fromEntries(order.map(k => [k, $(`[data-screen="${k}"]`)]));
+  const chips = [...document.querySelectorAll(".chips i")];
+  const backBtn = $("#backBtn"), howLink = $("#howLink");
+
+  function show(i, { focus = true } = {}) {
+    state.i = i;
+    const key = order[i];
+    for (const k of order) screens[k].hidden = k !== key;
+    const el = screens[key];
+    el.classList.remove("enter"); void el.offsetWidth; el.classList.add("enter");
+    chips.forEach((c, j) => c.classList.toggle("on", j <= i));
+    $("#progressLabel").textContent = labels[key];
+    backBtn.hidden = i === 0;
+    howLink.hidden = i !== 0;
+    if (key === "result") renderResult();
+    syncPressed();
+    window.scrollTo(0, 0);
+    if (focus) $("h1", el).focus({ preventScroll: true });
+    $("#announce").textContent = labels[key];
+  }
+
+  function setErr(input, errEl, msg) {
+    if (input) input.setAttribute("aria-invalid", msg ? "true" : "false");
+    errEl.textContent = msg || "";
+    errEl.hidden = !msg;
+  }
+
+  // Step 1
+  $("#contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = $("#fname"), p = $("#phone"), m = $("#email");
+    const name = f.value.trim(), phone = p.value.trim(), email = m.value.trim();
+    const digits = phone.replace(/\D/g, "");
+    const phoneOk = digits.length === 10 || (digits.length === 11 && digits[0] === "1");
+    const errs = [
+      [f, $("#fname-err"), name ? "" : "Enter your first name."],
+      [p, $("#phone-err"), !phone ? "Enter your mobile number so we can confirm your call." : phoneOk ? "" : "Enter a 10-digit US mobile number, like (555) 010-0000."],
+      [m, $("#email-err"), !email ? "Enter your email address." : /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? "" : "Check your email address. It should look like name@company.com."]
+    ];
+    errs.forEach(([i, el, msg]) => setErr(i, el, msg));
+    const first = errs.find(x => x[2]);
+    if (first) { first[0].focus(); return; }
+    Object.assign(state, { fname: name, phone, email, consent: $("#consent").checked });
+    show(1);
+  });
+
+  // One-tap answers
+  document.addEventListener("click", e => {
+    const b = e.target.closest(".opt[data-q]");
+    if (!b) return;
+    const q = b.dataset.q, v = b.dataset.v;
+    const val = (q === "crews" || q === "budget") ? Number(v) : v;
+    if (state[q] !== val) state.slot = null; // changed answers can change the route, so the mock booking resets
+    state[q] = val;
+    syncPressed();
+    if (q === "radius") { setErr(null, $("#radius-err"), ""); return; }
+    const next = state.i + 1;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(() => show(next), reduce ? 0 : 180);
+  });
+
+  function syncPressed() {
+    document.querySelectorAll(".opt[data-q]").forEach(b => {
+      const v = state[b.dataset.q];
+      b.setAttribute("aria-pressed", String(v !== null && String(v) === b.dataset.v));
+    });
+  }
+
+  // Number keys on one-tap screens
+  document.addEventListener("keydown", e => {
+    const key = order[state.i];
+    if (!["crews", "budget", "list"].includes(key) || e.metaKey || e.ctrlKey || e.altKey) return;
+    const n = Number(e.key);
+    const opts = screens[key].querySelectorAll(".opt");
+    if (n >= 1 && n <= opts.length) { e.preventDefault(); opts[n - 1].click(); }
+  });
+
+  // Question 2: area
+  $("#areaForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const p = $("#place"), place = p.value.trim();
+    setErr(p, $("#place-err"), place ? "" : "Enter the city or ZIP code you work from.");
+    setErr(null, $("#radius-err"), state.radius ? "" : "Pick how far you'll drive for an estimate.");
+    if (!place) { p.focus(); return; }
+    if (!state.radius) { $('.radius .opt').focus(); return; }
+    if (state.place !== place) state.slot = null;
+    state.place = place;
+    show(3);
+  });
+
+  backBtn.addEventListener("click", () => { if (state.i > 0) show(state.i - 1); });
+
+  // Clear a field's message as soon as it's being fixed
+  for (const id of ["fname", "phone", "email", "place"]) {
+    $("#" + id).addEventListener("input", e => setErr(e.target, $(`#${id}-err`), ""));
+  }
+
+  // Step 3
+  function renderResult() {
+    const dfy = state.budget >= 2 && state.crews >= 2;
+    $("#h-result").textContent = dfy ? "Done-for-You fits your company." : "Done-with-You is the place to start.";
+    $("#dfyView").hidden = !dfy;
+    $("#dfyTerms").hidden = !dfy;
+    $("#dwyView").hidden = dfy;
+    $("#ticketProgram").textContent = dfy ? "Done-for-You" : "Done-with-You";
+    const elig = $("#eligLine");
+    if (state.list === "complete") {
+      elig.className = "elig ok";
+      elig.textContent = "You're eligible for the DFY guarantee.";
+    } else {
+      elig.className = "elig warn";
+      elig.textContent = "The guarantee needs your complete historical lead list before launch. Without it, DFY runs without the guarantee.";
+    }
+    $("#a-crews").textContent = text.crews[state.crews];
+    $("#a-area").textContent = `${state.place}, ${state.radius} mi`;
+    $("#a-budget").textContent = text.budget[state.budget];
+    $("#a-list").textContent = text.list[state.list];
+    $("#prefill").textContent = `Booking as ${state.fname} · ${state.phone} · ${state.email}`;
+    renderCal();
+  }
+
+  function renderCal() {
+    const booked = state.slot !== null;
+    $("#calPick").hidden = booked;
+    $("#calBooked").hidden = !booked;
+    if (booked) {
+      const day = week[state.day];
+      $("#bookedH").textContent = `${day.long} at ${state.slot}`;
+      $("#bookedWhat").textContent = "Painting Pipeline Review · 30 minutes · video call.";
+      $("#bookedSent").textContent = `On the live page, the confirmation and video link go to ${state.email}` + (state.consent ? `, plus a text to ${state.phone}.` : ".");
+      return;
+    }
+    const days = $("#days");
+    days.innerHTML = "";
+    week.forEach((w, j) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "day";
+      b.setAttribute("aria-pressed", String(j === state.day));
+      b.setAttribute("aria-label", w.long);
+      b.innerHTML = `${w.d}<b>${w.n}</b>`;
+      b.addEventListener("click", () => { state.day = j; renderCal(); days.children[j].focus(); });
+      days.appendChild(b);
+    });
+    const slots = $("#slots");
+    slots.innerHTML = "";
+    week[state.day].t.forEach(t => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "slot"; b.textContent = t;
+      b.setAttribute("aria-label", `Book ${week[state.day].long} at ${t}`);
+      b.addEventListener("click", () => {
+        state.slot = t; renderCal();
+        $("#bookedH").focus();
+        $("#announce").textContent = `Booked: ${week[state.day].long} at ${t}`;
+      });
+      slots.appendChild(b);
+    });
+  }
+
+  $("#changeTime").addEventListener("click", () => { state.slot = null; renderCal(); $("#days [aria-pressed='true']").focus(); });
+
+  show(0, { focus: false });
+})();
+</script>
+</body>
+</html>

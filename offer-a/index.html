@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>MOCK · Offer page · Option A · EstimateFlows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f1d33;
+    --navy: #14284a;
+    --navy-2: #1d3762;
+    --navy-soft: #e8edf5;
+    --orange: #f08a3e;
+    --orange-btn: #c4541a;
+    --orange-btn-hover: #a8461a;
+    --orange-tint: #fdf1e8;
+    --paper: #f5f7fa;
+    --white: #ffffff;
+    --line: #dce2ea;
+    --muted: #4f5f77;
+    --ok: #1f7a4d;
+    --no: #a33a2a;
+    --radius: 10px;
+    --strip-h: 34px;
+    --display: "Manrope", system-ui, sans-serif;
+    --body: "DM Sans", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: calc(var(--strip-h) + 16px); }
+  body {
+    margin: 0;
+    padding-top: var(--strip-h);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.15; letter-spacing: -0.02em; margin: 0; }
+  p { margin: 0; }
+  a { color: var(--navy-2); }
+  :focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1160px, 100% - 40px); margin-inline: auto; }
+
+  /* Mock strip */
+  .mock-strip {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--strip-h);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 0 12px; background: #fff4b8; color: #3d3300;
+    border-bottom: 1px solid #e3d47a; font-size: 13px; font-weight: 600; line-height: 1.2; text-align: center;
+  }
+  .mock-strip b { font-weight: 700; white-space: nowrap; }
+
+  /* Header */
+  .site-head { background: var(--navy); color: #fff; }
+  .site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }
+  .brand svg { flex: none; }
+  .nav { display: flex; align-items: center; gap: 26px; }
+  .nav a { color: #cfd9ea; text-decoration: none; font-size: 15px; font-weight: 500; }
+  .nav a:hover { color: #fff; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; padding: 12px 22px; border-radius: 8px; border: 0;
+    background: var(--orange-btn); color: #fff; font: 700 16px/1.2 var(--body);
+    text-decoration: none; cursor: pointer; transition: background-color .15s;
+  }
+  .btn:hover { background: var(--orange-btn-hover); }
+  .btn-sm { min-height: 40px; padding: 9px 16px; font-size: 15px; }
+  .btn-ghost { background: transparent; color: var(--navy); box-shadow: inset 0 0 0 1.5px var(--navy); }
+  .btn-ghost:hover { background: var(--navy-soft); }
+  .terms-note { font-size: 13.5px; color: var(--muted); }
+
+  /* Hero */
+  .hero { background: var(--navy); color: #fff; padding: 56px 0 72px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 56px; align-items: center; }
+  .hero .wrap > * { min-width: 0; }
+  .eyebrow { font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--orange); }
+  .hero h1 { font-size: clamp(34px, 4.2vw, 50px); font-weight: 800; margin-top: 14px; }
+  .hero h1 em { font-style: normal; color: var(--orange); }
+  .hero .lede { margin-top: 20px; font-size: 19px; color: #d7e0ee; max-width: 33em; }
+  .hero-cta { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; }
+  .hero .terms-note { color: #b5c3d9; }
+  .hero .terms-note a { color: #fff; }
+  .hero-facts { margin: 34px 0 0; padding: 22px 0 0; border-top: 1px solid rgba(255,255,255,.14); display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 8px 36px; list-style: none; font-size: 15px; color: #d7e0ee; }
+  .hero-facts li strong { display: block; color: #fff; font-weight: 700; }
+
+  /* Thread artifact */
+  .thread {
+    background: #fff; color: var(--ink); border-radius: 16px; padding: 18px 18px 16px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.55); max-width: 440px; justify-self: end; width: 100%; margin: 0;
+  }
+  .thread-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .thread-top .who { font-weight: 700; font-size: 15px; }
+  .thread-top .who span { display: block; font-weight: 500; font-size: 12.5px; color: var(--muted); }
+  .tag-illus { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #6b4a00; background: #fff1c2; border: 1px solid #e9cf72; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+  .call-row { display: flex; align-items: center; gap: 10px; margin: 14px 0 6px; font-size: 13.5px; color: var(--no); font-weight: 600; }
+  .call-row svg { flex: none; }
+  .call-row time { margin-left: auto; color: var(--muted); font-weight: 500; white-space: nowrap; }
+  .msgs { display: flex; flex-direction: column; gap: 7px; margin-top: 8px; }
+  .msg { max-width: 82%; padding: 9px 12px; border-radius: 14px; font-size: 14.5px; line-height: 1.4; }
+  .msg time { display: block; margin-top: 3px; font-size: 11.5px; opacity: .7; }
+  .msg.out { align-self: flex-end; background: var(--navy-2); color: #fff; border-bottom-right-radius: 4px; }
+  .msg.in { align-self: flex-start; background: #edf0f4; border-bottom-left-radius: 4px; }
+  .booked {
+    margin-top: 12px; display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; align-items: center;
+    padding: 12px 14px; border-radius: 10px; background: var(--orange-tint); border: 1px solid #f3c9a6;
+  }
+  .booked .ic { grid-row: span 2; width: 34px; height: 34px; border-radius: 8px; background: var(--orange-btn); display: grid; place-items: center; }
+  .booked strong { font-size: 14.5px; }
+  .booked span { font-size: 13px; color: var(--muted); }
+  .thread-caption { margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+
+  /* Sections */
+  section { padding: 88px 0; }
+  .sec-head { max-width: 760px; margin-bottom: 44px; }
+  .sec-head h2 { font-size: clamp(30px, 3.4vw, 42px); font-weight: 800; margin-top: 10px; }
+  .sec-head p:not(.eyebrow) { margin-top: 14px; font-size: 18px; color: var(--muted); }
+  .eyebrow-dark { color: var(--orange-btn); }
+  .alt { background: var(--paper); }
+
+  /* Pillars */
+  .pillars { display: grid; gap: 22px; }
+  .pillar {
+    display: grid; grid-template-columns: 260px 1fr; gap: 36px;
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 32px;
+  }
+  .pillar-name .stage { font-size: 13px; font-weight: 700; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  .pillar-name h3 { font-size: 24px; font-weight: 800; margin-top: 6px; }
+  .pillar-name p { margin-top: 10px; font-size: 15px; color: var(--muted); }
+  .bridge { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .bridge li { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 16px; }
+  .bridge li:first-child { border-top: 0; padding-top: 0; }
+  .bridge .k { font-size: 13px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+  .bridge li.we { background: var(--orange-tint); margin: 6px -14px 0; padding: 12px 14px; border-radius: 8px; border-top: 0; }
+  .bridge li.we .k { color: var(--orange-btn); }
+  .bridge li.we + li { border-top: 0; }
+  .bridge li.so { font-weight: 600; }
+  .bridge li.so .k { color: var(--navy-2); }
+
+  /* Timeline */
+  .timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+  .timeline li { position: relative; padding: 34px 24px 0 0; }
+  .timeline li::before { content: ""; position: absolute; top: 9px; left: 0; right: 0; height: 2px; background: var(--line); }
+  .timeline li::after { content: ""; position: absolute; top: 2px; left: 0; width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid var(--orange-btn); }
+  .timeline .when { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--orange-btn); }
+  .timeline h3 { font-size: 20px; font-weight: 800; margin-top: 6px; }
+  .timeline p { margin-top: 8px; font-size: 15.5px; color: var(--muted); }
+  .timeline-note { margin-top: 32px; font-size: 15px; color: var(--muted); }
+
+  /* Programs */
+  .programs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+  .prog { border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 30px 30px 26px; display: flex; flex-direction: column; }
+  .prog.dfy { border: 2px solid var(--navy); }
+  .prog-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .prog h3 { font-size: 26px; font-weight: 800; }
+  .prog .badge { font-size: 12.5px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--navy); color: #fff; }
+  .prog .badge.plain { background: var(--navy-soft); color: var(--navy); }
+  .prog .sum { margin-top: 10px; font-size: 17px; }
+  .prog dl { margin: 22px 0 0; display: grid; gap: 0; }
+  .prog dl div { display: grid; grid-template-columns: 150px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); font-size: 15.5px; }
+  .prog dt { font-weight: 700; color: var(--muted); font-size: 13.5px; padding-top: 2px; }
+  .prog dd { margin: 0; }
+  .guar-cell strong { display: block; }
+  .confirm { display: inline-block; margin-top: 4px; font-size: 12.5px; font-weight: 700; color: #6b4a00; background: #fff1c2; padding: 1px 6px; border-radius: 4px; }
+  .prog .btn { margin-top: auto; align-self: flex-start; }
+  .prog dl { margin-bottom: 24px; }
+
+  /* Guarantee */
+  .guarantee { background: var(--navy); color: #fff; }
+  .guarantee .sec-head p:not(.eyebrow) { color: #c6d2e5; }
+  .guarantee .eyebrow { color: var(--orange); }
+  .g-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: start; }
+  .g-card { background: #fff; color: var(--ink); border-radius: var(--radius); padding: 32px; border-top: 6px solid var(--orange-btn); }
+  .g-card .lbl { font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--orange-btn); }
+  .g-card blockquote { margin: 12px 0 0; font-size: 18px; line-height: 1.6; }
+  .g-card blockquote .lead { display: block; font-family: var(--display); font-weight: 800; font-size: 24px; line-height: 1.25; letter-spacing: -.015em; margin-bottom: 10px; }
+  .g-side { display: grid; gap: 20px; }
+  .g-box { border: 1px solid rgba(255,255,255,.18); border-radius: var(--radius); padding: 24px 26px; background: rgba(255,255,255,.04); }
+  .g-box h3 { font-size: 18px; font-weight: 800; }
+  .g-box p { margin-top: 10px; font-size: 15.5px; color: #d7e0ee; }
+
+  /* Fit */
+  .fit { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .fit-col { border-radius: var(--radius); padding: 28px 30px; border: 1px solid var(--line); background: #fff; }
+  .fit-col h3 { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  .fit-col ul { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 12px; }
+  .fit-col li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 16px; }
+  .fit-col li svg { margin-top: 4px; }
+
+  /* Proof */
+  .proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .placeholder {
+    min-height: 180px; display: flex; flex-direction: column; justify-content: center; gap: 8px;
+    padding: 24px; border: 2px dashed #b9a24a; border-radius: var(--radius); background: repeating-linear-gradient(135deg, #fffbe6 0 12px, #fff7d6 12px 24px);
+    color: #4d4100; font-size: 15px; font-weight: 600;
+  }
+  .placeholder .ph-k { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; font-weight: 800; }
+
+  /* FAQ */
+  .faq { max-width: 860px; border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 20px 4px; font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: -.01em; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary .pm { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--navy); display: grid; place-items: center; transition: transform .15s; }
+  .faq details[open] summary .pm { transform: rotate(45deg); }
+  .faq .ans { padding: 0 4px 22px; color: #26354d; font-size: 16.5px; max-width: 760px; }
+  .faq .ans p + p, .faq .ans p + ul { margin-top: 10px; }
+  .faq .ans ul { margin: 10px 0 0; padding-left: 20px; }
+
+  /* Final CTA */
+  .final { background: var(--paper); }
+  .final-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 44px; display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .final-card h2 { font-size: clamp(28px, 3vw, 36px); font-weight: 800; }
+  .final-card p { margin-top: 12px; color: var(--muted); font-size: 17px; max-width: 40em; }
+  .final-card .act { display: grid; gap: 10px; justify-items: start; }
+
+  footer { background: var(--ink); color: #b5c3d9; padding: 30px 0; font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; }
+  footer nav { display: flex; gap: 22px; }
+  footer a { color: #e3e9f3; }
+
+  @media (max-width: 1040px) {
+    .pillar { grid-template-columns: 1fr; gap: 18px; }
+    .timeline { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+  }
+  @media (max-width: 860px) {
+    .nav a:not(.btn) { display: none; }
+    .hero .wrap, .programs, .g-grid, .fit, .final-card { grid-template-columns: 1fr; }
+    .thread { justify-self: start; }
+    .proof-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    :root { --strip-h: 46px; }
+    body { font-size: 16px; }
+    .wrap { width: min(1160px, 100% - 32px); }
+    .mock-strip { flex-direction: column; gap: 2px; font-size: 12px; }
+    .site-head .wrap { height: 60px; }
+    .brand { font-size: 17px; }
+    .hero { padding: 36px 0 52px; }
+    .hero .lede { font-size: 17px; }
+    .hero-cta .btn { width: 100%; }
+    .hero-facts { grid-template-columns: 1fr; gap: 12px; }
+    section { padding: 60px 0; }
+    .sec-head { margin-bottom: 30px; }
+    .sec-head p:not(.eyebrow) { font-size: 16.5px; }
+    .pillar { padding: 22px 18px; }
+    .bridge li { grid-template-columns: 1fr; gap: 2px; }
+    .bridge li.we { margin-inline: -8px; padding-inline: 8px; }
+    .timeline { grid-template-columns: 1fr; row-gap: 0; }
+    .timeline li { padding: 0 0 28px 34px; }
+    .timeline li::before { top: 0; bottom: 0; left: 7px; right: auto; width: 2px; height: auto; }
+    .timeline li:last-child::before { bottom: auto; height: 10px; }
+    .timeline li::after { top: 3px; }
+    .prog { padding: 24px 20px; }
+    .prog dl div { grid-template-columns: 1fr; gap: 2px; }
+    .prog .btn { width: 100%; }
+    .g-card { padding: 24px 20px; }
+    .g-card blockquote { font-size: 16.5px; }
+    .g-card blockquote .lead { font-size: 21px; }
+    .fit-col { padding: 22px 20px; }
+    .faq summary { font-size: 17px; }
+    .final-card { padding: 28px 22px; }
+    .final-card .act, .final-card .btn { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mock-strip" role="note">
+  <span>MOCK for review. Not a live page. Proof is placeholder.</span>
+  <b>Offer page · Option A</b>
+</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="EstimateFlows home">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#c4541a"/><path d="M7 9h14M7 14h9M7 19h12" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>
+      EstimateFlows
+    </a>
+    <nav class="nav" aria-label="Page sections">
+      <a href="#how">How it works</a>
+      <a href="#programs">Programs</a>
+      <a href="#guarantee">Guarantee</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-sm" href="../booking-a/index.html">Book a review</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">For established residential painting contractors</p>
+        <h1 id="hero-h">15 qualified attended estimate appointments in your <em>first 30 days</em>.</h1>
+        <p class="lede">We run the ads, reply fast to new inquiries, check each project before your estimator drives out, and confirm and remind booked appointments, so your calendar fills with estimates you want to give.</p>
+        <div class="hero-cta">
+          <a class="btn" href="../booking-a/index.html">Book your Painting Pipeline Review</a>
+          <p class="terms-note">DFY guarantee. Conditions apply. <a href="#guarantee">Read the terms</a></p>
+        </div>
+        <ul class="hero-facts">
+          <li><strong>30-minute review</strong>Video call, no obligation</li>
+          <li><strong>Two programs</strong>Done-for-You or Done-with-You</li>
+          <li><strong>Your areas</strong>Your project types</li>
+        </ul>
+      </div>
+
+      <figure class="thread" aria-label="Illustration: a missed call answered by text and turned into a booked estimate">
+        <div class="thread-top">
+          <div class="who">Homeowner, exterior repaint<span>Texts to your business line</span></div>
+          <span class="tag-illus">Illustration</span>
+        </div>
+        <div class="call-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z" fill="currentColor"/><path d="M15 3l6 6M21 3l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Missed call while the crew was on site
+          <time>6:42 pm</time>
+        </div>
+        <div class="msgs">
+          <p class="msg out">Hi, it's [Your company] Painting. Sorry we missed you. Is this about an interior or exterior project?<time>6:43 pm</time></p>
+          <p class="msg in">Exterior. Two-story house, trim is peeling on the south side.<time>6:47 pm</time></p>
+          <p class="msg out">Got it. What's the street, and when are you hoping to start?<time>6:47 pm</time></p>
+          <p class="msg in">Maple Ave, near the school. Sometime in May.<time>6:51 pm</time></p>
+          <p class="msg out">Thanks. Our estimator can come Thursday at 4:30 pm or Friday at 10:00 am. Which suits you?<time>6:52 pm</time></p>
+          <p class="msg in">Thursday works.<time>6:55 pm</time></p>
+        </div>
+        <div class="booked">
+          <span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <strong>Estimate booked: Thursday 4:30 pm</strong>
+          <span>Exterior, two-story, in your area. Reminder goes out Wednesday.</span>
+        </div>
+        <figcaption class="thread-caption">Illustration. Not a real conversation or client.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow eyebrow-dark">How it works</p>
+        <h2 id="how-h">Four places painting leads get lost, and what we do instead</h2>
+        <p>A homeowner moves from ad to inquiry to booked estimate to the estimator at the door. Most contractors lose them at one of these four steps.</p>
+      </div>
+
+      <div class="pillars">
+        <article class="pillar">
+          <div class="pillar-name">
+            <p class="stage">Step 1 · Getting inquiries</p>
+            <h3>Service-area demand capture</h3>
+            <p>Meta ads for the project types and neighbourhoods you want, plus your own past leads.</p>
+          </div>
+          <ul class="bridge">
+            <li><span class="k">Most do</span><span>Run broad "painters near me" ads or buy shared leads, and leave the old lead list sitting in a spreadsheet.</span></li>
+            <li><span class="k">The problem</span><span>Inquiries come from outside your area, for work you don't want, and the same lead goes to three other painters.</span></li>
+            <li><span class="k">What it costs</span><span>Estimator hours driving across town for small jobs you lose on price. Past customers who would hire you again call someone else.</span></li>
+            <li class="we"><span class="k">What we do</span><span>Build Meta ads around your profitable project types and the neighbourhoods you choose, and reactivate your own past leads and customers.</span></li>
+            <li class="so"><span class="k">So you can</span><span>Fill the estimate calendar with the work you want, where you want it.</span></li>
+          </ul>
+        </article>
+
+        <article class="pillar">
+          <div class="pillar-name">
+            <p class="stage">Step 2 · Answering</p>
+            <h3>Instant inquiry response</h3>
+            <p>A fast reply to new calls and forms, missed-call text-back included.</p>
+          </div>
+          <ul class="bridge">
+            <li><span class="k">Most do</span><span>Call back when the crew packs up for the day, or the next morning.</span></li>
+            <li><span class="k">The problem</span><span>Homeowners contact two or three painters and talk to whoever gets back to them first.</span></li>
+            <li><span class="k">What it costs</span><span>You pay for the inquiry and lose it before you ever speak.</span></li>
+            <li class="we"><span class="k">What we do</span><span>Send a fast reply to new calls and form inquiries, with missed-call text-back, evenings and weekends included.</span></li>
+            <li class="so"><span class="k">So you can</span><span>Stay on the job and still be one of the first painters they hear from.</span></li>
+          </ul>
+        </article>
+
+        <article class="pillar">
+          <div class="pillar-name">
+            <p class="stage">Step 3 · Checking the job</p>
+            <h3>Job qualification and routing</h3>
+            <p>Scope, address, timing and fit, before anyone drives out.</p>
+          </div>
+          <ul class="bridge">
+            <li><span class="k">Most do</span><span>Put whoever calls straight onto the estimator's calendar.</span></li>
+            <li><span class="k">The problem</span><span>The estimator finds out at the door that it's one bathroom 40 minutes away, or a homeowner who's only collecting prices.</span></li>
+            <li><span class="k">What it costs</span><span>Half a day per wasted estimate, and fewer slots for the jobs you'd win.</span></li>
+            <li class="we"><span class="k">What we do</span><span>Collect the scope, address, timing and fit before your estimator spends any time on it.</span></li>
+            <li class="so"><span class="k">So you can</span><span>Send your estimator only to homes that match your service area and project types.</span></li>
+          </ul>
+        </article>
+
+        <article class="pillar">
+          <div class="pillar-name">
+            <p class="stage">Step 4 · Getting them there</p>
+            <h3>Confirmation and recovery</h3>
+            <p>Confirmations, reminders and follow-up on no-shows and unbooked homeowners.</p>
+          </div>
+          <ul class="bridge">
+            <li><span class="k">Most do</span><span>Book it and hope they're home. No-shows get written off. Homeowners who didn't book get forgotten.</span></li>
+            <li><span class="k">The problem</span><span>Homeowners forget, need to reschedule, or go quiet with a question nobody answered.</span></li>
+            <li><span class="k">What it costs</span><span>Empty slots on the calendar, and inquiries you already paid for going cold.</span></li>
+            <li class="we"><span class="k">What we do</span><span>Confirm and remind booked appointments, follow up no-shows, and follow up homeowners who didn't book.</span></li>
+            <li class="so"><span class="k">So you can</span><span>Keep a calendar of estimates that actually happen.</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" aria-labelledby="days-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow eyebrow-dark">What happens when</p>
+        <h2 id="days-h">Your first 30 days</h2>
+        <p>Short and predictable. You'll know what we're doing each week, and what we need from you.</p>
+      </div>
+      <ol class="timeline">
+        <li>
+          <p class="when">Before launch</p>
+          <h3>Set up</h3>
+          <p>We agree your service areas and project types. You hand over your complete past lead list. You approve the ads and the reply and booking messages.</p>
+        </li>
+        <li>
+          <p class="when">Days 1 to 7</p>
+          <h3>Go live</h3>
+          <p>Ads start in your areas. Your past leads and customers hear from you again. New inquiries get a fast reply.</p>
+        </li>
+        <li>
+          <p class="when">Days 8 to 21</p>
+          <h3>Tune</h3>
+          <p>We shift spend toward the project types that book. You run the estimates and make your calls to past customers.</p>
+        </li>
+        <li>
+          <p class="when">Days 22 to 30</p>
+          <h3>Count and plan</h3>
+          <p>We count qualified attended estimate appointments in your CRM, then plan month two with you.</p>
+        </li>
+      </ol>
+      <p class="timeline-note">Shown for Done-for-You. Done-with-You follows the same steps, with your team running them once the system is built.</p>
+    </div>
+  </section>
+
+  <section id="programs" aria-labelledby="prog-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow eyebrow-dark">Two programs</p>
+        <h2 id="prog-h">Done-for-You or Done-with-You</h2>
+        <p>Same four steps. The difference is who runs them day to day, and only Done-for-You carries the guarantee.</p>
+      </div>
+      <div class="programs">
+        <article class="prog dfy">
+          <div class="prog-top"><h3>Done-for-You</h3><span class="badge">Guarantee available</span></div>
+          <p class="sum">We build it and run it. Your team runs the estimates.</p>
+          <dl>
+            <div><dt>Who runs it</dt><dd>EstimateFlows runs the ads, replies, qualification, confirmations and follow-up.</dd></div>
+            <div><dt>Your time</dt><dd>Approvals, 10 calls a week to past customers, and the estimates themselves.</dd></div>
+            <div><dt>Ad spend</dt><dd>Paid by you directly to the ad platform. The guarantee needs at least $2,000 per month.</dd></div>
+            <div><dt>Guarantee</dt><dd class="guar-cell"><strong>15 qualified attended estimate appointments in your first 30 days.</strong><span class="terms-note">DFY guarantee. Conditions apply. <a href="#guarantee">Terms</a></span></dd></div>
+          </dl>
+          <a class="btn" href="../booking-a/index.html">Check if Done-for-You fits</a>
+        </article>
+        <article class="prog">
+          <div class="prog-top"><h3>Done-with-You</h3><span class="badge plain">No guarantee</span></div>
+          <p class="sum">We build the system with you and coach your team to run it. <span class="confirm">[Ali to confirm DWY wording]</span></p>
+          <dl>
+            <div><dt>Who runs it</dt><dd>Your team, once the system is built and they've been coached on it.</dd></div>
+            <div><dt>Your time</dt><dd>More of it. Your team handles replies, qualification and follow-up.</dd></div>
+            <div><dt>Ad spend</dt><dd>Paid by you directly to the ad platform, at a level we agree on the review.</dd></div>
+            <div><dt>Guarantee</dt><dd>None. The appointment guarantee is Done-for-You only.</dd></div>
+          </dl>
+          <a class="btn btn-ghost" href="../booking-a/index.html">Check if Done-with-You fits</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="guarantee" class="guarantee" aria-labelledby="g-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">The Done-for-You guarantee</p>
+        <h2 id="g-h">What we guarantee, word for word</h2>
+        <p>Estimate appointments, not signed or completed painting jobs. Read the conditions before the review call so there are no surprises.</p>
+      </div>
+      <div class="g-grid">
+        <div class="g-card">
+          <p class="lbl">Guarantee</p>
+          <blockquote>
+            <span class="lead">15 qualified attended estimate appointments in the first 30 days.</span>
+            Appointments generated through database reactivation count toward the same 15 if they meet the same qualification, attendance, and CRM-recording criteria. If EstimateFlows misses the target, it will continue work at no additional service fee for another 30 days; if the same 15-appointment target is still unmet at the end of that extension, refund all program fees and reimburse all client ad spend. This is not a guarantee of signed or completed painting jobs.
+          </blockquote>
+        </div>
+        <div class="g-side">
+          <div class="g-box">
+            <h3>Conditions</h3>
+            <p>Done-for-You only. Available only if you provide your complete historical lead list before campaign launch. Your side: at least $2,000 per month of ad spend paid to the advertising platform; the complete historical lead list before launch; at least 10 calls per week to eligible prior painting customers; reasonably open estimate capacity; keep your service areas and advertised work available; run and reschedule estimates in good faith and follow up on quotes; keep the approved response and booking operations active; give reasonable access, approvals, assets and timely creative review; capture before, mid-job and after photos or video for each job. Full terms are in your written agreement.</p>
+          </div>
+          <div class="g-box">
+            <h3>What counts</h3>
+            <p>A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="fit-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow eyebrow-dark">Fit</p>
+        <h2 id="fit-h">Who this is for, and who it isn't</h2>
+      </div>
+      <div class="fit">
+        <div class="fit-col">
+          <h3><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1f7a4d"/><path d="M7 12.5l3.3 3.3L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>A good fit</h3>
+          <ul>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1f7a4d" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>You own an established residential painting company in the US.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1f7a4d" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Your crews can take on more work, and your estimator has open time.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1f7a4d" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>You have a list of past leads and customers, in a CRM or a spreadsheet.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1f7a4d" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>You can put money into ads each month, paid to Meta directly.</span></li>
+          </ul>
+        </div>
+        <div class="fit-col">
+          <h3><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#a33a2a"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg>Not a fit</h3>
+          <ul>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" stroke="#a33a2a" stroke-width="2.6" stroke-linecap="round"/></svg><span>You're booked out and can't run more estimates in the next 30 days.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" stroke="#a33a2a" stroke-width="2.6" stroke-linecap="round"/></svg><span>You want to buy shared leads by the piece.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" stroke="#a33a2a" stroke-width="2.6" stroke-linecap="round"/></svg><span>You want someone to guarantee your close rate. Our guarantee covers estimate appointments only.</span></li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" stroke="#a33a2a" stroke-width="2.6" stroke-linecap="round"/></svg><span>Nobody on your team will follow up on quotes after the estimate.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" aria-labelledby="proof-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow eyebrow-dark">Results</p>
+        <h2 id="proof-h">From painting contractors on the program</h2>
+      </div>
+      <div class="proof-grid">
+        <div class="placeholder"><span class="ph-k">Placeholder</span>PLACEHOLDER: client result. Needs written client permission before use.</div>
+        <div class="placeholder"><span class="ph-k">Placeholder</span>PLACEHOLDER: client result. Needs written client permission before use.</div>
+        <div class="placeholder"><span class="ph-k">Placeholder</span>PLACEHOLDER: client result. Needs written client permission before use.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow eyebrow-dark">Questions</p>
+        <h2 id="faq-h">Common questions</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is this a guarantee of jobs?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="#14284a" stroke-width="1.8" stroke-linecap="round"/></svg></span></summary>
+          <div class="ans">
+            <p>No. This is not a guarantee of signed or completed painting jobs. The Done-for-You guarantee covers 15 qualified attended estimate appointments in the first 30 days. DFY guarantee. Conditions apply.</p>
+            <p>Winning the job after the estimate is down to your estimator, your price and your follow-up on quotes. <a href="#guarantee">Read the full guarantee</a>.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What do I need to provide?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="#14284a" stroke-width="1.8" stroke-linecap="round"/></svg></span></summary>
+          <div class="ans">
+            <p>For the Done-for-You guarantee, your side is:</p>
+            <ul>
+              <li>at least $2,000 per month of ad spend paid to the advertising platform</li>
+              <li>the complete historical lead list before launch</li>
+              <li>at least 10 calls per week to eligible prior painting customers</li>
+              <li>reasonably open estimate capacity</li>
+              <li>keep your service areas and advertised work available</li>
+              <li>run and reschedule estimates in good faith and follow up on quotes</li>
+              <li>keep the approved response and booking operations active</li>
+              <li>give reasonable access, approvals, assets and timely creative review</li>
+              <li>capture before, mid-job and after photos or video for each job</li>
+            </ul>
+            <p>Full terms are in your written agreement.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Do I need to spend on ads?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="#14284a" stroke-width="1.8" stroke-linecap="round"/></svg></span></summary>
+          <div class="ans">
+            <p>Yes. You pay the ad platform directly. The Done-for-You guarantee needs at least $2,000 per month of ad spend paid to the advertising platform. For Done-with-You, we agree a level with you on the review call.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What happens on the review call?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="#14284a" stroke-width="1.8" stroke-linecap="round"/></svg></span></summary>
+          <div class="ans">
+            <p>The Painting Pipeline Review is a 30-minute video call with no obligation. We look at your service area, crews, ad budget and past lead list, show you where inquiries are getting lost today, and tell you which program fits. If Done-for-You fits, we tell you whether you'd qualify for the guarantee.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What counts as a qualified attended estimate appointment?<span class="pm" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 1v10M1 6h10" stroke="#14284a" stroke-width="1.8" stroke-linecap="round"/></svg></span></summary>
+          <div class="ans">
+            <p>A qualified attended estimate appointment means: the project matches the agreed service area, project type and homeowner intent; the homeowner (or decision-maker) and your estimator attend and the estimate is conducted. Bookings, cancellations and no-shows don't count.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" aria-labelledby="final-h">
+    <div class="wrap">
+      <div class="final-card">
+        <div>
+          <h2 id="final-h">See which program fits your company</h2>
+          <p>Answer four quick questions, then pick a time for your 30-minute Painting Pipeline Review. No obligation.</p>
+        </div>
+        <div class="act">
+          <a class="btn" href="../booking-a/index.html">Book your Painting Pipeline Review</a>
+          <p class="terms-note">DFY guarantee. Conditions apply.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 EstimateFlows</span>
+    <nav aria-label="Legal"><a href="#">Privacy</a><a href="#">Terms</a></nav>
+  </div>
+</footer>
+</body>
+</html>
